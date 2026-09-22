@@ -5,6 +5,7 @@ import { useCart } from "@/components/cart/CartProvider";
 import { RecommendationsSection } from "@/components/shop/RecommendationsSection";
 import { CouponBox } from "@/components/shop/CouponBox";
 import { AvailableOffers } from "@/components/shop/AvailableOffers";
+import { PageHero } from "@/components/shop/PageHero";
 import { buttonVariants } from "@/components/ui/Button";
 import { formatCurrency } from "@/lib/utils/currency";
 
@@ -13,24 +14,33 @@ export function CartView() {
 
   if (isHydrated && items.length === 0) {
     return (
-      <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-4 py-24 text-center">
-        <h1 className="font-serif text-2xl font-bold text-foreground">Your bag is empty</h1>
-        <p className="text-foreground/60">Find something you&apos;ll love.</p>
-        <Link
-          href="/shop"
-          className="rounded-full bg-rose-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-rose-500"
-        >
-          Continue shopping
-        </Link>
+      <div className="flex flex-col">
+        <PageHero
+          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Bag" }]}
+          eyebrow="Your bag"
+          title="Your bag is empty"
+          description="Find something you'll love."
+        />
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-4 py-16 text-center">
+          <Link href="/shop" className={buttonVariants({ variant: "burgundy" })}>
+            Continue shopping
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <h1 className="font-serif text-2xl font-bold text-foreground">Your bag</h1>
+    <div className="flex flex-col">
+      <PageHero
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Bag" }]}
+        eyebrow="Your bag"
+        title="Your bag"
+        description={`${items.length} ${items.length === 1 ? "item" : "items"} ready for checkout.`}
+      />
 
-      <div className="mt-8 flex flex-col gap-6">
+      <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="flex flex-col gap-6">
         {items.map((item) => (
           <div
             key={item.key}
@@ -149,6 +159,7 @@ export function CartView() {
           title="Complete your look"
           endpoint="/api/products/complete-the-look"
         />
+      </div>
       </div>
     </div>
   );

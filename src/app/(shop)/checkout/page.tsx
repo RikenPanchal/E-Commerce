@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { getAddressesForUser } from "@/lib/account/addresses";
 import { CheckoutForm } from "@/components/shop/CheckoutForm";
+import { PageHero } from "@/components/shop/PageHero";
 
 export const metadata: Metadata = {
   title: "Checkout",
@@ -19,9 +20,17 @@ export default async function CheckoutPage() {
   const addresses = await getAddressesForUser(user.id);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <h1 className="font-serif text-2xl font-bold text-foreground">Checkout</h1>
-      <CheckoutForm defaultName={user.name} savedAddresses={addresses} />
+    <div className="flex flex-col">
+      <PageHero
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Bag", href: "/cart" }, { label: "Checkout" }]}
+        eyebrow="Secure checkout"
+        title="Checkout"
+        description="Review your bag and confirm your delivery details."
+      />
+
+      <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+        <CheckoutForm defaultName={user.name} savedAddresses={addresses} />
+      </div>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useWishlist } from "@/components/wishlist/WishlistProvider";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { ProductCardSkeleton } from "@/components/ui/Skeleton";
+import { PageHero } from "@/components/shop/PageHero";
 import { buttonVariants } from "@/components/ui/Button";
 import { HeartIcon } from "@/components/home/icons";
 import type { ProductWithRating, ProductsPageResponse } from "@/app/api/products/route";
@@ -75,28 +76,17 @@ export function WishlistView() {
 
   const products = fetchedProducts.filter((product) => productIds.includes(product.id));
 
-  const breadcrumb = (
-    <div className="bg-background">
-      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground">
-          <Link href="/" className="transition-colors hover:text-foreground">
-            Home
-          </Link>
-          <span aria-hidden="true">/</span>
-          <span className="font-medium text-foreground">Wishlist</span>
-        </nav>
-      </div>
-    </div>
-  );
-
   if (isHydrated && productIds.length === 0) {
     return (
       <div className="flex flex-col">
-        {breadcrumb}
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 px-4 py-20 text-center sm:py-24">
+        <PageHero
+          breadcrumbs={[{ label: "Home", href: "/" }, { label: "Wishlist" }]}
+          eyebrow="Saved styles"
+          title="Your wishlist is empty"
+          description="Save the styles you love and come back to them anytime."
+        />
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 px-4 py-16 text-center">
           <HeartIcon className="h-8 w-8 text-rose-400" />
-          <h1 className="mt-1 font-serif text-2xl font-semibold text-foreground">Your wishlist is empty</h1>
-          <p className="text-sm text-muted-foreground">Save the styles you love and come back to them anytime.</p>
           <Link href="/shop" className={buttonVariants({ variant: "primary", size: "lg", className: "mt-2" })}>
             Explore shop
           </Link>
@@ -107,15 +97,17 @@ export function WishlistView() {
 
   return (
     <div className="flex flex-col">
-      {breadcrumb}
-      <div className="mx-auto max-w-[1380px] px-4 py-12 sm:px-8">
-        <h1 className="font-serif text-2xl font-semibold text-foreground sm:text-3xl">Your wishlist</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {status === "loading" && products.length === 0
+      <PageHero
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Wishlist" }]}
+        eyebrow="Saved styles"
+        title="Your wishlist"
+        description={
+          status === "loading" && products.length === 0
             ? "Loading your saved styles."
-            : `${products.length} saved ${products.length === 1 ? "style" : "styles"}.`}
-        </p>
-
+            : `${products.length} saved ${products.length === 1 ? "style" : "styles"}.`
+        }
+      />
+      <div className="mx-auto max-w-[1380px] px-4 py-12 sm:px-8">
         {status === "error" ? (
           <div className="mx-auto mt-12 flex max-w-sm flex-col items-center gap-3 py-8 text-center">
             <p className="font-serif text-lg font-semibold text-foreground">Unable to load your wishlist</p>

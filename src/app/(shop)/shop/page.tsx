@@ -244,11 +244,22 @@ export default async function ShopPage({
         </label>
       </FilterSection>
 
-      <div className="flex items-center gap-3 border-t border-surface-border pt-5">
-        <Link href="/shop" className={buttonVariants({ variant: "outline-burgundy", className: "flex-1" })}>
+      {/* Side-by-side in the roomy mobile/tablet drawer, stacked full-width
+          in the desktop sidebar - that column is a fixed 240px
+          (`lg:grid-cols-[240px_1fr]` below), too narrow to fit both
+          uppercase, tracked-out labels on one row without the second
+          button's text clipping. */}
+      <div className="flex flex-row items-stretch gap-3 border-t border-surface-border pt-5 lg:flex-col">
+        <Link
+          href="/shop"
+          className={buttonVariants({ variant: "outline-burgundy", className: "flex-1 lg:w-full lg:flex-none" })}
+        >
           Clear all
         </Link>
-        <button type="submit" className={buttonVariants({ variant: "burgundy", className: "flex-1" })}>
+        <button
+          type="submit"
+          className={buttonVariants({ variant: "burgundy", className: "flex-1 lg:w-full lg:flex-none" })}
+        >
           Apply filters
         </button>
       </div>
