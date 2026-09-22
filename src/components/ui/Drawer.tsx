@@ -53,7 +53,7 @@ export function Drawer({
   return createPortal(
     <div className={cn("fixed inset-0 z-50 flex", side === "bottom" && "items-end")}>
       <div
-        className="absolute inset-0 bg-foreground/40 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-black/60 backdrop-blur-[2px]"
         onClick={onClose}
         aria-hidden="true"
       />

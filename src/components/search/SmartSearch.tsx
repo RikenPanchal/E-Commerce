@@ -222,7 +222,7 @@ export function SmartSearch() {
         ? createPortal(
             <>
               <div
-                className="fixed inset-0 z-40 bg-foreground/40 backdrop-blur-[2px] sm:bg-transparent sm:backdrop-blur-none"
+                className="fixed inset-0 z-40 bg-black/60 backdrop-blur-[2px] sm:bg-transparent sm:backdrop-blur-none"
                 onClick={close}
                 aria-hidden="true"
               />

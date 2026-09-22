@@ -83,7 +83,7 @@ export default async function AdminProductsPage({
         <div className="flex items-center gap-4">
           <Link
             href="/admin/products/new"
-            className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-rose-500"
+            className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-rose-500"
           >
             Add product
           </Link>
@@ -99,7 +99,7 @@ export default async function AdminProductsPage({
               href={buildHref({ search: rawSearch, category, stock: filter.value })}
               className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors ${
                 isActive
-                  ? "border-rose-600 bg-rose-600 text-white"
+                  ? "border-rose-600 bg-rose-600 text-background"
                   : "border-black/10 text-foreground/70 hover:border-rose-300 dark:border-white/15"
               }`}
             >
@@ -146,7 +146,7 @@ export default async function AdminProductsPage({
         </div>
         <button
           type="submit"
-          className="h-10 rounded-md bg-rose-600 px-5 text-sm font-medium text-white transition-colors hover:bg-rose-500"
+          className="h-10 rounded-md bg-rose-600 px-5 text-sm font-medium text-background transition-colors hover:bg-rose-500"
         >
           Filter
         </button>

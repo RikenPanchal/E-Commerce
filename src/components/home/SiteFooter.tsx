@@ -41,7 +41,7 @@ export async function SiteFooter({ variant = "light" }: { variant?: "light" | "d
   );
 
   return (
-    <footer className={cn(isDark ? "bg-foreground text-white" : "border-t border-surface-border bg-background")}>
+    <footer className={cn(isDark ? "bg-burgundy text-foreground" : "border-t border-surface-border bg-background")}>
       <div
         className={cn(
           "mx-auto grid max-w-7xl grid-cols-1 gap-6 border-b px-4 py-8 sm:grid-cols-3 sm:px-6 lg:px-8",

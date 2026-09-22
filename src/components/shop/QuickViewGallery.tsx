@@ -35,7 +35,7 @@ export function QuickViewGallery({
     <div className="flex flex-col gap-2.5">
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-md border border-surface-border bg-background">
         {badge ? (
-          <span className="absolute top-2 left-2 z-10 rounded-sm bg-rose-600 px-2 py-1 text-[10px] font-semibold tracking-wide text-white uppercase">
+          <span className="absolute top-2 left-2 z-10 rounded-sm bg-rose-600 px-2 py-1 text-[10px] font-semibold tracking-wide text-background uppercase">
             {badge}
           </span>
         ) : null}

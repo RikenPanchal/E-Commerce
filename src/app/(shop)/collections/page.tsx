@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getActiveCollections } from "@/lib/shop/collections";
+import { getActiveCollections, getCollectionProducts } from "@/lib/shop/collections";
 import { CollectionCard } from "@/components/shop/CollectionCard";
 import { buttonVariants } from "@/components/ui/Button";
 
@@ -8,8 +8,15 @@ export const metadata: Metadata = {
   title: "Collections",
 };
 
+const PREVIEW_PRODUCTS_PER_CARD = 4;
+
 export default async function CollectionsPage() {
   const collections = await getActiveCollections();
+  // One real product-photo mosaic per card (see `CollectionCard`) instead
+  // of a single flat banner - resolved here, in parallel.
+  const productsByCollection = await Promise.all(
+    collections.map((collection) => getCollectionProducts(collection).then((products) => products.slice(0, PREVIEW_PRODUCTS_PER_CARD)))
+  );
 
   return (
     <div className="flex flex-col">
@@ -53,8 +60,8 @@ export default async function CollectionsPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {collections.map((collection) => (
-              <CollectionCard key={collection.id} collection={collection} />
+            {collections.map((collection, index) => (
+              <CollectionCard key={collection.id} collection={collection} previewProducts={productsByCollection[index]} />
             ))}
           </div>
         )}

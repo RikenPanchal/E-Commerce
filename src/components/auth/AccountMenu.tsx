@@ -66,7 +66,7 @@ export function AccountMenu({
         aria-haspopup="menu"
         className="flex items-center gap-2 rounded-full py-1 pr-2.5 pl-1 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5 sm:pr-3"
       >
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-rose-600 text-xs font-semibold text-white">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-rose-600 text-xs font-semibold text-background">
           {initial}
         </span>
         <span className="hidden max-w-[8rem] truncate sm:inline">{firstName}</span>

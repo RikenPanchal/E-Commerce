@@ -28,7 +28,7 @@ export function BestSellerCard({
       <div className="relative">
         <Link href={`/products/${product.slug}`} className="relative block aspect-[4/5] w-full overflow-hidden bg-cream">
           {isTopSeller ? (
-            <span className="absolute top-3 left-3 z-10 rounded-sm bg-rose-800 px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] text-white uppercase">
+            <span className="absolute top-3 left-3 z-10 rounded-sm bg-rose-800 px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] text-background uppercase">
               Best Seller
             </span>
           ) : null}

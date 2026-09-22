@@ -36,7 +36,7 @@ export function ProductGallery({
     <div className="flex flex-col gap-3">
       <div className="relative overflow-hidden rounded-3xl shadow-xl shadow-rose-100 ring-1 ring-rose-100/70 dark:shadow-none dark:ring-white/10">
         {badge ? (
-          <span className="absolute left-4 top-4 z-10 rounded-full bg-rose-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white shadow-sm">
+          <span className="absolute left-4 top-4 z-10 rounded-full bg-rose-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-background shadow-sm">
             {badge}
           </span>
         ) : null}

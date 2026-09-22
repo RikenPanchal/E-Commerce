@@ -97,7 +97,7 @@ export function QuickViewModal({
 
   return createPortal(
     <>
-      <div className="fixed inset-0 z-50 bg-foreground/40 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
+      <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
       <div
         ref={dialogRef}
         role="dialog"

@@ -1,54 +1,50 @@
 @import "tailwindcss";
 
-/* This site is always light, regardless of the visitor's OS/browser dark
-   mode setting - by default Tailwind's `dark:` variant (used throughout
-   the app) and `prefers-color-scheme: dark` below both switch on
-   automatically for anyone whose system prefers dark, which is exactly
-   why a "white theme" kept not appearing to look white. Redefining `dark:`
-   to require an actual `.dark` class - one we never add anywhere - means
-   every `dark:*` utility in the whole codebase simply never matches, and
-   the page renders with its plain (light) classes unconditionally. */
+/* This site is always on its one dark palette, regardless of the visitor's
+   OS/browser preference - `dark:` is redefined to require an actual `.dark`
+   class, and `<html>` (see layout.tsx) always carries it. That means every
+   `dark:*` utility already written throughout the app (light-on-dark text,
+   white-opacity hairlines, dark-mode badge pairs, etc.) is now the ONE
+   active styling path everywhere, not a secondary mode - which is exactly
+   what a permanently-dark luxury theme needs. */
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
   ==========================================================================
-  Design system v5 - "Option 2" modern fashion palette
+  Design system v6 - "Black + Champagne" luxury palette
   ==========================================================================
-  A fixed, named palette (white / warm ivory / soft beige / blush / muted
-  rose / deep burgundy / charcoal), anchored so the brief's exact hex values
-  land on exact steps of the existing rose ramp rather than living as
-  separate one-off tokens: 100 = Blush (#E8C7CB), 500 = Muted Rose
-  (#B87582), 800 = Deep Burgundy (#542C38). Every existing `rose-*` utility
-  already in the codebase still works exactly the same way; this only
-  changes what color it resolves to.
+  Replaces the earlier light "Modern Feminine" (white/ivory/blush/rose/
+  burgundy) palette. Every existing `rose-*` utility, and the `blush`/
+  `blush-line`/`burgundy` tokens, are kept under their old names (renaming
+  every call site across ~100 files would be a much larger, much riskier
+  change for zero visual benefit) but now resolve to warm gold/champagne
+  tones instead of pink - so `bg-rose-600`, `text-rose-800`,
+  `border-rose-800`, `bg-blush`, `bg-burgundy` etc. everywhere in the app
+  automatically become on-brand without touching each call site.
 
-  The explicit color rule this ramp exists to satisfy: white/beige/ivory
-  cover most of the page, rose is an ACCENT (text, buttons, badges, a thin
-  section tint at most) rather than a section-filling background, and
-  burgundy is reserved for the one or two highest-impact panels (the
-  closing CTA) - never body text. The site must not read as "a pink
-  website".
+  Champagne is an ACCENT (text, icons, thin borders, a sparing badge/button
+  fill) - the page background itself is always black/charcoal, never
+  champagne-filled edge to edge.
 */
 @theme {
-  --color-rose-50: #f4dcdd;
-  --color-rose-100: #e8c7cb;
-  /* Blush */
-  --color-rose-200: #dcb3b9;
-  --color-rose-300: #d09ea7;
-  --color-rose-400: #c48a94;
-  /* Muted Rose - the brand accent proper: text links, focus rings, small
-     details, and (sparingly) a section-background tint at low opacity. */
-  --color-rose-500: #b87582;
-  /* Darkened slightly for safe white-on-top contrast (~6:1) - solid-fill
-     accent buttons/badges use this step, not 500 directly. */
-  --color-rose-600: #975d69;
-  --color-rose-700: #754451;
-  /* Deep Burgundy - the dark accent, used sparingly for a section
-     background (never as body text color, only as a background paired
-     with light type). */
-  --color-rose-800: #542c38;
-  --color-rose-900: #33141f;
-  --color-rose-950: #220813;
+  /* Lightest warm-gold tints - chip/badge backgrounds, soft section washes. */
+  --color-rose-50: #3a3222;
+  --color-rose-100: #453b26;
+  --color-rose-200: #e6d3a3;
+  /* Light Champagne */
+  --color-rose-300: #dcc48f;
+  /* Champagne - the brand accent proper: text links, icons, focus rings. */
+  --color-rose-400: #d6b77c;
+  --color-rose-500: #c9a468;
+  /* Slightly deeper for reliable BLACK-on-top contrast - solid-fill accent
+     buttons/badges pair this step with dark text, never white. */
+  --color-rose-600: #bd9757;
+  --color-rose-700: #a07f45;
+  /* Deep bronze - a dark accent for hover/pressed states and the rare
+     accent-filled panel, paired with light (never dark) type. */
+  --color-rose-800: #6b5530;
+  --color-rose-900: #453722;
+  --color-rose-950: #241d12;
 
   /* Small and square, not soft and bubbly - 0-8px covers nearly every
      component. `rounded-full` (pills, avatars, icon buttons, the odd true
@@ -59,16 +55,14 @@
   --radius-2xl: 0.5rem;
   --radius-3xl: 0.5rem;
 
-  /* Almost no shadow at the small end (barely a hairline of depth) - a
-     shadow this faint reads as "the edge of a photograph", not "a card
-     floating above the page". `shadow-lg`/`shadow-xl` stay reserved for
-     things that genuinely float above the page's own stacking context (a
-     modal, a drawer, an open dropdown) and are the only steps meant to
-     still be clearly visible as a shadow. */
-  --shadow-sm: 0 1px 1px 0 rgb(22 22 22 / 0.03);
-  --shadow-md: 0 1px 3px 0 rgb(22 22 22 / 0.05);
-  --shadow-lg: 0 6px 16px -4px rgb(22 22 22 / 0.08);
-  --shadow-xl: 0 12px 28px -6px rgb(22 22 22 / 0.1);
+  /* Dark-UI depth reads through a real, darker-than-black-page shadow (not
+     the near-invisible near-black-on-off-white haze the light theme used) -
+     still restrained (no glow, no color), just enough to lift a modal/
+     drawer/dropdown off the page behind it. */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.35);
+  --shadow-md: 0 2px 6px 0 rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 24px -6px rgb(0 0 0 / 0.55);
+  --shadow-xl: 0 20px 40px -8px rgb(0 0 0 / 0.6);
 
   /* One deliberate easing curve + duration for every unlabelled
      `transition-*` utility already used across the app (`transition-colors`,
@@ -81,42 +75,42 @@
 }
 
 :root {
-  /* Warm Ivory - the page's own background. */
-  --background: #faf8f6;
-  /* White - reserved for surfaces that should visually lift a touch off the
+  /* Black - the page's own background. */
+  --background: #0b0b0b;
+  /* Card - reserved for surfaces that should visually lift a touch off the
      page background beneath them (a card, a panel). */
-  --surface: #ffffff;
-  /* Soft Beige, and one step deeper again for sections that want to read as
-     visually distinct from the plain page without reaching for rose. */
-  --cream: #f3ece6;
-  --sand: #e9dfd8;
+  --surface: #1c1c1c;
+  /* Charcoal, and Elevated one step lighter again for sections that want to
+     read as visually distinct from the plain page without reaching for
+     champagne. */
+  --cream: #151515;
+  --sand: #232323;
   /* Kept as an alias of `sand` - components that already reach for
      `bg-soft`/`disabled:bg-soft` (a neutral `Badge`, a disabled `Input`)
-     pick up the same warm neutral automatically. */
-  --soft: #e9dfd8;
-  /* Charcoal - primary text and headings. */
-  --foreground: #1d1a1b;
-  /* Secondary Text - captions, meta info, helper copy. */
-  --muted-foreground: #706a69;
-  /* Border - hairline borders/dividers everywhere. */
-  --surface-border: #e8e2df;
-  --ring: #b87582;
+     pick up the same neutral automatically. */
+  --soft: #232323;
+  /* Ivory - primary text and headings. */
+  --foreground: #f5f0e6;
+  /* Muted - captions, meta info, helper copy. */
+  --muted-foreground: #a8a29a;
+  /* Border - hairline borders/dividers everywhere; a warm-tinted charcoal,
+     not pure gray, so hairlines read as part of the same warm-dark palette
+     rather than a generic UI gray. */
+  --surface-border: #2a2620;
+  --ring: #d6b77c;
 
-  /* "Modern Feminine - Blush + Burgundy" - a handful of additive tokens for
-     the Shop page redesign, layered onto the palette above rather than
-     replacing it. `--background`/`--surface`/`--foreground`/
-     `--muted-foreground`/`--surface-border` and the rose-500/rose-800 steps
-     already match this theme's Warm Ivory/White/Charcoal/Secondary/Border/
-     Muted-Rose/Deep-Burgundy values exactly, so only the genuinely new
-     colors get new tokens here: a softer blush surface tint, a blush
-     hairline for chip borders, a deeper burgundy for hover/pressed states,
-     and a tertiary (lighter than --muted-foreground) text tone. Adding
-     these does not change how any existing utility resolves anywhere else
-     in the app - only Shop-page-specific components reach for them. */
-  --blush: #f7efed;
-  --blush-line: #e8d6d8;
-  --burgundy: #3f2029;
-  --muted-soft: #9a9190;
+  /* A handful of additive tokens layered onto the palette above rather than
+     replacing it - `--background`/`--surface`/`--foreground`/
+     `--muted-foreground`/`--surface-border` and the rose-400/rose-800 steps
+     already match this theme's Black/Card/Ivory/Muted/Border/Champagne/
+     Deep-Bronze values, so only the genuinely distinct tones get their own
+     token: a dim champagne-tinted surface, a champagne-tinted hairline for
+     chip borders, a deep bronze-black for the highest-impact CTA panels,
+     and a tertiary (dimmer than --muted-foreground) text tone. */
+  --blush: #201a10;
+  --blush-line: #4a3f26;
+  --burgundy: #171310;
+  --muted-soft: #6b6660;
 }
 
 @theme inline {
@@ -150,7 +144,8 @@
 
 /* No `@media (prefers-color-scheme: dark)` override here on purpose - see
    the `@custom-variant dark` note above. The site stays on the :root
-   (light) values above no matter what the visitor's system prefers. */
+   values above no matter what the visitor's system prefers - there is only
+   one theme now, not a light/dark pair. */
 
 * {
   border-color: var(--surface-border);

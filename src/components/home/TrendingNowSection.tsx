@@ -59,7 +59,6 @@ export function TrendingNowSection({ highlights }: { highlights: CategoryHighlig
                   <TrendingCategoryCard
                     category={highlight.category}
                     product={highlight.product}
-                    startingPrice={highlight.startingPrice}
                     index={index}
                   />
                 </Reveal>

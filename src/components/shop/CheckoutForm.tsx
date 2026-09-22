@@ -174,7 +174,7 @@ export function CheckoutForm({
         <p className="text-foreground/60">Your bag is empty, so there&apos;s nothing to check out.</p>
         <Link
           href="/shop"
-          className="rounded-full bg-rose-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-rose-500"
+          className="rounded-full bg-rose-600 px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-rose-500"
         >
           Continue shopping
         </Link>
@@ -308,7 +308,7 @@ export function CheckoutForm({
         <button
           type="submit"
           disabled={isSubmitting || items.length === 0}
-          className="mt-2 w-fit rounded-full bg-rose-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-rose-500 disabled:opacity-50"
+          className="mt-2 w-fit rounded-full bg-rose-600 px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-rose-500 disabled:opacity-50"
         >
           {isSubmitting ? "Placing order..." : "Place order"}
         </button>

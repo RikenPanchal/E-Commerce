@@ -28,7 +28,7 @@ export function OrderStatusTimeline({ status }: { status: OrderStatus }) {
               <div
                 className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
                   isComplete
-                    ? "bg-rose-600 text-white"
+                    ? "bg-rose-600 text-background"
                     : "bg-black/10 text-foreground/40 dark:bg-white/10"
                 }`}
               >

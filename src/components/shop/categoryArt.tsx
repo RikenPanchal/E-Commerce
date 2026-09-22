@@ -62,10 +62,10 @@ const CATEGORY_ART: Record<ProductCategory, ComponentType> = {
 // rather than "empty placeholder box", while staying gentle enough not to
 // compete with real product photos once they're uploaded.
 const CATEGORY_TINT: Record<ProductCategory, string> = {
-  Dresses: "from-rose-100 via-rose-50 to-white text-rose-300 dark:from-rose-950/40 dark:text-rose-900",
-  "Tops & Blouses": "from-orange-100 via-rose-50 to-white text-orange-300 dark:from-orange-950/30 dark:text-orange-900",
-  "Ethnic Wear": "from-amber-100 via-rose-50 to-white text-amber-300 dark:from-amber-950/30 dark:text-amber-900",
-  Accessories: "from-fuchsia-100 via-rose-50 to-white text-fuchsia-300 dark:from-fuchsia-950/30 dark:text-fuchsia-900",
+  Dresses: "from-rose-100 via-rose-50 to-white text-rose-300 dark:from-rose-950/40 dark:text-rose-700",
+  "Tops & Blouses": "from-orange-100 via-rose-50 to-white text-orange-300 dark:from-orange-950/30 dark:text-orange-700",
+  "Ethnic Wear": "from-amber-100 via-rose-50 to-white text-amber-300 dark:from-amber-950/30 dark:text-amber-700",
+  Accessories: "from-fuchsia-100 via-rose-50 to-white text-fuchsia-300 dark:from-fuchsia-950/30 dark:text-fuchsia-700",
 };
 
 export function CategoryPlaceholder({ category }: { category?: ProductCategory }) {

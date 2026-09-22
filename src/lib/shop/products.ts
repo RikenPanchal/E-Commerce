@@ -184,11 +184,13 @@ export interface CategoryHighlight {
   category: ProductCategory;
   /** The newest active product in this category - the same "one real,
    *  representative photo per category" rule `CategoryShowcase` already
-   *  uses, so this never shows an invented/stock image. */
+   *  uses, so this never shows an invented/stock image. The tile built from
+   *  this links straight to the product's own page (it's one specific real
+   *  item, not an abstract stand-in for the category), so its own real
+   *  price is shown alongside it - never a separate "category's cheapest
+   *  item" figure that could belong to a different product than the one
+   *  pictured/linked. */
   product: ProductView;
-  /** The real, current cheapest active price in this category - never a
-   *  fabricated "starting from" figure. */
-  startingPrice: number;
 }
 
 /** Real per-category facts for the homepage's "Trending now" category
@@ -199,12 +201,9 @@ export async function getCategoryHighlights(): Promise<CategoryHighlight[]> {
 
   const highlights = await Promise.all(
     PRODUCT_CATEGORIES.map(async (category): Promise<CategoryHighlight | null> => {
-      const [representative, cheapest] = await Promise.all([
-        Product.findOne({ isDeleted: false, category }).sort({ createdAt: -1 }),
-        Product.findOne({ isDeleted: false, category }).sort({ price: 1 }),
-      ]);
-      if (!representative || !cheapest) return null;
-      return { category, product: toProductView(representative), startingPrice: cheapest.price };
+      const representative = await Product.findOne({ isDeleted: false, category }).sort({ createdAt: -1 });
+      if (!representative) return null;
+      return { category, product: toProductView(representative) };
     })
   );
 

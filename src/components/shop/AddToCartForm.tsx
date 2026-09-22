@@ -137,7 +137,7 @@ export function AddToCartForm({ product }: { product: ProductView }) {
           <span className="text-sm text-foreground/40 line-through">
             {formatCurrency(effectiveCompareAtPrice ?? 0)}
           </span>
-          <span className="rounded-full bg-rose-600 px-2 py-0.5 text-[11px] font-semibold text-white">
+          <span className="rounded-full bg-rose-600 px-2 py-0.5 text-[11px] font-semibold text-background">
             Save {discountPercent}%
           </span>
         </>
@@ -198,7 +198,7 @@ export function AddToCartForm({ product }: { product: ProductView }) {
                   aria-label={available ? undefined : `Size ${option}, unavailable`}
                   className={`min-w-9 rounded-full border px-3 py-1.5 text-xs font-medium transition-all ${
                     size === option
-                      ? "border-rose-600 bg-rose-600 text-white shadow-sm"
+                      ? "border-rose-600 bg-rose-600 text-background shadow-sm"
                       : available
                         ? "border-black/10 text-foreground/70 hover:border-rose-300 hover:text-foreground dark:border-white/15"
                         : "cursor-not-allowed border-black/5 text-foreground/30 line-through dark:border-white/5"
@@ -302,7 +302,7 @@ export function AddToCartForm({ product }: { product: ProductView }) {
             <button
               type="button"
               onClick={handleBuyNow}
-              className="flex-1 rounded-full bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-rose-500 hover:shadow-md"
+              className="flex-1 rounded-full bg-rose-600 px-4 py-2 text-sm font-medium text-background shadow-sm transition-all hover:-translate-y-0.5 hover:bg-rose-500 hover:shadow-md"
             >
               Buy now
             </button>

@@ -19,7 +19,7 @@ export function LegalPage({
   children: ReactNode;
 }) {
   return (
-    <div className="bg-gradient-to-b from-rose-50/50 via-white to-white">
+    <div className="bg-gradient-to-b from-rose-950/25 via-background to-background">
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <div className="flex flex-col gap-2 text-center">
           <span className="mx-auto w-fit rounded-full bg-rose-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-rose-600 dark:bg-rose-950/40 dark:text-rose-300">

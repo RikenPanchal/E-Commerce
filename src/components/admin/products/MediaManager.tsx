@@ -98,7 +98,7 @@ export function MediaManager({
             >
               Remove
             </button>
-            <span className="absolute bottom-1 left-1 rounded-full bg-rose-600 px-1.5 py-0.5 text-[10px] font-medium text-white">
+            <span className="absolute bottom-1 left-1 rounded-full bg-rose-600 px-1.5 py-0.5 text-[10px] font-medium text-background">
               New
             </span>
           </div>

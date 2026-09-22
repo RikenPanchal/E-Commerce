@@ -35,7 +35,7 @@ export function SiteHeader({ announcementVariant = "light" }: { announcementVari
         id="top"
         className={cn(
           "border-b py-2 text-center text-xs font-medium tracking-wide",
-          isDarkAnnouncement ? "border-white/10 bg-foreground text-white/80" : "border-surface-border bg-background text-muted-foreground"
+          isDarkAnnouncement ? "border-white/10 bg-burgundy text-white/80" : "border-surface-border bg-background text-muted-foreground"
         )}
       >
         <p>Free shipping across India &nbsp;&middot;&nbsp; All sales are final</p>

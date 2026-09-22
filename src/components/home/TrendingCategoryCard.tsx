@@ -10,23 +10,25 @@ import type { ProductView } from "@/types/product";
  * CATEGORY tile (arched photo, a numbered index, the category name, and
  * its real current starting price), reusing whichever real product photo
  * best represents that category (see `getCategoryHighlights`) rather than
- * showing a specific product's own price/rating/wishlist state.
+ * showing a specific product's own price/rating/wishlist state. The tile's
+ * own photo is that one real product's photo, though - so it links straight
+ * to that product's page (not a filtered category listing), since that's
+ * the actual, specific item a visitor sees and clicks on.
  */
 export function TrendingCategoryCard({
   category,
   product,
-  startingPrice,
   index,
 }: {
   category: ProductCategory;
-  /** The real product whose photo represents this category. */
+  /** The real product whose photo represents this category - also where the
+   *  tile links and whose own price is shown, since it's the specific item
+   *  shown, not just a category. */
   product: ProductView;
-  /** The real, current cheapest active price in this category. */
-  startingPrice: number;
   index: number;
 }) {
   return (
-    <Link href={`/shop?category=${encodeURIComponent(category)}`} className="group block">
+    <Link href={`/products/${product.slug}`} className="group block">
       <div className="relative aspect-[3/4] w-full overflow-hidden rounded-t-full bg-rose-100">
         <ProductImage
           media={product.media}
@@ -42,8 +44,9 @@ export function TrendingCategoryCard({
 
       <div className="mt-4 text-center">
         <span className="block font-serif text-lg font-semibold text-foreground">{category}</span>
+        <span className="mt-1 truncate text-xs text-muted-foreground">{product.name}</span>
         <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-medium text-rose-800">
-          From {formatCurrency(startingPrice)}
+          {formatCurrency(product.price)}
           <ArrowRightIcon className="h-3 w-3 transition-transform duration-300 ease-out group-hover:translate-x-1" />
         </span>
       </div>

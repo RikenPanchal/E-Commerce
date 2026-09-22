@@ -409,7 +409,7 @@ export function CollectionForm({ collection, initialProducts = [] }: CollectionF
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-md bg-rose-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-rose-500 disabled:opacity-50"
+          className="rounded-md bg-rose-600 px-5 py-2.5 text-sm font-medium text-background transition-colors hover:bg-rose-500 disabled:opacity-50"
         >
           {isSubmitting ? "Saving..." : isEdit ? "Save changes" : "Create collection"}
         </button>

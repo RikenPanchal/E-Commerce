@@ -203,7 +203,7 @@ export default async function ShopPage({
                     className="peer sr-only"
                   />
                   <span
-                    className="block h-8 w-8 rounded-full border border-black/10 ring-offset-2 transition-shadow peer-checked:ring-2 peer-checked:ring-rose-800 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-500"
+                    className="block h-8 w-8 rounded-full border border-black/10 ring-offset-2 ring-offset-background transition-shadow peer-checked:ring-2 peer-checked:ring-rose-800 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-500 dark:border-white/20"
                     style={{ backgroundColor: color.hex ?? "#e5e5e5" }}
                   />
                 </span>

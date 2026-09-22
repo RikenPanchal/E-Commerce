@@ -64,8 +64,8 @@ export function StickyBuyBar({ product, isOutOfStock }: { product: ProductView; 
           href="#buy-box"
           className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold shadow-sm transition-colors ${
             isOutOfStock
-              ? "pointer-events-none bg-black/10 text-foreground/40"
-              : "bg-rose-600 text-white hover:bg-rose-700"
+              ? "pointer-events-none bg-black/10 text-foreground/40 dark:bg-white/10"
+              : "bg-rose-600 text-background hover:bg-rose-700"
           }`}
         >
           {isOutOfStock ? "Out of stock" : "Buy now"}

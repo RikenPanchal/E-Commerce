@@ -83,7 +83,7 @@ export default async function ProductPage({
     // homepage sections each carry their own color identity now, and this
     // page floating on plain white next to them was a big part of why it
     // read as flat/unfinished by comparison.
-    <div className="bg-gradient-to-b from-rose-50/50 via-white to-white">
+    <div className="bg-gradient-to-b from-rose-950/25 via-background to-background">
       <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
         <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 text-xs text-foreground/50">
           <Link href="/" className="hover:text-rose-600">

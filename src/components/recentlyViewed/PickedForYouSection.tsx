@@ -49,7 +49,7 @@ export function PickedForYouSection() {
   const [heroProduct, ...rest] = resolved.products;
 
   return (
-    <section className="bg-rose-800 py-14 text-white sm:py-20">
+    <section className="bg-rose-800 py-14 text-background sm:py-20">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8">
         <div className="grid gap-8 lg:grid-cols-[280px_240px_1fr] lg:items-center lg:gap-10">
           <Reveal className="flex flex-col justify-center">

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import { Geist_Mono, Inter, Playfair_Display } from "next/font/google";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { WishlistProvider } from "@/components/wishlist/WishlistProvider";
 import { RecentlyViewedProvider } from "@/components/recentlyViewed/RecentlyViewedProvider";
@@ -7,7 +7,11 @@ import { ToastProvider } from "@/components/ui/ToastProvider";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import "./globals.css";
 
-const geistSans = Geist({
+// Kept under its old CSS variable name (`--font-geist-sans`, read by
+// `--font-sans` in globals.css) even though the font itself changed - Inter
+// is the clean modern sans the Black + Champagne brief calls for; renaming
+// the variable would mean touching every consumer for no visual difference.
+const bodySans = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
@@ -19,8 +23,8 @@ const geistMono = Geist_Mono({
 
 // The storefront's editorial display face - headings, the wordmark, and
 // section titles use this elegant serif for a premium fashion-editorial
-// look; body text stays on Geist Sans, a clean modern sans-serif that
-// already suits UI copy, so it's kept rather than swapped for its own sake.
+// look; body text stays on Inter, a clean modern sans-serif that already
+// suits UI copy, so it's kept rather than swapped for its own sake.
 const heading = Playfair_Display({
   variable: "--font-heading",
   subsets: ["latin"],
@@ -44,7 +48,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${heading.variable} h-full antialiased`}
+      // `dark` is permanent, not a toggle - see the `@custom-variant dark`
+      // note in globals.css. The Black + Champagne theme is the only theme.
+      className={`dark ${bodySans.variable} ${geistMono.variable} ${heading.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ToastProvider>

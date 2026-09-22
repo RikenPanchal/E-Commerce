@@ -1,10 +1,13 @@
 import Link from "next/link";
-import { getActiveCollections } from "@/lib/shop/collections";
+import { getActiveCollections, getCollectionProducts } from "@/lib/shop/collections";
 import { CollectionCard } from "@/components/shop/CollectionCard";
 import { Reveal } from "@/components/home/Reveal";
 import { ArrowRightIcon } from "@/components/home/icons";
 
 const HOME_COLLECTION_LIMIT = 4;
+// Each card tiles at most 4 photos (1 featured + 3 smaller) - no point
+// resolving more of a collection's products than that.
+const PREVIEW_PRODUCTS_PER_CARD = 4;
 
 /**
  * "Shop by Collection" - real, admin-curated collections (New Season,
@@ -19,6 +22,13 @@ export async function CollectionsSection() {
   if (collections.length === 0) {
     return null;
   }
+
+  // One real product-photo mosaic per card (see `CollectionCard`) instead
+  // of a single flat banner - resolved here, in parallel, so the section
+  // stays a single round trip per collection rather than N+1.
+  const productsByCollection = await Promise.all(
+    collections.map((collection) => getCollectionProducts(collection).then((products) => products.slice(0, PREVIEW_PRODUCTS_PER_CARD)))
+  );
 
   return (
     <section id="collections" className="scroll-mt-20 bg-background py-14 sm:py-20">
@@ -39,9 +49,9 @@ export async function CollectionsSection() {
           </Link>
         </Reveal>
 
-        <Reveal delayMs={100} className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {collections.map((collection) => (
-            <CollectionCard key={collection.id} collection={collection} />
+        <Reveal delayMs={100} className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {collections.map((collection, index) => (
+            <CollectionCard key={collection.id} collection={collection} previewProducts={productsByCollection[index]} />
           ))}
         </Reveal>
 

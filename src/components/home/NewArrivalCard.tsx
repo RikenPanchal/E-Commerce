@@ -17,7 +17,7 @@ export function NewArrivalCard({ product, rating }: { product: ProductView; rati
     <div className="group flex flex-col">
       <div className="relative">
         <Link href={`/products/${product.slug}`} className="relative block aspect-[3/4] w-full overflow-hidden bg-background">
-          <span className="absolute top-3 left-3 z-10 rounded-sm bg-rose-800 px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-white uppercase">
+          <span className="absolute top-3 left-3 z-10 rounded-sm bg-rose-800 px-2.5 py-1 text-[10px] font-bold tracking-[0.1em] text-background uppercase">
             New
           </span>
           <ProductImage

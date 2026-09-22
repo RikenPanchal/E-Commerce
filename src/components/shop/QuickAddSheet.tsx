@@ -118,7 +118,7 @@ export function QuickAddSheet({
 
   return createPortal(
     <>
-      <div className="fixed inset-0 z-50 bg-foreground/40 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
+      <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
       <div
         ref={dialogRef}
         role="dialog"
@@ -135,7 +135,7 @@ export function QuickAddSheet({
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-foreground/60 transition-colors hover:bg-black/[.04] hover:text-foreground"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-foreground/60 transition-colors hover:bg-black/[.04] dark:hover:bg-white/[.06] hover:text-foreground"
           >
             <CloseIcon className="h-4 w-4" />
           </button>
@@ -143,7 +143,7 @@ export function QuickAddSheet({
 
         {!usesVariants && unavailableTarget ? (
           <>
-            <p className="rounded-2xl border border-black/10 bg-black/[.02] px-3.5 py-2.5 text-xs font-semibold tracking-wide text-foreground/60 uppercase">
+            <p className="rounded-2xl border border-black/10 bg-black/[.02] px-3.5 py-2.5 text-xs font-semibold tracking-wide text-foreground/60 uppercase dark:border-white/15 dark:bg-white/[.03]">
               Out of stock
             </p>
             <NotifyMeButton productId={product.id} productName={product.name} className="mt-1 w-full" />
@@ -175,10 +175,10 @@ export function QuickAddSheet({
                         aria-pressed={size === option}
                         className={`min-w-9 rounded-full border px-3 py-1.5 text-xs font-medium transition-all ${
                           size === option
-                            ? "border-rose-600 bg-rose-600 text-white shadow-sm"
+                            ? "border-rose-600 bg-rose-600 text-background shadow-sm"
                             : available
-                              ? "border-black/10 text-foreground/70 hover:border-rose-300 hover:text-foreground"
-                              : "cursor-not-allowed border-black/5 text-foreground/30 line-through"
+                              ? "border-black/10 text-foreground/70 hover:border-rose-300 hover:text-foreground dark:border-white/15"
+                              : "cursor-not-allowed border-black/5 text-foreground/30 line-through dark:border-white/10"
                         }`}
                       >
                         {option}
@@ -215,7 +215,7 @@ export function QuickAddSheet({
                         }`}
                       >
                         <span
-                          className="h-5 w-5 rounded-full border-2 border-black/20 shadow-sm"
+                          className="h-5 w-5 rounded-full border-2 border-black/20 shadow-sm dark:border-white/30"
                           style={{ backgroundColor: option.hex ?? "#e5e5e5" }}
                         />
                       </button>
@@ -229,7 +229,7 @@ export function QuickAddSheet({
 
             {unavailableTarget ? (
               <>
-                <p className="rounded-2xl border border-black/10 bg-black/[.02] px-3.5 py-2.5 text-xs font-semibold tracking-wide text-foreground/60 uppercase">
+                <p className="rounded-2xl border border-black/10 bg-black/[.02] px-3.5 py-2.5 text-xs font-semibold tracking-wide text-foreground/60 uppercase dark:border-white/15 dark:bg-white/[.03]">
                   Out of stock
                 </p>
                 <NotifyMeButton

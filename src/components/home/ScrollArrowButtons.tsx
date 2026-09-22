@@ -1,8 +1,9 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/home/icons";
 
 /** The pair of round prev/next buttons every homepage carousel uses -
- *  `theme="dark"` for a burgundy section (light ring on a dark panel),
- *  `theme="light"` (default) for every ivory/blush/cream section. */
+ *  `theme="dark"` for the deep-bronze "Picked for you" panel (a lighter
+ *  ring/fill for extra contrast against that richer background),
+ *  `theme="light"` (default) for every plain black/card/charcoal section. */
 export function ScrollArrowButtons({
   edges,
   onPrev,

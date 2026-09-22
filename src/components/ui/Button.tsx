@@ -7,29 +7,35 @@ export type ButtonSize = "sm" | "md" | "lg";
 /** Deliberately not a big rounded pill - small square-ish corners (4px, via
  *  the shared radius scale), generous horizontal padding, and no drop
  *  shadow reads as editorial rather than "generic SaaS button". `primary`
- *  is ink-on-white/white-on-ink, matching how premium fashion sites treat
- *  their main CTA - the rose accent is reserved for `accent`, used
+ *  is ivory-on-black/black-on-ivory, matching how premium fashion sites
+ *  treat their main CTA - the champagne accent (`rose-*`, kept under its
+ *  old name - see globals.css) is reserved for `accent`/`burgundy`, used
  *  sparingly for a single highlighted action per view, never as the
- *  default button color everywhere. Tracked-out uppercase labels on the
- *  three "real button" variants read as a confident, considered fashion-
- *  brand CTA rather than an ordinary sentence-case UI button; `ghost` and
- *  `link` stay plain since they're quieter, secondary actions. */
+ *  default button color everywhere. A solid champagne fill always pairs
+ *  with dark (never white) text - champagne is a light gold, so white text
+ *  on top of it reads as low-contrast and washed out, the opposite of
+ *  "premium". Tracked-out uppercase labels on the "real button" variants
+ *  read as a confident, considered fashion-brand CTA rather than an
+ *  ordinary sentence-case UI button; `ghost` and `link` stay plain since
+ *  they're quieter, secondary actions. */
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
     "bg-foreground text-background hover:bg-foreground/90 disabled:bg-foreground/40 uppercase tracking-[0.08em]",
-  accent: "bg-rose-600 text-white hover:bg-rose-700 disabled:bg-rose-600/40 uppercase tracking-[0.08em]",
+  accent:
+    "bg-rose-400 text-background hover:bg-rose-300 disabled:bg-rose-400/40 uppercase tracking-[0.08em]",
   outline:
     "border border-surface-border bg-surface text-foreground hover:border-foreground/30 hover:bg-background disabled:opacity-40 uppercase tracking-[0.08em]",
   ghost: "text-foreground hover:bg-foreground/5 disabled:opacity-40",
-  link: "text-rose-600 underline-offset-4 hover:underline disabled:opacity-40 p-0 h-auto",
-  // Deep-burgundy CTA - additive, used only where a page's own visual
-  // direction specifically calls for burgundy as the primary action color
-  // (the Shop page's "Modern Feminine" redesign) rather than this app's
-  // default ink-on-white `primary`. Every other existing call site of
-  // `primary`/`accent`/etc. is unaffected by adding these two variants.
-  burgundy: "bg-rose-800 text-white hover:bg-burgundy disabled:bg-rose-800/40 uppercase tracking-[0.08em]",
+  link: "text-rose-400 underline-offset-4 hover:underline disabled:opacity-40 p-0 h-auto",
+  // Champagne CTA - additive, used only where a page's own visual direction
+  // specifically calls for the accent color as the primary action rather
+  // than this app's default ivory-on-black `primary`. Every other existing
+  // call site of `primary`/`accent`/etc. is unaffected by adding these two
+  // variants.
+  burgundy:
+    "bg-rose-500 text-background hover:bg-rose-400 disabled:bg-rose-500/40 uppercase tracking-[0.08em]",
   "outline-burgundy":
-    "border border-rose-800 bg-transparent text-rose-800 hover:bg-blush disabled:opacity-40 uppercase tracking-[0.08em]",
+    "border border-rose-400 bg-transparent text-rose-400 hover:bg-blush disabled:opacity-40 uppercase tracking-[0.08em]",
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {

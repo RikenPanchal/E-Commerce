@@ -29,7 +29,7 @@ export function ShopFilterDrawer({ children, activeCount }: { children: ReactNod
         {activeCount > 0 ? (
           <span
             className={cn(
-              "flex h-5 min-w-5 items-center justify-center rounded-full bg-rose-800 px-1 text-[11px] font-semibold text-white"
+              "flex h-5 min-w-5 items-center justify-center rounded-full bg-rose-800 px-1 text-[11px] font-semibold text-background"
             )}
           >
             {activeCount}

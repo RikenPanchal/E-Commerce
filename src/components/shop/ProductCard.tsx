@@ -102,7 +102,7 @@ export function ProductCard({
       <div className="relative">
         <Link href={`/products/${product.slug}`} className="relative block aspect-[4/5] w-full overflow-hidden bg-background">
           {displayBadge ? (
-            <span className="absolute top-2 left-2 z-10 bg-rose-600 px-2 py-1 text-[10px] font-semibold tracking-wide text-white uppercase">
+            <span className="absolute top-2 left-2 z-10 bg-rose-600 px-2 py-1 text-[10px] font-semibold tracking-wide text-background uppercase">
               {displayBadge}
             </span>
           ) : null}
@@ -217,7 +217,7 @@ export function ProductCard({
                 // A plain border-black/10 all but disappears for a white
                 // (or near-white) swatch against this white-themed card -
                 // a stronger, fixed-opacity border keeps it visible always.
-                className="h-3 w-3 rounded-full border-2 border-black/20 shadow-sm"
+                className="h-3 w-3 rounded-full border-2 border-black/20 shadow-sm dark:border-white/30"
                 style={{ backgroundColor: color.hex ?? "#e5e5e5" }}
               />
             ))}

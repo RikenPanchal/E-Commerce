@@ -50,7 +50,7 @@ export function SizeGuideModal({
 
   return createPortal(
     <>
-      <div className="fixed inset-0 z-[55] bg-foreground/40 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
+      <div className="fixed inset-0 z-[55] bg-black/60 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
       <div
         ref={dialogRef}
         role="dialog"
@@ -66,7 +66,7 @@ export function SizeGuideModal({
             type="button"
             onClick={onClose}
             aria-label="Close size guide"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-foreground/60 transition-colors hover:bg-black/[.04] hover:text-foreground"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-foreground/60 transition-colors hover:bg-black/[.04] dark:hover:bg-white/[.06] hover:text-foreground"
           >
             <CloseIcon className="h-4 w-4" />
           </button>
