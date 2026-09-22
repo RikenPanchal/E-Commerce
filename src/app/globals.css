@@ -1,0 +1,243 @@
+@import "tailwindcss";
+
+/* This site is always light, regardless of the visitor's OS/browser dark
+   mode setting - by default Tailwind's `dark:` variant (used throughout
+   the app) and `prefers-color-scheme: dark` below both switch on
+   automatically for anyone whose system prefers dark, which is exactly
+   why a "white theme" kept not appearing to look white. Redefining `dark:`
+   to require an actual `.dark` class - one we never add anywhere - means
+   every `dark:*` utility in the whole codebase simply never matches, and
+   the page renders with its plain (light) classes unconditionally. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  ==========================================================================
+  Design system v5 - "Option 2" modern fashion palette
+  ==========================================================================
+  A fixed, named palette (white / warm ivory / soft beige / blush / muted
+  rose / deep burgundy / charcoal), anchored so the brief's exact hex values
+  land on exact steps of the existing rose ramp rather than living as
+  separate one-off tokens: 100 = Blush (#E8C7CB), 500 = Muted Rose
+  (#B87582), 800 = Deep Burgundy (#542C38). Every existing `rose-*` utility
+  already in the codebase still works exactly the same way; this only
+  changes what color it resolves to.
+
+  The explicit color rule this ramp exists to satisfy: white/beige/ivory
+  cover most of the page, rose is an ACCENT (text, buttons, badges, a thin
+  section tint at most) rather than a section-filling background, and
+  burgundy is reserved for the one or two highest-impact panels (the
+  closing CTA) - never body text. The site must not read as "a pink
+  website".
+*/
+@theme {
+  --color-rose-50: #f4dcdd;
+  --color-rose-100: #e8c7cb;
+  /* Blush */
+  --color-rose-200: #dcb3b9;
+  --color-rose-300: #d09ea7;
+  --color-rose-400: #c48a94;
+  /* Muted Rose - the brand accent proper: text links, focus rings, small
+     details, and (sparingly) a section-background tint at low opacity. */
+  --color-rose-500: #b87582;
+  /* Darkened slightly for safe white-on-top contrast (~6:1) - solid-fill
+     accent buttons/badges use this step, not 500 directly. */
+  --color-rose-600: #975d69;
+  --color-rose-700: #754451;
+  /* Deep Burgundy - the dark accent, used sparingly for a section
+     background (never as body text color, only as a background paired
+     with light type). */
+  --color-rose-800: #542c38;
+  --color-rose-900: #33141f;
+  --color-rose-950: #220813;
+
+  /* Small and square, not soft and bubbly - 0-8px covers nearly every
+     component. `rounded-full` (pills, avatars, icon buttons, the odd true
+     circle) is untouched by this scale; everything else - cards, panels,
+     inputs, modals - now tops out at 8px instead of drifting up to 14px. */
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.375rem;
+  --radius-2xl: 0.5rem;
+  --radius-3xl: 0.5rem;
+
+  /* Almost no shadow at the small end (barely a hairline of depth) - a
+     shadow this faint reads as "the edge of a photograph", not "a card
+     floating above the page". `shadow-lg`/`shadow-xl` stay reserved for
+     things that genuinely float above the page's own stacking context (a
+     modal, a drawer, an open dropdown) and are the only steps meant to
+     still be clearly visible as a shadow. */
+  --shadow-sm: 0 1px 1px 0 rgb(22 22 22 / 0.03);
+  --shadow-md: 0 1px 3px 0 rgb(22 22 22 / 0.05);
+  --shadow-lg: 0 6px 16px -4px rgb(22 22 22 / 0.08);
+  --shadow-xl: 0 12px 28px -6px rgb(22 22 22 / 0.1);
+
+  /* One deliberate easing curve + duration for every unlabelled
+     `transition-*` utility already used across the app (`transition-colors`,
+     `transition-all`, `transition-transform`...) - a touch slower and
+     gentler than Tailwind's default, which reads as considered rather than
+     "snappy SaaS app". Any call site that sets its own `duration-*` still
+     overrides this, as normal. */
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root {
+  /* Warm Ivory - the page's own background. */
+  --background: #faf8f6;
+  /* White - reserved for surfaces that should visually lift a touch off the
+     page background beneath them (a card, a panel). */
+  --surface: #ffffff;
+  /* Soft Beige, and one step deeper again for sections that want to read as
+     visually distinct from the plain page without reaching for rose. */
+  --cream: #f3ece6;
+  --sand: #e9dfd8;
+  /* Kept as an alias of `sand` - components that already reach for
+     `bg-soft`/`disabled:bg-soft` (a neutral `Badge`, a disabled `Input`)
+     pick up the same warm neutral automatically. */
+  --soft: #e9dfd8;
+  /* Charcoal - primary text and headings. */
+  --foreground: #1d1a1b;
+  /* Secondary Text - captions, meta info, helper copy. */
+  --muted-foreground: #706a69;
+  /* Border - hairline borders/dividers everywhere. */
+  --surface-border: #e8e2df;
+  --ring: #b87582;
+
+  /* "Modern Feminine - Blush + Burgundy" - a handful of additive tokens for
+     the Shop page redesign, layered onto the palette above rather than
+     replacing it. `--background`/`--surface`/`--foreground`/
+     `--muted-foreground`/`--surface-border` and the rose-500/rose-800 steps
+     already match this theme's Warm Ivory/White/Charcoal/Secondary/Border/
+     Muted-Rose/Deep-Burgundy values exactly, so only the genuinely new
+     colors get new tokens here: a softer blush surface tint, a blush
+     hairline for chip borders, a deeper burgundy for hover/pressed states,
+     and a tertiary (lighter than --muted-foreground) text tone. Adding
+     these does not change how any existing utility resolves anywhere else
+     in the app - only Shop-page-specific components reach for them. */
+  --blush: #f7efed;
+  --blush-line: #e8d6d8;
+  --burgundy: #3f2029;
+  --muted-soft: #9a9190;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-cream: var(--cream);
+  --color-sand: var(--sand);
+  --color-soft: var(--soft);
+  --color-muted-foreground: var(--muted-foreground);
+  /* Was only ever applied via the blanket `border-color` rule below, never
+     actually registered as a Tailwind color - so `border-surface-border`
+     (already written throughout the app) was a no-op class name that
+     happened to look right anyway, because every bordered element already
+     got this same color from that blanket rule regardless. Registering it
+     here makes it a real utility - functionally unchanged today, but now
+     variants like `border-surface-border/50` actually work too. */
+  --color-surface-border: var(--surface-border);
+  --color-blush: var(--blush);
+  --color-blush-line: var(--blush-line);
+  --color-burgundy: var(--burgundy);
+  --color-muted-soft: var(--muted-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  /* Reused across the app as `font-serif` - this token is what actually
+     controls the look, so repointing it here swaps every heading over to
+     the new editorial serif without touching each component. Falls back to
+     real serifs (not a rounded sans) if the webfont hasn't loaded yet. */
+  --font-serif: var(--font-heading), Georgia, "Times New Roman", serif;
+}
+
+/* No `@media (prefers-color-scheme: dark)` override here on purpose - see
+   the `@custom-variant dark` note above. The site stays on the :root
+   (light) values above no matter what the visitor's system prefers. */
+
+* {
+  border-color: var(--surface-border);
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, Arial, sans-serif;
+}
+
+/* A slightly tighter default for the editorial serif - fashion headlines
+   are typically set with less breathing room between letters than body
+   copy, which is part of what makes a large headline read as "considered
+   type" rather than "a big heading someone left at browser defaults". Every
+   existing `font-serif` heading across the app picks this up automatically. */
+.font-serif {
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--ring);
+  color: #fff;
+}
+
+/* A visible, on-brand focus ring for keyboard users that replaces the
+   browser default outline everywhere, including on elements that don't
+   otherwise declare their own focus styling. */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Calmer, on-brand scrollbar on browsers that support it - purely
+   cosmetic, never load-bearing for functionality. */
+* {
+  scrollbar-color: rgb(185 130 141 / 0.35) transparent;
+  scrollbar-width: thin;
+}
+
+/* The Shop page's dual-thumb price slider (`PriceRangeSlider`) - written
+   as plain CSS rather than Tailwind's `[&::-webkit-slider-thumb]`
+   arbitrary-variant syntax, which turned out not to generate any rule at
+   all for vendor-prefixed pseudo-elements (verified: the class names were
+   present in the DOM, but no matching CSS rule existed), silently leaving
+   the thumb un-draggable everywhere - the actual "filter not responsive"
+   bug this fixes. */
+.price-range-input {
+  pointer-events: none;
+  appearance: none;
+  background: transparent;
+}
+.price-range-input::-webkit-slider-runnable-track {
+  appearance: none;
+  height: 100%;
+  background: transparent;
+}
+.price-range-input::-moz-range-track {
+  height: 100%;
+  background: transparent;
+}
+.price-range-input::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: auto;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 9999px;
+  border: 2px solid var(--color-rose-800);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+.price-range-input::-moz-range-thumb {
+  pointer-events: auto;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 9999px;
+  border: 2px solid var(--color-rose-800);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  box-sizing: border-box;
+}

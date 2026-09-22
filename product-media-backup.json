@@ -1,0 +1,1922 @@
+[
+  {
+    "_id": "6aa7f343ae111a498f42e9bc",
+    "slug": "floral-wrap-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac037",
+        "type": "image",
+        "url": "https://picsum.photos/seed/floral-wrap-dress-1/900/1200",
+        "alt": "Floral Wrap Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac038",
+        "type": "image",
+        "url": "https://picsum.photos/seed/floral-wrap-dress-2/900/1200",
+        "alt": "Floral Wrap Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac039",
+        "type": "image",
+        "url": "https://picsum.photos/seed/floral-wrap-dress-3/900/1200",
+        "alt": "Floral Wrap Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9bd",
+    "slug": "maxi-summer-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac03a",
+        "type": "image",
+        "url": "https://picsum.photos/seed/maxi-summer-dress-1/900/1200",
+        "alt": "Maxi Summer Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac03b",
+        "type": "image",
+        "url": "https://picsum.photos/seed/maxi-summer-dress-2/900/1200",
+        "alt": "Maxi Summer Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac03c",
+        "type": "image",
+        "url": "https://picsum.photos/seed/maxi-summer-dress-3/900/1200",
+        "alt": "Maxi Summer Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9be",
+    "slug": "a-line-cocktail-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac03d",
+        "type": "image",
+        "url": "https://picsum.photos/seed/a-line-cocktail-dress-1/900/1200",
+        "alt": "A-Line Cocktail Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac03e",
+        "type": "image",
+        "url": "https://picsum.photos/seed/a-line-cocktail-dress-2/900/1200",
+        "alt": "A-Line Cocktail Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac03f",
+        "type": "image",
+        "url": "https://picsum.photos/seed/a-line-cocktail-dress-3/900/1200",
+        "alt": "A-Line Cocktail Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9bf",
+    "slug": "off-shoulder-party-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac040",
+        "type": "image",
+        "url": "https://picsum.photos/seed/off-shoulder-party-dress-1/900/1200",
+        "alt": "Off-Shoulder Party Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac041",
+        "type": "image",
+        "url": "https://picsum.photos/seed/off-shoulder-party-dress-2/900/1200",
+        "alt": "Off-Shoulder Party Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac042",
+        "type": "image",
+        "url": "https://picsum.photos/seed/off-shoulder-party-dress-3/900/1200",
+        "alt": "Off-Shoulder Party Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9c0",
+    "slug": "denim-shirt-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac043",
+        "type": "image",
+        "url": "https://picsum.photos/seed/denim-shirt-dress-1/900/1200",
+        "alt": "Denim Shirt Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac044",
+        "type": "image",
+        "url": "https://picsum.photos/seed/denim-shirt-dress-2/900/1200",
+        "alt": "Denim Shirt Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac045",
+        "type": "image",
+        "url": "https://picsum.photos/seed/denim-shirt-dress-3/900/1200",
+        "alt": "Denim Shirt Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9c1",
+    "slug": "bodycon-evening-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac046",
+        "type": "image",
+        "url": "https://picsum.photos/seed/bodycon-evening-dress-1/900/1200",
+        "alt": "Bodycon Evening Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac047",
+        "type": "image",
+        "url": "https://picsum.photos/seed/bodycon-evening-dress-2/900/1200",
+        "alt": "Bodycon Evening Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac048",
+        "type": "image",
+        "url": "https://picsum.photos/seed/bodycon-evening-dress-3/900/1200",
+        "alt": "Bodycon Evening Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9c2",
+    "slug": "polka-dot-midi-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac049",
+        "type": "image",
+        "url": "https://picsum.photos/seed/polka-dot-midi-dress-1/900/1200",
+        "alt": "Polka Dot Midi Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac04a",
+        "type": "image",
+        "url": "https://picsum.photos/seed/polka-dot-midi-dress-2/900/1200",
+        "alt": "Polka Dot Midi Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac04b",
+        "type": "image",
+        "url": "https://picsum.photos/seed/polka-dot-midi-dress-3/900/1200",
+        "alt": "Polka Dot Midi Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9c3",
+    "slug": "ruffle-sleeve-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac04c",
+        "type": "image",
+        "url": "https://picsum.photos/seed/ruffle-sleeve-dress-1/900/1200",
+        "alt": "Ruffle Sleeve Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac04d",
+        "type": "image",
+        "url": "https://picsum.photos/seed/ruffle-sleeve-dress-2/900/1200",
+        "alt": "Ruffle Sleeve Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac04e",
+        "type": "image",
+        "url": "https://picsum.photos/seed/ruffle-sleeve-dress-3/900/1200",
+        "alt": "Ruffle Sleeve Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9c4",
+    "slug": "satin-slip-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac04f",
+        "type": "image",
+        "url": "https://picsum.photos/seed/satin-slip-dress-1/900/1200",
+        "alt": "Satin Slip Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac050",
+        "type": "image",
+        "url": "https://picsum.photos/seed/satin-slip-dress-2/900/1200",
+        "alt": "Satin Slip Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac051",
+        "type": "image",
+        "url": "https://picsum.photos/seed/satin-slip-dress-3/900/1200",
+        "alt": "Satin Slip Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9c5",
+    "slug": "boho-printed-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac052",
+        "type": "image",
+        "url": "https://picsum.photos/seed/boho-printed-dress-1/900/1200",
+        "alt": "Boho Printed Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac053",
+        "type": "image",
+        "url": "https://picsum.photos/seed/boho-printed-dress-2/900/1200",
+        "alt": "Boho Printed Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac054",
+        "type": "image",
+        "url": "https://picsum.photos/seed/boho-printed-dress-3/900/1200",
+        "alt": "Boho Printed Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9c6",
+    "slug": "puff-sleeve-mini-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac055",
+        "type": "image",
+        "url": "https://picsum.photos/seed/puff-sleeve-mini-dress-1/900/1200",
+        "alt": "Puff Sleeve Mini Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac056",
+        "type": "image",
+        "url": "https://picsum.photos/seed/puff-sleeve-mini-dress-2/900/1200",
+        "alt": "Puff Sleeve Mini Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac057",
+        "type": "image",
+        "url": "https://picsum.photos/seed/puff-sleeve-mini-dress-3/900/1200",
+        "alt": "Puff Sleeve Mini Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9c7",
+    "slug": "wrap-front-midi-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac058",
+        "type": "image",
+        "url": "https://picsum.photos/seed/wrap-front-midi-dress-1/900/1200",
+        "alt": "Wrap Front Midi Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac059",
+        "type": "image",
+        "url": "https://picsum.photos/seed/wrap-front-midi-dress-2/900/1200",
+        "alt": "Wrap Front Midi Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac05a",
+        "type": "image",
+        "url": "https://picsum.photos/seed/wrap-front-midi-dress-3/900/1200",
+        "alt": "Wrap Front Midi Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9c8",
+    "slug": "chiffon-layered-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac05b",
+        "type": "image",
+        "url": "https://picsum.photos/seed/chiffon-layered-dress-1/900/1200",
+        "alt": "Chiffon Layered Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac05c",
+        "type": "image",
+        "url": "https://picsum.photos/seed/chiffon-layered-dress-2/900/1200",
+        "alt": "Chiffon Layered Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac05d",
+        "type": "image",
+        "url": "https://picsum.photos/seed/chiffon-layered-dress-3/900/1200",
+        "alt": "Chiffon Layered Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9c9",
+    "slug": "velvet-party-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac05e",
+        "type": "image",
+        "url": "https://picsum.photos/seed/velvet-party-dress-1/900/1200",
+        "alt": "Velvet Party Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac05f",
+        "type": "image",
+        "url": "https://picsum.photos/seed/velvet-party-dress-2/900/1200",
+        "alt": "Velvet Party Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac060",
+        "type": "image",
+        "url": "https://picsum.photos/seed/velvet-party-dress-3/900/1200",
+        "alt": "Velvet Party Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9ca",
+    "slug": "linen-shift-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac061",
+        "type": "image",
+        "url": "https://picsum.photos/seed/linen-shift-dress-1/900/1200",
+        "alt": "Linen Shift Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac062",
+        "type": "image",
+        "url": "https://picsum.photos/seed/linen-shift-dress-2/900/1200",
+        "alt": "Linen Shift Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac063",
+        "type": "image",
+        "url": "https://picsum.photos/seed/linen-shift-dress-3/900/1200",
+        "alt": "Linen Shift Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9cb",
+    "slug": "sequin-party-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac064",
+        "type": "image",
+        "url": "https://picsum.photos/seed/sequin-party-dress-1/900/1200",
+        "alt": "Sequin Party Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac065",
+        "type": "image",
+        "url": "https://picsum.photos/seed/sequin-party-dress-2/900/1200",
+        "alt": "Sequin Party Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac066",
+        "type": "image",
+        "url": "https://picsum.photos/seed/sequin-party-dress-3/900/1200",
+        "alt": "Sequin Party Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9cc",
+    "slug": "tiered-ruffle-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac067",
+        "type": "image",
+        "url": "https://picsum.photos/seed/tiered-ruffle-dress-1/900/1200",
+        "alt": "Tiered Ruffle Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac068",
+        "type": "image",
+        "url": "https://picsum.photos/seed/tiered-ruffle-dress-2/900/1200",
+        "alt": "Tiered Ruffle Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac069",
+        "type": "image",
+        "url": "https://picsum.photos/seed/tiered-ruffle-dress-3/900/1200",
+        "alt": "Tiered Ruffle Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9cd",
+    "slug": "halter-neck-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac06a",
+        "type": "image",
+        "url": "https://picsum.photos/seed/halter-neck-dress-1/900/1200",
+        "alt": "Halter Neck Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac06b",
+        "type": "image",
+        "url": "https://picsum.photos/seed/halter-neck-dress-2/900/1200",
+        "alt": "Halter Neck Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac06c",
+        "type": "image",
+        "url": "https://picsum.photos/seed/halter-neck-dress-3/900/1200",
+        "alt": "Halter Neck Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9ce",
+    "slug": "pleated-fit-flare-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac06d",
+        "type": "image",
+        "url": "https://picsum.photos/seed/pleated-fit-flare-dress-1/900/1200",
+        "alt": "Pleated Fit & Flare Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac06e",
+        "type": "image",
+        "url": "https://picsum.photos/seed/pleated-fit-flare-dress-2/900/1200",
+        "alt": "Pleated Fit & Flare Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac06f",
+        "type": "image",
+        "url": "https://picsum.photos/seed/pleated-fit-flare-dress-3/900/1200",
+        "alt": "Pleated Fit & Flare Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9cf",
+    "slug": "georgette-flowy-dress",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac070",
+        "type": "image",
+        "url": "https://picsum.photos/seed/georgette-flowy-dress-1/900/1200",
+        "alt": "Georgette Flowy Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac071",
+        "type": "image",
+        "url": "https://picsum.photos/seed/georgette-flowy-dress-2/900/1200",
+        "alt": "Georgette Flowy Dress"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac072",
+        "type": "image",
+        "url": "https://picsum.photos/seed/georgette-flowy-dress-3/900/1200",
+        "alt": "Georgette Flowy Dress"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9d0",
+    "slug": "silk-wrap-blouse",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac073",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-wrap-blouse-1/900/1200",
+        "alt": "Silk Wrap Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac074",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-wrap-blouse-2/900/1200",
+        "alt": "Silk Wrap Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac075",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-wrap-blouse-3/900/1200",
+        "alt": "Silk Wrap Blouse"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9d1",
+    "slug": "cotton-crop-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac076",
+        "type": "image",
+        "url": "https://picsum.photos/seed/cotton-crop-top-1/900/1200",
+        "alt": "Cotton Crop Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac077",
+        "type": "image",
+        "url": "https://picsum.photos/seed/cotton-crop-top-2/900/1200",
+        "alt": "Cotton Crop Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac078",
+        "type": "image",
+        "url": "https://picsum.photos/seed/cotton-crop-top-3/900/1200",
+        "alt": "Cotton Crop Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9d2",
+    "slug": "ruffle-sleeve-blouse",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac079",
+        "type": "image",
+        "url": "https://picsum.photos/seed/ruffle-sleeve-blouse-1/900/1200",
+        "alt": "Ruffle Sleeve Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac07a",
+        "type": "image",
+        "url": "https://picsum.photos/seed/ruffle-sleeve-blouse-2/900/1200",
+        "alt": "Ruffle Sleeve Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac07b",
+        "type": "image",
+        "url": "https://picsum.photos/seed/ruffle-sleeve-blouse-3/900/1200",
+        "alt": "Ruffle Sleeve Blouse"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9d3",
+    "slug": "off-shoulder-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac07c",
+        "type": "image",
+        "url": "https://picsum.photos/seed/off-shoulder-top-1/900/1200",
+        "alt": "Off-Shoulder Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac07d",
+        "type": "image",
+        "url": "https://picsum.photos/seed/off-shoulder-top-2/900/1200",
+        "alt": "Off-Shoulder Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac07e",
+        "type": "image",
+        "url": "https://picsum.photos/seed/off-shoulder-top-3/900/1200",
+        "alt": "Off-Shoulder Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9d4",
+    "slug": "peplum-blouse",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac07f",
+        "type": "image",
+        "url": "https://picsum.photos/seed/peplum-blouse-1/900/1200",
+        "alt": "Peplum Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac080",
+        "type": "image",
+        "url": "https://picsum.photos/seed/peplum-blouse-2/900/1200",
+        "alt": "Peplum Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac081",
+        "type": "image",
+        "url": "https://picsum.photos/seed/peplum-blouse-3/900/1200",
+        "alt": "Peplum Blouse"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9d5",
+    "slug": "satin-cami-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac082",
+        "type": "image",
+        "url": "https://picsum.photos/seed/satin-cami-top-1/900/1200",
+        "alt": "Satin Cami Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac083",
+        "type": "image",
+        "url": "https://picsum.photos/seed/satin-cami-top-2/900/1200",
+        "alt": "Satin Cami Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac084",
+        "type": "image",
+        "url": "https://picsum.photos/seed/satin-cami-top-3/900/1200",
+        "alt": "Satin Cami Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9d6",
+    "slug": "puff-sleeve-blouse",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac085",
+        "type": "image",
+        "url": "https://picsum.photos/seed/puff-sleeve-blouse-1/900/1200",
+        "alt": "Puff Sleeve Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac086",
+        "type": "image",
+        "url": "https://picsum.photos/seed/puff-sleeve-blouse-2/900/1200",
+        "alt": "Puff Sleeve Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac087",
+        "type": "image",
+        "url": "https://picsum.photos/seed/puff-sleeve-blouse-3/900/1200",
+        "alt": "Puff Sleeve Blouse"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9d7",
+    "slug": "tie-front-crop-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac088",
+        "type": "image",
+        "url": "https://picsum.photos/seed/tie-front-crop-top-1/900/1200",
+        "alt": "Tie-Front Crop Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac089",
+        "type": "image",
+        "url": "https://picsum.photos/seed/tie-front-crop-top-2/900/1200",
+        "alt": "Tie-Front Crop Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac08a",
+        "type": "image",
+        "url": "https://picsum.photos/seed/tie-front-crop-top-3/900/1200",
+        "alt": "Tie-Front Crop Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9d8",
+    "slug": "printed-shirt-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac08b",
+        "type": "image",
+        "url": "https://picsum.photos/seed/printed-shirt-top-1/900/1200",
+        "alt": "Printed Shirt Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac08c",
+        "type": "image",
+        "url": "https://picsum.photos/seed/printed-shirt-top-2/900/1200",
+        "alt": "Printed Shirt Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac08d",
+        "type": "image",
+        "url": "https://picsum.photos/seed/printed-shirt-top-3/900/1200",
+        "alt": "Printed Shirt Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9d9",
+    "slug": "sleeveless-tank-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac08e",
+        "type": "image",
+        "url": "https://picsum.photos/seed/sleeveless-tank-top-1/900/1200",
+        "alt": "Sleeveless Tank Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac08f",
+        "type": "image",
+        "url": "https://picsum.photos/seed/sleeveless-tank-top-2/900/1200",
+        "alt": "Sleeveless Tank Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac090",
+        "type": "image",
+        "url": "https://picsum.photos/seed/sleeveless-tank-top-3/900/1200",
+        "alt": "Sleeveless Tank Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9da",
+    "slug": "bishop-sleeve-blouse",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac091",
+        "type": "image",
+        "url": "https://picsum.photos/seed/bishop-sleeve-blouse-1/900/1200",
+        "alt": "Bishop Sleeve Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac092",
+        "type": "image",
+        "url": "https://picsum.photos/seed/bishop-sleeve-blouse-2/900/1200",
+        "alt": "Bishop Sleeve Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac093",
+        "type": "image",
+        "url": "https://picsum.photos/seed/bishop-sleeve-blouse-3/900/1200",
+        "alt": "Bishop Sleeve Blouse"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9db",
+    "slug": "knot-front-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac094",
+        "type": "image",
+        "url": "https://picsum.photos/seed/knot-front-top-1/900/1200",
+        "alt": "Knot Front Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac095",
+        "type": "image",
+        "url": "https://picsum.photos/seed/knot-front-top-2/900/1200",
+        "alt": "Knot Front Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac096",
+        "type": "image",
+        "url": "https://picsum.photos/seed/knot-front-top-3/900/1200",
+        "alt": "Knot Front Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9dc",
+    "slug": "georgette-blouse",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac097",
+        "type": "image",
+        "url": "https://picsum.photos/seed/georgette-blouse-1/900/1200",
+        "alt": "Georgette Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac098",
+        "type": "image",
+        "url": "https://picsum.photos/seed/georgette-blouse-2/900/1200",
+        "alt": "Georgette Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac099",
+        "type": "image",
+        "url": "https://picsum.photos/seed/georgette-blouse-3/900/1200",
+        "alt": "Georgette Blouse"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9dd",
+    "slug": "denim-shirt-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac09a",
+        "type": "image",
+        "url": "https://picsum.photos/seed/denim-shirt-top-1/900/1200",
+        "alt": "Denim Shirt Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac09b",
+        "type": "image",
+        "url": "https://picsum.photos/seed/denim-shirt-top-2/900/1200",
+        "alt": "Denim Shirt Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac09c",
+        "type": "image",
+        "url": "https://picsum.photos/seed/denim-shirt-top-3/900/1200",
+        "alt": "Denim Shirt Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9de",
+    "slug": "lace-trim-blouse",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac09d",
+        "type": "image",
+        "url": "https://picsum.photos/seed/lace-trim-blouse-1/900/1200",
+        "alt": "Lace Trim Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac09e",
+        "type": "image",
+        "url": "https://picsum.photos/seed/lace-trim-blouse-2/900/1200",
+        "alt": "Lace Trim Blouse"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac09f",
+        "type": "image",
+        "url": "https://picsum.photos/seed/lace-trim-blouse-3/900/1200",
+        "alt": "Lace Trim Blouse"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9df",
+    "slug": "v-neck-wrap-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0a0",
+        "type": "image",
+        "url": "https://picsum.photos/seed/v-neck-wrap-top-1/900/1200",
+        "alt": "V-Neck Wrap Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0a1",
+        "type": "image",
+        "url": "https://picsum.photos/seed/v-neck-wrap-top-2/900/1200",
+        "alt": "V-Neck Wrap Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0a2",
+        "type": "image",
+        "url": "https://picsum.photos/seed/v-neck-wrap-top-3/900/1200",
+        "alt": "V-Neck Wrap Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9e0",
+    "slug": "cold-shoulder-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0a3",
+        "type": "image",
+        "url": "https://picsum.photos/seed/cold-shoulder-top-1/900/1200",
+        "alt": "Cold Shoulder Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0a4",
+        "type": "image",
+        "url": "https://picsum.photos/seed/cold-shoulder-top-2/900/1200",
+        "alt": "Cold Shoulder Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0a5",
+        "type": "image",
+        "url": "https://picsum.photos/seed/cold-shoulder-top-3/900/1200",
+        "alt": "Cold Shoulder Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9e1",
+    "slug": "button-down-shirt",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0a6",
+        "type": "image",
+        "url": "https://picsum.photos/seed/button-down-shirt-1/900/1200",
+        "alt": "Button-Down Shirt"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0a7",
+        "type": "image",
+        "url": "https://picsum.photos/seed/button-down-shirt-2/900/1200",
+        "alt": "Button-Down Shirt"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0a8",
+        "type": "image",
+        "url": "https://picsum.photos/seed/button-down-shirt-3/900/1200",
+        "alt": "Button-Down Shirt"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9e2",
+    "slug": "halter-neck-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0a9",
+        "type": "image",
+        "url": "https://picsum.photos/seed/halter-neck-top-1/900/1200",
+        "alt": "Halter Neck Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0aa",
+        "type": "image",
+        "url": "https://picsum.photos/seed/halter-neck-top-2/900/1200",
+        "alt": "Halter Neck Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ab",
+        "type": "image",
+        "url": "https://picsum.photos/seed/halter-neck-top-3/900/1200",
+        "alt": "Halter Neck Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9e3",
+    "slug": "embroidered-cotton-top",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ac",
+        "type": "image",
+        "url": "https://picsum.photos/seed/embroidered-cotton-top-1/900/1200",
+        "alt": "Embroidered Cotton Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ad",
+        "type": "image",
+        "url": "https://picsum.photos/seed/embroidered-cotton-top-2/900/1200",
+        "alt": "Embroidered Cotton Top"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ae",
+        "type": "image",
+        "url": "https://picsum.photos/seed/embroidered-cotton-top-3/900/1200",
+        "alt": "Embroidered Cotton Top"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9e4",
+    "slug": "embroidered-anarkali-suit",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0af",
+        "type": "image",
+        "url": "https://picsum.photos/seed/embroidered-anarkali-suit-1/900/1200",
+        "alt": "Embroidered Anarkali Suit"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0b0",
+        "type": "image",
+        "url": "https://picsum.photos/seed/embroidered-anarkali-suit-2/900/1200",
+        "alt": "Embroidered Anarkali Suit"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0b1",
+        "type": "image",
+        "url": "https://picsum.photos/seed/embroidered-anarkali-suit-3/900/1200",
+        "alt": "Embroidered Anarkali Suit"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9e5",
+    "slug": "silk-saree",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0b2",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-saree-1/900/1200",
+        "alt": "Silk Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0b3",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-saree-2/900/1200",
+        "alt": "Silk Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0b4",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-saree-3/900/1200",
+        "alt": "Silk Saree"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9e6",
+    "slug": "printed-kurti",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0b5",
+        "type": "image",
+        "url": "https://picsum.photos/seed/printed-kurti-1/900/1200",
+        "alt": "Printed Kurti"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0b6",
+        "type": "image",
+        "url": "https://picsum.photos/seed/printed-kurti-2/900/1200",
+        "alt": "Printed Kurti"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0b7",
+        "type": "image",
+        "url": "https://picsum.photos/seed/printed-kurti-3/900/1200",
+        "alt": "Printed Kurti"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9e7",
+    "slug": "chanderi-silk-kurta-set",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0b8",
+        "type": "image",
+        "url": "https://picsum.photos/seed/chanderi-silk-kurta-set-1/900/1200",
+        "alt": "Chanderi Silk Kurta Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0b9",
+        "type": "image",
+        "url": "https://picsum.photos/seed/chanderi-silk-kurta-set-2/900/1200",
+        "alt": "Chanderi Silk Kurta Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ba",
+        "type": "image",
+        "url": "https://picsum.photos/seed/chanderi-silk-kurta-set-3/900/1200",
+        "alt": "Chanderi Silk Kurta Set"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9e8",
+    "slug": "banarasi-silk-saree",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0bb",
+        "type": "image",
+        "url": "https://picsum.photos/seed/banarasi-silk-saree-1/900/1200",
+        "alt": "Banarasi Silk Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0bc",
+        "type": "image",
+        "url": "https://picsum.photos/seed/banarasi-silk-saree-2/900/1200",
+        "alt": "Banarasi Silk Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0bd",
+        "type": "image",
+        "url": "https://picsum.photos/seed/banarasi-silk-saree-3/900/1200",
+        "alt": "Banarasi Silk Saree"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9e9",
+    "slug": "palazzo-suit-set",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0be",
+        "type": "image",
+        "url": "https://picsum.photos/seed/palazzo-suit-set-1/900/1200",
+        "alt": "Palazzo Suit Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0bf",
+        "type": "image",
+        "url": "https://picsum.photos/seed/palazzo-suit-set-2/900/1200",
+        "alt": "Palazzo Suit Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0c0",
+        "type": "image",
+        "url": "https://picsum.photos/seed/palazzo-suit-set-3/900/1200",
+        "alt": "Palazzo Suit Set"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9ea",
+    "slug": "georgette-saree",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0c1",
+        "type": "image",
+        "url": "https://picsum.photos/seed/georgette-saree-1/900/1200",
+        "alt": "Georgette Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0c2",
+        "type": "image",
+        "url": "https://picsum.photos/seed/georgette-saree-2/900/1200",
+        "alt": "Georgette Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0c3",
+        "type": "image",
+        "url": "https://picsum.photos/seed/georgette-saree-3/900/1200",
+        "alt": "Georgette Saree"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9eb",
+    "slug": "cotton-kurti-with-dupatta",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0c4",
+        "type": "image",
+        "url": "https://picsum.photos/seed/cotton-kurti-with-dupatta-1/900/1200",
+        "alt": "Cotton Kurti with Dupatta"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0c5",
+        "type": "image",
+        "url": "https://picsum.photos/seed/cotton-kurti-with-dupatta-2/900/1200",
+        "alt": "Cotton Kurti with Dupatta"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0c6",
+        "type": "image",
+        "url": "https://picsum.photos/seed/cotton-kurti-with-dupatta-3/900/1200",
+        "alt": "Cotton Kurti with Dupatta"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9ec",
+    "slug": "sharara-suit-set",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0c7",
+        "type": "image",
+        "url": "https://picsum.photos/seed/sharara-suit-set-1/900/1200",
+        "alt": "Sharara Suit Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0c8",
+        "type": "image",
+        "url": "https://picsum.photos/seed/sharara-suit-set-2/900/1200",
+        "alt": "Sharara Suit Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0c9",
+        "type": "image",
+        "url": "https://picsum.photos/seed/sharara-suit-set-3/900/1200",
+        "alt": "Sharara Suit Set"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9ed",
+    "slug": "bandhani-print-saree",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ca",
+        "type": "image",
+        "url": "https://picsum.photos/seed/bandhani-print-saree-1/900/1200",
+        "alt": "Bandhani Print Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0cb",
+        "type": "image",
+        "url": "https://picsum.photos/seed/bandhani-print-saree-2/900/1200",
+        "alt": "Bandhani Print Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0cc",
+        "type": "image",
+        "url": "https://picsum.photos/seed/bandhani-print-saree-3/900/1200",
+        "alt": "Bandhani Print Saree"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9ee",
+    "slug": "straight-kurta-set",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0cd",
+        "type": "image",
+        "url": "https://picsum.photos/seed/straight-kurta-set-1/900/1200",
+        "alt": "Straight Kurta Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ce",
+        "type": "image",
+        "url": "https://picsum.photos/seed/straight-kurta-set-2/900/1200",
+        "alt": "Straight Kurta Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0cf",
+        "type": "image",
+        "url": "https://picsum.photos/seed/straight-kurta-set-3/900/1200",
+        "alt": "Straight Kurta Set"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9ef",
+    "slug": "lehenga-choli",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0d0",
+        "type": "image",
+        "url": "https://picsum.photos/seed/lehenga-choli-1/900/1200",
+        "alt": "Lehenga Choli"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0d1",
+        "type": "image",
+        "url": "https://picsum.photos/seed/lehenga-choli-2/900/1200",
+        "alt": "Lehenga Choli"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0d2",
+        "type": "image",
+        "url": "https://picsum.photos/seed/lehenga-choli-3/900/1200",
+        "alt": "Lehenga Choli"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9f0",
+    "slug": "chikankari-kurti",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0d3",
+        "type": "image",
+        "url": "https://picsum.photos/seed/chikankari-kurti-1/900/1200",
+        "alt": "Chikankari Kurti"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0d4",
+        "type": "image",
+        "url": "https://picsum.photos/seed/chikankari-kurti-2/900/1200",
+        "alt": "Chikankari Kurti"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0d5",
+        "type": "image",
+        "url": "https://picsum.photos/seed/chikankari-kurti-3/900/1200",
+        "alt": "Chikankari Kurti"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9f1",
+    "slug": "patola-print-saree",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0d6",
+        "type": "image",
+        "url": "https://picsum.photos/seed/patola-print-saree-1/900/1200",
+        "alt": "Patola Print Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0d7",
+        "type": "image",
+        "url": "https://picsum.photos/seed/patola-print-saree-2/900/1200",
+        "alt": "Patola Print Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0d8",
+        "type": "image",
+        "url": "https://picsum.photos/seed/patola-print-saree-3/900/1200",
+        "alt": "Patola Print Saree"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9f2",
+    "slug": "rayon-printed-kurti",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0d9",
+        "type": "image",
+        "url": "https://picsum.photos/seed/rayon-printed-kurti-1/900/1200",
+        "alt": "Rayon Printed Kurti"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0da",
+        "type": "image",
+        "url": "https://picsum.photos/seed/rayon-printed-kurti-2/900/1200",
+        "alt": "Rayon Printed Kurti"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0db",
+        "type": "image",
+        "url": "https://picsum.photos/seed/rayon-printed-kurti-3/900/1200",
+        "alt": "Rayon Printed Kurti"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9f3",
+    "slug": "silk-blend-kurta-set",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0dc",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-blend-kurta-set-1/900/1200",
+        "alt": "Silk Blend Kurta Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0dd",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-blend-kurta-set-2/900/1200",
+        "alt": "Silk Blend Kurta Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0de",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-blend-kurta-set-3/900/1200",
+        "alt": "Silk Blend Kurta Set"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9f4",
+    "slug": "gharara-suit-set",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0df",
+        "type": "image",
+        "url": "https://picsum.photos/seed/gharara-suit-set-1/900/1200",
+        "alt": "Gharara Suit Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0e0",
+        "type": "image",
+        "url": "https://picsum.photos/seed/gharara-suit-set-2/900/1200",
+        "alt": "Gharara Suit Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0e1",
+        "type": "image",
+        "url": "https://picsum.photos/seed/gharara-suit-set-3/900/1200",
+        "alt": "Gharara Suit Set"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9f5",
+    "slug": "block-print-cotton-saree",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0e2",
+        "type": "image",
+        "url": "https://picsum.photos/seed/block-print-cotton-saree-1/900/1200",
+        "alt": "Block Print Cotton Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0e3",
+        "type": "image",
+        "url": "https://picsum.photos/seed/block-print-cotton-saree-2/900/1200",
+        "alt": "Block Print Cotton Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0e4",
+        "type": "image",
+        "url": "https://picsum.photos/seed/block-print-cotton-saree-3/900/1200",
+        "alt": "Block Print Cotton Saree"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9f6",
+    "slug": "angrakha-style-kurti",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0e5",
+        "type": "image",
+        "url": "https://picsum.photos/seed/angrakha-style-kurti-1/900/1200",
+        "alt": "Angrakha Style Kurti"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0e6",
+        "type": "image",
+        "url": "https://picsum.photos/seed/angrakha-style-kurti-2/900/1200",
+        "alt": "Angrakha Style Kurti"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0e7",
+        "type": "image",
+        "url": "https://picsum.photos/seed/angrakha-style-kurti-3/900/1200",
+        "alt": "Angrakha Style Kurti"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9f7",
+    "slug": "net-embroidered-saree",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0e8",
+        "type": "image",
+        "url": "https://picsum.photos/seed/net-embroidered-saree-1/900/1200",
+        "alt": "Net Embroidered Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0e9",
+        "type": "image",
+        "url": "https://picsum.photos/seed/net-embroidered-saree-2/900/1200",
+        "alt": "Net Embroidered Saree"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ea",
+        "type": "image",
+        "url": "https://picsum.photos/seed/net-embroidered-saree-3/900/1200",
+        "alt": "Net Embroidered Saree"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9f8",
+    "slug": "statement-drop-earrings",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0eb",
+        "type": "image",
+        "url": "https://picsum.photos/seed/statement-drop-earrings-1/900/1200",
+        "alt": "Statement Drop Earrings"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ec",
+        "type": "image",
+        "url": "https://picsum.photos/seed/statement-drop-earrings-2/900/1200",
+        "alt": "Statement Drop Earrings"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ed",
+        "type": "image",
+        "url": "https://picsum.photos/seed/statement-drop-earrings-3/900/1200",
+        "alt": "Statement Drop Earrings"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9f9",
+    "slug": "leather-sling-bag",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ee",
+        "type": "image",
+        "url": "https://picsum.photos/seed/leather-sling-bag-1/900/1200",
+        "alt": "Leather Sling Bag"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ef",
+        "type": "image",
+        "url": "https://picsum.photos/seed/leather-sling-bag-2/900/1200",
+        "alt": "Leather Sling Bag"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0f0",
+        "type": "image",
+        "url": "https://picsum.photos/seed/leather-sling-bag-3/900/1200",
+        "alt": "Leather Sling Bag"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9fa",
+    "slug": "silk-scarf",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0f1",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-scarf-1/900/1200",
+        "alt": "Silk Scarf"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0f2",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-scarf-2/900/1200",
+        "alt": "Silk Scarf"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0f3",
+        "type": "image",
+        "url": "https://picsum.photos/seed/silk-scarf-3/900/1200",
+        "alt": "Silk Scarf"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9fb",
+    "slug": "pearl-necklace-set",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0f4",
+        "type": "image",
+        "url": "https://picsum.photos/seed/pearl-necklace-set-1/900/1200",
+        "alt": "Pearl Necklace Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0f5",
+        "type": "image",
+        "url": "https://picsum.photos/seed/pearl-necklace-set-2/900/1200",
+        "alt": "Pearl Necklace Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0f6",
+        "type": "image",
+        "url": "https://picsum.photos/seed/pearl-necklace-set-3/900/1200",
+        "alt": "Pearl Necklace Set"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9fc",
+    "slug": "oversized-sunglasses",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0f7",
+        "type": "image",
+        "url": "https://picsum.photos/seed/oversized-sunglasses-1/900/1200",
+        "alt": "Oversized Sunglasses"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0f8",
+        "type": "image",
+        "url": "https://picsum.photos/seed/oversized-sunglasses-2/900/1200",
+        "alt": "Oversized Sunglasses"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0f9",
+        "type": "image",
+        "url": "https://picsum.photos/seed/oversized-sunglasses-3/900/1200",
+        "alt": "Oversized Sunglasses"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9fd",
+    "slug": "layered-chain-bracelet",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0fa",
+        "type": "image",
+        "url": "https://picsum.photos/seed/layered-chain-bracelet-1/900/1200",
+        "alt": "Layered Chain Bracelet"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0fb",
+        "type": "image",
+        "url": "https://picsum.photos/seed/layered-chain-bracelet-2/900/1200",
+        "alt": "Layered Chain Bracelet"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0fc",
+        "type": "image",
+        "url": "https://picsum.photos/seed/layered-chain-bracelet-3/900/1200",
+        "alt": "Layered Chain Bracelet"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9fe",
+    "slug": "woven-straw-tote",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0fd",
+        "type": "image",
+        "url": "https://picsum.photos/seed/woven-straw-tote-1/900/1200",
+        "alt": "Woven Straw Tote"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0fe",
+        "type": "image",
+        "url": "https://picsum.photos/seed/woven-straw-tote-2/900/1200",
+        "alt": "Woven Straw Tote"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac0ff",
+        "type": "image",
+        "url": "https://picsum.photos/seed/woven-straw-tote-3/900/1200",
+        "alt": "Woven Straw Tote"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42e9ff",
+    "slug": "beaded-choker-necklace",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac100",
+        "type": "image",
+        "url": "https://picsum.photos/seed/beaded-choker-necklace-1/900/1200",
+        "alt": "Beaded Choker Necklace"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac101",
+        "type": "image",
+        "url": "https://picsum.photos/seed/beaded-choker-necklace-2/900/1200",
+        "alt": "Beaded Choker Necklace"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac102",
+        "type": "image",
+        "url": "https://picsum.photos/seed/beaded-choker-necklace-3/900/1200",
+        "alt": "Beaded Choker Necklace"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea00",
+    "slug": "leather-wallet",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac103",
+        "type": "image",
+        "url": "https://picsum.photos/seed/leather-wallet-1/900/1200",
+        "alt": "Leather Wallet"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac104",
+        "type": "image",
+        "url": "https://picsum.photos/seed/leather-wallet-2/900/1200",
+        "alt": "Leather Wallet"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac105",
+        "type": "image",
+        "url": "https://picsum.photos/seed/leather-wallet-3/900/1200",
+        "alt": "Leather Wallet"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea01",
+    "slug": "hoop-earrings",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac106",
+        "type": "image",
+        "url": "https://picsum.photos/seed/hoop-earrings-1/900/1200",
+        "alt": "Hoop Earrings"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac107",
+        "type": "image",
+        "url": "https://picsum.photos/seed/hoop-earrings-2/900/1200",
+        "alt": "Hoop Earrings"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac108",
+        "type": "image",
+        "url": "https://picsum.photos/seed/hoop-earrings-3/900/1200",
+        "alt": "Hoop Earrings"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea02",
+    "slug": "printed-silk-stole",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac109",
+        "type": "image",
+        "url": "https://picsum.photos/seed/printed-silk-stole-1/900/1200",
+        "alt": "Printed Silk Stole"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac10a",
+        "type": "image",
+        "url": "https://picsum.photos/seed/printed-silk-stole-2/900/1200",
+        "alt": "Printed Silk Stole"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac10b",
+        "type": "image",
+        "url": "https://picsum.photos/seed/printed-silk-stole-3/900/1200",
+        "alt": "Printed Silk Stole"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea03",
+    "slug": "structured-handbag",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac10c",
+        "type": "image",
+        "url": "https://picsum.photos/seed/structured-handbag-1/900/1200",
+        "alt": "Structured Handbag"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac10d",
+        "type": "image",
+        "url": "https://picsum.photos/seed/structured-handbag-2/900/1200",
+        "alt": "Structured Handbag"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac10e",
+        "type": "image",
+        "url": "https://picsum.photos/seed/structured-handbag-3/900/1200",
+        "alt": "Structured Handbag"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea04",
+    "slug": "charm-bracelet",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac10f",
+        "type": "image",
+        "url": "https://picsum.photos/seed/charm-bracelet-1/900/1200",
+        "alt": "Charm Bracelet"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac110",
+        "type": "image",
+        "url": "https://picsum.photos/seed/charm-bracelet-2/900/1200",
+        "alt": "Charm Bracelet"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac111",
+        "type": "image",
+        "url": "https://picsum.photos/seed/charm-bracelet-3/900/1200",
+        "alt": "Charm Bracelet"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea05",
+    "slug": "velvet-hair-clip-set",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac112",
+        "type": "image",
+        "url": "https://picsum.photos/seed/velvet-hair-clip-set-1/900/1200",
+        "alt": "Velvet Hair Clip Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac113",
+        "type": "image",
+        "url": "https://picsum.photos/seed/velvet-hair-clip-set-2/900/1200",
+        "alt": "Velvet Hair Clip Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac114",
+        "type": "image",
+        "url": "https://picsum.photos/seed/velvet-hair-clip-set-3/900/1200",
+        "alt": "Velvet Hair Clip Set"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea06",
+    "slug": "crossbody-sling-bag",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac115",
+        "type": "image",
+        "url": "https://picsum.photos/seed/crossbody-sling-bag-1/900/1200",
+        "alt": "Crossbody Sling Bag"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac116",
+        "type": "image",
+        "url": "https://picsum.photos/seed/crossbody-sling-bag-2/900/1200",
+        "alt": "Crossbody Sling Bag"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac117",
+        "type": "image",
+        "url": "https://picsum.photos/seed/crossbody-sling-bag-3/900/1200",
+        "alt": "Crossbody Sling Bag"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea07",
+    "slug": "statement-ring-set",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac118",
+        "type": "image",
+        "url": "https://picsum.photos/seed/statement-ring-set-1/900/1200",
+        "alt": "Statement Ring Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac119",
+        "type": "image",
+        "url": "https://picsum.photos/seed/statement-ring-set-2/900/1200",
+        "alt": "Statement Ring Set"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac11a",
+        "type": "image",
+        "url": "https://picsum.photos/seed/statement-ring-set-3/900/1200",
+        "alt": "Statement Ring Set"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea08",
+    "slug": "canvas-tote-bag",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac11b",
+        "type": "image",
+        "url": "https://picsum.photos/seed/canvas-tote-bag-1/900/1200",
+        "alt": "Canvas Tote Bag"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac11c",
+        "type": "image",
+        "url": "https://picsum.photos/seed/canvas-tote-bag-2/900/1200",
+        "alt": "Canvas Tote Bag"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac11d",
+        "type": "image",
+        "url": "https://picsum.photos/seed/canvas-tote-bag-3/900/1200",
+        "alt": "Canvas Tote Bag"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea09",
+    "slug": "layered-anklet",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac11e",
+        "type": "image",
+        "url": "https://picsum.photos/seed/layered-anklet-1/900/1200",
+        "alt": "Layered Anklet"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac11f",
+        "type": "image",
+        "url": "https://picsum.photos/seed/layered-anklet-2/900/1200",
+        "alt": "Layered Anklet"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac120",
+        "type": "image",
+        "url": "https://picsum.photos/seed/layered-anklet-3/900/1200",
+        "alt": "Layered Anklet"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea0a",
+    "slug": "embellished-clutch",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac121",
+        "type": "image",
+        "url": "https://picsum.photos/seed/embellished-clutch-1/900/1200",
+        "alt": "Embellished Clutch"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac122",
+        "type": "image",
+        "url": "https://picsum.photos/seed/embellished-clutch-2/900/1200",
+        "alt": "Embellished Clutch"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac123",
+        "type": "image",
+        "url": "https://picsum.photos/seed/embellished-clutch-3/900/1200",
+        "alt": "Embellished Clutch"
+      }
+    ]
+  },
+  {
+    "_id": "6aa7f343ae111a498f42ea0b",
+    "slug": "classic-leather-belt",
+    "media": [
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac124",
+        "type": "image",
+        "url": "https://picsum.photos/seed/classic-leather-belt-1/900/1200",
+        "alt": "Classic Leather Belt"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac125",
+        "type": "image",
+        "url": "https://picsum.photos/seed/classic-leather-belt-2/900/1200",
+        "alt": "Classic Leather Belt"
+      },
+      {
+        "_id": "6aa7f9aa3db1cf21c78ac126",
+        "type": "image",
+        "url": "https://picsum.photos/seed/classic-leather-belt-3/900/1200",
+        "alt": "Classic Leather Belt"
+      }
+    ]
+  }
+]
