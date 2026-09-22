@@ -2,8 +2,10 @@ import { z } from "zod";
 import { isValidObjectId } from "mongoose";
 import { PRODUCT_CATEGORIES } from "@/lib/data/categories";
 import { PRODUCT_SIZES } from "@/lib/data/productOptions";
+import { seoMetaRobotsSchema } from "@/lib/validations/seo";
 
 const HEX_COLOR_PATTERN = /^#[0-9a-fA-F]{6}$/;
+const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 export const productColorSchema = z.object({
   name: z.string().trim().min(1, "Color name is required").max(40, "Color name is too long"),
@@ -75,6 +77,18 @@ export const productSchema = z.object({
     .min(10, "Description must be at least 10 characters")
     .max(5000, "Description is too long"),
   category: z.enum(PRODUCT_CATEGORIES, "Choose a valid category"),
+  // Optional: left blank, `generateUniqueSlug` derives one from `name` (the
+  // existing, unchanged default). Provided, it must already look like a
+  // slug - never silently mangled into one, mirroring Collection's own
+  // slug field.
+  slug: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .max(160, "Slug is too long")
+    .regex(SLUG_PATTERN, "Use lowercase letters, numbers and hyphens only")
+    .optional()
+    .or(z.literal("")),
   price: z.coerce.number("Price must be a number").min(0, "Price cannot be negative"),
   compareAtPrice: z.coerce.number().min(0, "Compare-at price cannot be negative").optional(),
   sku: z.string().trim().max(40, "SKU is too long").optional(),
@@ -98,6 +112,19 @@ export const productSchema = z.object({
   brand: z.string().trim().max(60, "Brand is too long").optional(),
   tags: z.array(z.string().trim().min(1).max(30)).max(20, "Too many tags").default([]),
   isFeatured: z.boolean().default(false),
+  // Every field below is an optional override - left blank, the product
+  // page derives real metadata from name/description/category/brand/price
+  // instead (see `buildProductMetadata`), so SEO never breaks just because
+  // these weren't filled in.
+  seoTitle: z.string().trim().max(70, "SEO title should be under 70 characters").optional(),
+  seoDescription: z.string().trim().max(160, "Meta description should be under 160 characters").optional(),
+  seoKeywords: z.array(z.string().trim().min(1).max(40)).max(15, "Too many keywords").default([]),
+  seoCanonicalUrl: z.string().trim().max(300, "Canonical URL is too long").optional(),
+  seoMetaRobots: seoMetaRobotsSchema,
+  seoOgTitle: z.string().trim().max(70, "OG title should be under 70 characters").optional(),
+  seoOgDescription: z.string().trim().max(200, "OG description is too long").optional(),
+  seoOgImageUrl: z.string().trim().max(500, "OG image URL is too long").optional(),
+  seoImageAlt: z.string().trim().max(125, "Image alt text is too long").optional(),
 });
 
 export type ProductInput = z.infer<typeof productSchema>;
@@ -127,6 +154,7 @@ export function productFormDataToObject(formData: FormData): Record<string, unkn
     name: readString("name"),
     description: readString("description"),
     category: readString("category"),
+    slug: readString("slug") ?? "",
     price: readString("price"),
     compareAtPrice: readString("compareAtPrice"),
     sku: readString("sku"),
@@ -139,5 +167,14 @@ export function productFormDataToObject(formData: FormData): Record<string, unkn
     brand: readString("brand"),
     tags: readJsonArray(formData, "tags"),
     isFeatured: formData.get("isFeatured") === "true",
+    seoTitle: readString("seoTitle"),
+    seoDescription: readString("seoDescription"),
+    seoKeywords: readJsonArray(formData, "seoKeywords"),
+    seoCanonicalUrl: readString("seoCanonicalUrl"),
+    seoMetaRobots: readString("seoMetaRobots") ?? "index,follow",
+    seoOgTitle: readString("seoOgTitle"),
+    seoOgDescription: readString("seoOgDescription"),
+    seoOgImageUrl: readString("seoOgImageUrl"),
+    seoImageAlt: readString("seoImageAlt"),
   };
 }

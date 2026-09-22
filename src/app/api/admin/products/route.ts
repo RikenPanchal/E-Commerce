@@ -71,7 +71,7 @@ export async function POST(request: Request): Promise<NextResponse<ProductRespon
   } catch (error) {
     if (isDuplicateKeyError(error)) {
       return NextResponse.json(
-        { success: false, message: "A product with this name or SKU already exists" },
+        { success: false, message: "A product with this name, SKU, or slug already exists" },
         { status: 409 }
       );
     }

@@ -2,6 +2,7 @@ import { connectDB } from "@/lib/db/connectDB";
 import Collection from "@/models/Collection";
 import { toCollectionView } from "@/lib/admin/collections";
 import { getPublicProductsByIds } from "@/lib/shop/products";
+import type { SitemapEntry } from "@/lib/shop/products";
 import type { CollectionView } from "@/types/collection";
 import type { ProductView } from "@/types/product";
 
@@ -40,4 +41,19 @@ export async function getCollectionProducts(collection: CollectionView): Promise
   const products = await getPublicProductsByIds(collection.productIds);
   const byId = new Map(products.map((product) => [product.id, product]));
   return collection.productIds.map((id) => byId.get(id)).filter((product): product is ProductView => Boolean(product));
+}
+
+/** Every real, active collection's slug + last-modified date, for the
+ *  sitemap only - a lean projection, same idea as
+ *  `getAllProductSlugsForSitemap` (including the same "skip anything an
+ *  admin set to noindex" exclusion). */
+export async function getAllActiveCollectionSlugsForSitemap(): Promise<SitemapEntry[]> {
+  await connectDB();
+  const collections = await Collection.find({
+    isActive: true,
+    "seo.metaRobots": { $nin: ["noindex,follow", "noindex,nofollow"] },
+  })
+    .select("slug updatedAt")
+    .lean();
+  return collections.map((collection) => ({ slug: collection.slug, updatedAt: collection.updatedAt }));
 }

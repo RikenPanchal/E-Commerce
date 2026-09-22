@@ -23,10 +23,51 @@ import { getRecommendedProductsForCategory } from "@/lib/shop/recommendations";
 import { ProductScroller } from "@/components/home/ProductScroller";
 import { getRatingSummaries } from "@/lib/shop/reviews";
 import type { ProductWithRating } from "@/app/api/products/route";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbSchema } from "@/lib/seo/structuredData";
 
-export const metadata: Metadata = {
-  title: "Shop",
-};
+/**
+ * Only the base `/shop` and a single `?category=` selection are real SEO
+ * landing pages - every other filter combination (search, multi-category,
+ * size/color/brand/price/in-stock) is a valid, fully-functional page for
+ * shoppers but not a distinct page worth indexing (thin/duplicate content
+ * against the base catalog), so it gets `noindex,follow` with a canonical
+ * pointing back to the clean base/category URL. See section 8 of the SEO
+ * brief ("Search + Filter SEO").
+ */
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<RawShopSearchParams>;
+}): Promise<Metadata> {
+  const raw = await searchParams;
+  const current = parseShopFilters(raw);
+  const { categories, search, sizes, colors, brands, minPrice, maxPrice, inStock } = current;
+  const singleCategory = categories.length === 1 ? categories[0] : undefined;
+
+  const hasOtherFilters =
+    sizes.length > 0 ||
+    colors.length > 0 ||
+    brands.length > 0 ||
+    minPrice !== undefined ||
+    maxPrice !== undefined ||
+    inStock ||
+    categories.length > 1;
+  const isIndexable = !search && !hasOtherFilters;
+
+  const canonicalPath = singleCategory ? `/shop?category=${encodeURIComponent(singleCategory)}` : "/shop";
+  const title = search ? `Search results for "${search}"` : singleCategory ? singleCategory : "Shop";
+  const description = singleCategory
+    ? `Shop the ${singleCategory} edit - browse our latest ${singleCategory.toLowerCase()} styles, with sizes and colors in stock.`
+    : "Browse our full catalog of women's fashion - dresses, tops, ethnic wear and accessories, with real-time sizes and colors in stock.";
+
+  return {
+    title,
+    description,
+    alternates: { canonical: canonicalPath },
+    robots: { index: isIndexable, follow: true },
+  };
+}
 
 function buildShopHref(overrides: Partial<ParsedShopFilters>, current: ParsedShopFilters): string {
   const queryString = buildShopQueryString({ ...current, ...overrides });
@@ -285,8 +326,15 @@ export default async function ShopPage({
       ? await getRatingSummaries(categoryRecommendations.map((product) => product.id))
       : new Map();
 
+  const breadcrumbSchema = buildBreadcrumbSchema(
+    singleCategory
+      ? [{ name: "Home", path: "/" }, { name: "Shop", path: "/shop" }, { name: singleCategory }]
+      : [{ name: "Home", path: "/" }, { name: "Shop" }]
+  );
+
   return (
     <div className="flex flex-col">
+      <JsonLd data={breadcrumbSchema} />
       {/* Breadcrumb - compact, muted, real routes only. */}
       <div className="bg-background">
         <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">

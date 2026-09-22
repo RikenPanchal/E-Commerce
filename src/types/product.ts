@@ -27,6 +27,18 @@ export interface ProductMediaView {
   alt?: string;
 }
 
+export interface ProductSeoView {
+  title?: string;
+  description?: string;
+  keywords: string[];
+  canonicalUrl?: string;
+  metaRobots: "index,follow" | "noindex,follow" | "noindex,nofollow";
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImageUrl?: string;
+  imageAlt?: string;
+}
+
 /** Product shape sent to the client - Mongo internals mapped to plain values. */
 export interface ProductView {
   id: string;
@@ -49,6 +61,7 @@ export interface ProductView {
   tags: string[];
   isFeatured: boolean;
   media: ProductMediaView[];
+  seo?: ProductSeoView;
   isDeleted: boolean;
   deletedAt?: string;
   createdAt: string;

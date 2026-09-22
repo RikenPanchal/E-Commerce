@@ -23,6 +23,10 @@ import { ProductCard } from "@/components/shop/ProductCard";
 import { TrackRecentlyViewed } from "@/components/recentlyViewed/TrackRecentlyViewed";
 import { RecentlyViewedSection } from "@/components/recentlyViewed/RecentlyViewedSection";
 import { TruckIcon, CheckIcon, ShieldIcon } from "@/components/home/icons";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbSchema, buildProductSchema } from "@/lib/seo/structuredData";
+import { absoluteUrl } from "@/lib/seo/site";
+import { truncateForMeta, buildKeywords } from "@/lib/seo/text";
 
 const assurances = [
   { icon: TruckIcon, label: "Free shipping across India" },
@@ -37,7 +41,44 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const product = await getPublicProductBySlug(slug);
-  return { title: product?.name ?? "Product" };
+  if (!product) {
+    return { title: "Product" };
+  }
+
+  const seo = product.seo;
+  const title = seo?.title || product.name;
+  const description = seo?.description || truncateForMeta(product.description);
+  const canonicalPath = seo?.canonicalUrl || `/products/${product.slug}`;
+  const keywords =
+    seo && seo.keywords.length > 0
+      ? seo.keywords
+      : buildKeywords([product.name, product.category, product.brand, product.material, ...product.tags]);
+  const ogTitle = seo?.ogTitle || title;
+  const ogDescription = seo?.ogDescription || description;
+  const firstImage = product.media.find((item) => item.type === "image");
+  const ogImageUrl = seo?.ogImageUrl || firstImage?.url;
+  const [index, follow] = (seo?.metaRobots ?? "index,follow").split(",") as ["index" | "noindex", "follow" | "nofollow"];
+
+  return {
+    title,
+    description,
+    keywords: keywords.length > 0 ? keywords : undefined,
+    alternates: { canonical: canonicalPath },
+    robots: { index: index === "index", follow: follow === "follow" },
+    openGraph: {
+      type: "website",
+      title: ogTitle,
+      description: ogDescription,
+      url: canonicalPath,
+      images: ogImageUrl ? [{ url: ogImageUrl }] : undefined,
+    },
+    twitter: {
+      card: ogImageUrl ? "summary_large_image" : "summary",
+      title: ogTitle,
+      description: ogDescription,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
+    },
+  };
 }
 
 export default async function ProductPage({
@@ -78,12 +119,30 @@ export default async function ProductPage({
       : 0;
   const isOutOfStock = product.stock <= 0;
 
+  const productUrl = absoluteUrl(product.seo?.canonicalUrl || `/products/${product.slug}`);
+  const productImageUrls = product.media.filter((item) => item.type === "image").map((item) => absoluteUrl(item.url));
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Shop", path: "/shop" },
+    { name: product.category, path: `/shop?category=${encodeURIComponent(product.category)}` },
+    { name: product.name },
+  ]);
+  const productSchema = buildProductSchema({
+    product,
+    rating,
+    reviews,
+    url: productUrl,
+    imageUrls: productImageUrls,
+  });
+
   return (
     // A soft blush wash behind the whole page instead of stark white - the
     // homepage sections each carry their own color identity now, and this
     // page floating on plain white next to them was a big part of why it
     // read as flat/unfinished by comparison.
     <div className="bg-gradient-to-b from-rose-950/25 via-background to-background">
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={productSchema} />
       <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
         <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 text-xs text-foreground/50">
           <Link href="/" className="hover:text-rose-600">

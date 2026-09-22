@@ -58,7 +58,7 @@ export function QuickViewGallery({
                 }`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={item.url} alt={item.alt ?? name} className="h-full w-full object-cover" />
+                <img src={item.url} alt={item.alt ?? name} className="h-full w-full object-cover" loading="lazy" />
               </button>
             );
           })}

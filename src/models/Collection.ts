@@ -5,11 +5,25 @@ export interface CollectionImage {
   alt?: string;
 }
 
+/** Optional admin overrides for this collection's SEO metadata - same
+ *  shape/intent as `ProductSeoAttributes`, every field falls back to
+ *  something derived from the collection's own real data when left blank. */
+export interface CollectionSeoAttributes {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  metaRobots: "index,follow" | "noindex,follow" | "noindex,nofollow";
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImageUrl?: string;
+}
+
 export interface CollectionAttributes {
   name: string;
   slug: string;
   description?: string;
   image?: CollectionImage;
+  seo?: CollectionSeoAttributes;
   /** Real Product `_id`s only, in display/storefront order - reordering a
    *  collection means rewriting this array, never a separate "position"
    *  field per product. Existence and soft-delete are checked at the lib
@@ -28,6 +42,23 @@ const collectionImageSchema = new Schema<CollectionImage>(
   {
     url: { type: String, required: true },
     alt: { type: String, trim: true },
+  },
+  { _id: false }
+);
+
+const collectionSeoSchema = new Schema<CollectionSeoAttributes>(
+  {
+    title: { type: String, trim: true, maxlength: 70 },
+    description: { type: String, trim: true, maxlength: 160 },
+    canonicalUrl: { type: String, trim: true, maxlength: 300 },
+    metaRobots: {
+      type: String,
+      enum: ["index,follow", "noindex,follow", "noindex,nofollow"],
+      default: "index,follow",
+    },
+    ogTitle: { type: String, trim: true, maxlength: 70 },
+    ogDescription: { type: String, trim: true, maxlength: 200 },
+    ogImageUrl: { type: String, trim: true, maxlength: 500 },
   },
   { _id: false }
 );
@@ -54,6 +85,7 @@ const collectionSchema = new Schema<CollectionAttributes>(
       maxlength: [500, "Description must be at most 500 characters"],
     },
     image: { type: collectionImageSchema },
+    seo: { type: collectionSeoSchema },
     // Database-level guard against duplicate references, mirroring
     // `Product.complementaryProductIds` - the admin API already validates
     // this with Zod, but a path-level validator also covers

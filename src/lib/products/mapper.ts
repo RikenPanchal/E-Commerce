@@ -43,6 +43,19 @@ export function toProductView(product: ProductDocument): ProductView {
       url: item.url,
       alt: item.alt,
     })),
+    seo: product.seo
+      ? {
+          title: product.seo.title,
+          description: product.seo.description,
+          keywords: product.seo.keywords ?? [],
+          canonicalUrl: product.seo.canonicalUrl,
+          metaRobots: product.seo.metaRobots ?? "index,follow",
+          ogTitle: product.seo.ogTitle,
+          ogDescription: product.seo.ogDescription,
+          ogImageUrl: product.seo.ogImageUrl,
+          imageAlt: product.seo.imageAlt,
+        }
+      : undefined,
     isDeleted: product.isDeleted,
     deletedAt: product.deletedAt ? product.deletedAt.toISOString() : undefined,
     createdAt: product.createdAt.toISOString(),

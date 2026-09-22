@@ -5,6 +5,9 @@ import { WishlistProvider } from "@/components/wishlist/WishlistProvider";
 import { RecentlyViewedProvider } from "@/components/recentlyViewed/RecentlyViewedProvider";
 import { ToastProvider } from "@/components/ui/ToastProvider";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildOrganizationSchema, buildWebsiteSchema } from "@/lib/seo/structuredData";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo/site";
 import "./globals.css";
 
 // Kept under its old CSS variable name (`--font-geist-sans`, read by
@@ -31,13 +34,42 @@ const heading = Playfair_Display({
   weight: ["500", "600", "700"],
 });
 
+const DEFAULT_TITLE = `${SITE_NAME} | Women's Fashion`;
+
 export const metadata: Metadata = {
+  // Lets every child page's `alternates.canonical`/`openGraph.images` use a
+  // site-relative path (e.g. `/products/my-dress`) and still resolve to a
+  // real absolute URL - one place to point at the real production domain
+  // (NEXT_PUBLIC_SITE_URL) instead of hardcoding it into every page.
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "E-Commerce | Women's Fashion",
-    template: "%s | E-Commerce",
+    default: DEFAULT_TITLE,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Curated women's fashion, thoughtfully designed for every occasion.",
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  // The real, permanent default - individual private pages (cart, account,
+  // admin, etc.) override this with their own `noindex`.
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: DEFAULT_TITLE,
+    description: SITE_DESCRIPTION,
+    url: "/",
+  },
+  twitter: {
+    card: "summary",
+    title: DEFAULT_TITLE,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
@@ -53,6 +85,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`dark ${bodySans.variable} ${geistMono.variable} ${heading.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <JsonLd data={buildOrganizationSchema()} />
+        <JsonLd data={buildWebsiteSchema()} />
         <ToastProvider>
           <CartProvider userId={user?.id ?? null}>
             <WishlistProvider userId={user?.id ?? null}>

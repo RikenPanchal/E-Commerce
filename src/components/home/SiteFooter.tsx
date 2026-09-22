@@ -72,15 +72,21 @@ export async function SiteFooter({ variant = "light" }: { variant?: "light" | "d
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4 sm:gap-x-10">
           <div className="flex flex-col gap-3">
             <span className={columnHeadingClass}>Shop</span>
-            <a href="/shop" className={linkClass}>
+            <Link href="/shop" className={linkClass}>
               All products
-            </a>
-            <a href="#featured" className={linkClass}>
+            </Link>
+            {/* Both sections only exist on the homepage (see
+                `NewArrivalsSection`/`CategoryShowcase`'s own `id`s) - a bare
+                `#featured`/`#categories` hash only works when already on `/`;
+                from anywhere else it just appended the hash to the current
+                URL and did nothing. Prefixing with `/` navigates to the
+                homepage first, then scrolls to the section, from any page. */}
+            <Link href="/#featured" className={linkClass}>
               New arrivals
-            </a>
-            <a href="#categories" className={linkClass}>
+            </Link>
+            <Link href="/#categories" className={linkClass}>
               Categories
-            </a>
+            </Link>
           </div>
 
           <div className="flex flex-col gap-3">

@@ -8,6 +8,7 @@ import { PageHero } from "@/components/shop/PageHero";
 
 export const metadata: Metadata = {
   title: "Order details",
+  robots: { index: false, follow: false },
 };
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short" });

@@ -9,6 +9,10 @@ import { ProductImage } from "@/components/shop/ProductImage";
 import { StarRating } from "@/components/shop/StarRating";
 import { buttonVariants } from "@/components/ui/Button";
 import { formatCurrency } from "@/lib/utils/currency";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbSchema, buildCollectionPageSchema } from "@/lib/seo/structuredData";
+import { absoluteUrl } from "@/lib/seo/site";
+import { truncateForMeta } from "@/lib/seo/text";
 
 // Below this many pieces, a "hero look + grid" split reads as unbalanced
 // (a single lonely card sitting under a big feature photo) - small edits
@@ -23,7 +27,39 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const collection = await getCollectionBySlug(slug, true);
-  return { title: collection?.name ?? "Collection" };
+  if (!collection) {
+    return { title: "Collection" };
+  }
+
+  const seo = collection.seo;
+  const title = seo?.title || collection.name;
+  const description =
+    seo?.description || (collection.description ? truncateForMeta(collection.description) : undefined);
+  const canonicalPath = seo?.canonicalUrl || `/collections/${collection.slug}`;
+  const ogTitle = seo?.ogTitle || title;
+  const ogDescription = seo?.ogDescription || description;
+  const ogImageUrl = seo?.ogImageUrl || collection.image?.url;
+  const [index, follow] = (seo?.metaRobots ?? "index,follow").split(",") as ["index" | "noindex", "follow" | "nofollow"];
+
+  return {
+    title,
+    description,
+    alternates: { canonical: canonicalPath },
+    robots: { index: index === "index", follow: follow === "follow" },
+    openGraph: {
+      type: "website",
+      title: ogTitle,
+      description: ogDescription,
+      url: canonicalPath,
+      images: ogImageUrl ? [{ url: ogImageUrl }] : undefined,
+    },
+    twitter: {
+      card: ogImageUrl ? "summary_large_image" : "summary",
+      title: ogTitle,
+      description: ogDescription,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
+    },
+  };
 }
 
 export default async function CollectionDetailPage({
@@ -63,8 +99,22 @@ export default async function CollectionDetailPage({
       ? Math.round(((heroProduct.compareAtPrice - heroProduct.price) / heroProduct.compareAtPrice) * 100)
       : 0;
 
+  const collectionUrl = absoluteUrl(collection.seo?.canonicalUrl || `/collections/${collection.slug}`);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Collections", path: "/collections" },
+    { name: collection.name },
+  ]);
+  const collectionSchema = buildCollectionPageSchema({
+    collection,
+    productUrls: products.map((product) => ({ name: product.name, url: absoluteUrl(`/products/${product.slug}`) })),
+    url: collectionUrl,
+  });
+
   return (
     <div className="flex flex-col">
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={collectionSchema} />
       {!collection.isActive ? (
         <div className="bg-burgundy py-2 text-center text-xs font-medium text-foreground">
           Inactive - only visible to admins as a preview
@@ -153,6 +203,7 @@ export default async function CollectionDetailPage({
                     name={heroProduct.name}
                     category={heroProduct.category}
                     className="h-full w-full transition-transform duration-500 ease-out group-hover:scale-105"
+                    priority
                   />
                 </Link>
                 <div className="flex flex-col justify-center gap-3 p-8 sm:p-10">

@@ -21,7 +21,10 @@ export function CartView() {
           title="Your bag is empty"
           description="Find something you'll love."
         />
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-4 py-16 text-center">
+        {/* Same `w-full` reasoning as the non-empty state below - a direct
+            flex item with `mx-auto` needs it or it shrink-to-fits instead of
+            respecting the viewport. */}
+        <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-4 px-4 py-16 text-center">
           <Link href="/shop" className={buttonVariants({ variant: "burgundy" })}>
             Continue shopping
           </Link>
@@ -31,7 +34,7 @@ export function CartView() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex min-w-0 flex-col">
       <PageHero
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Bag" }]}
         eyebrow="Your bag"
@@ -39,7 +42,18 @@ export function CartView() {
         description={`${items.length} ${items.length === 1 ? "item" : "items"} ready for checkout.`}
       />
 
-      <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+      {/* `w-full min-w-0` both matter here: this div is a flex item of the
+          column flex above it, and `mx-auto` on a flex item's cross axis
+          overrides the default `align-items: stretch`, making the browser
+          size it by shrink-to-fit content instead of the container's actual
+          width - which, however deep, ends up including the "Complete your
+          look" carousel's un-scrolled full width (896px, its max-w-4xl cap),
+          forcing this entire page that wide on every screen narrower than
+          that instead of actually scrolling within its own carousel.
+          `w-full` restores the intended "100%, capped at max-w-4xl" sizing;
+          `min-w-0` (same reasoning as `ProductScroller`'s own wrapper)
+          additionally guards against the flex-item min-content default. */}
+      <div className="mx-auto w-full min-w-0 max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-6">
         {items.map((item) => (
           <div
@@ -49,7 +63,12 @@ export function CartView() {
             <div className="flex gap-4">
               {item.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={item.image} alt={item.name} className="h-20 w-20 shrink-0 rounded-lg object-cover" />
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="h-20 w-20 shrink-0 rounded-lg object-cover"
+                  loading="lazy"
+                />
               ) : (
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-black/5 text-xs text-foreground/40 dark:bg-white/10">
                   No photo

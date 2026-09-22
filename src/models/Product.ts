@@ -38,6 +38,24 @@ export interface ProductMediaItem {
   alt?: string;
 }
 
+/** Optional admin overrides for this product's SEO metadata - every field
+ *  falls back to something derived from the product's own real data (name,
+ *  description, category, brand, price - see `buildProductMetadata`) when
+ *  left blank, so SEO never breaks just because nobody filled these in. */
+export interface ProductSeoAttributes {
+  title?: string;
+  description?: string;
+  keywords: string[];
+  canonicalUrl?: string;
+  metaRobots: "index,follow" | "noindex,follow" | "noindex,nofollow";
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImageUrl?: string;
+  /** Overrides the primary product photo's alt text specifically - the
+   *  rest of the gallery keeps each image's own per-photo `alt`. */
+  imageAlt?: string;
+}
+
 export interface ProductAttributes {
   name: string;
   slug: string;
@@ -62,6 +80,7 @@ export interface ProductAttributes {
   tags: string[];
   isFeatured: boolean;
   media: ProductMediaItem[];
+  seo?: ProductSeoAttributes;
   isDeleted: boolean;
   deletedAt?: Date | null;
   createdAt: Date;
@@ -83,6 +102,25 @@ const productColorSchema = new Schema<ProductColor>(
   {
     name: { type: String, required: true, trim: true },
     hex: { type: String, trim: true },
+  },
+  { _id: false }
+);
+
+const productSeoSchema = new Schema<ProductSeoAttributes>(
+  {
+    title: { type: String, trim: true, maxlength: 70 },
+    description: { type: String, trim: true, maxlength: 160 },
+    keywords: { type: [String], default: [] },
+    canonicalUrl: { type: String, trim: true, maxlength: 300 },
+    metaRobots: {
+      type: String,
+      enum: ["index,follow", "noindex,follow", "noindex,nofollow"],
+      default: "index,follow",
+    },
+    ogTitle: { type: String, trim: true, maxlength: 70 },
+    ogDescription: { type: String, trim: true, maxlength: 200 },
+    ogImageUrl: { type: String, trim: true, maxlength: 500 },
+    imageAlt: { type: String, trim: true, maxlength: 125 },
   },
   { _id: false }
 );
@@ -217,6 +255,7 @@ const productSchema = new Schema<ProductAttributes>(
     tags: { type: [String], default: [] },
     isFeatured: { type: Boolean, default: false },
     media: { type: [productMediaSchema], default: [] },
+    seo: { type: productSeoSchema },
     isDeleted: { type: Boolean, default: false },
     deletedAt: { type: Date, default: null },
   },

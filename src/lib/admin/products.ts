@@ -245,13 +245,45 @@ export async function getProductViewById(id: string): Promise<ProductView | null
   return product ? toProductView(product) : null;
 }
 
+/** Builds the nested `seo` sub-document from the flat form-input fields -
+ *  `undefined` (never a meaningless stub) when the admin left every SEO
+ *  field blank/default, same idea as Collection's own `buildSeoUpdate`. */
+function buildProductSeoUpdate(input: ProductInput) {
+  const hasOverrides =
+    input.seoTitle ||
+    input.seoDescription ||
+    input.seoKeywords.length > 0 ||
+    input.seoCanonicalUrl ||
+    input.seoOgTitle ||
+    input.seoOgDescription ||
+    input.seoOgImageUrl ||
+    input.seoImageAlt ||
+    input.seoMetaRobots !== "index,follow";
+  if (!hasOverrides) return undefined;
+  return {
+    title: input.seoTitle,
+    description: input.seoDescription,
+    keywords: input.seoKeywords,
+    canonicalUrl: input.seoCanonicalUrl,
+    metaRobots: input.seoMetaRobots,
+    ogTitle: input.seoOgTitle,
+    ogDescription: input.seoOgDescription,
+    ogImageUrl: input.seoOgImageUrl,
+    imageAlt: input.seoImageAlt,
+  };
+}
+
 export async function createProduct(
   input: ProductInput,
   files: File[]
 ): Promise<ProductDocument> {
   await connectDB();
 
-  const slug = await generateUniqueSlug(input.name);
+  // An admin-provided slug is used as-is - if it's already taken, the
+  // schema's own unique index rejects the write and the API route's
+  // existing `isDuplicateKeyError` handling surfaces that, the same way a
+  // duplicate name/SKU already does. Left blank, behavior is unchanged.
+  const slug = input.slug ? input.slug : await generateUniqueSlug(input.name);
   const sku = input.sku?.trim() ? input.sku.toUpperCase() : generateSku(slug);
   const _id = new Types.ObjectId();
   const productId = _id.toString();
@@ -263,9 +295,10 @@ export async function createProduct(
     sku: variant.sku?.trim() ? variant.sku : generateVariantSku(sku, variant.color, variant.size),
   }));
   const complementaryProductIds = await resolveComplementaryProductIds(input.complementaryProductIds, productId);
+  const seo = buildProductSeoUpdate(input);
 
   try {
-    return await Product.create({ _id, ...input, slug, sku, stock, variants, complementaryProductIds, media });
+    return await Product.create({ _id, ...input, slug, sku, stock, variants, complementaryProductIds, media, seo });
   } catch (error) {
     // Roll back any files already written before the DB write failed.
     await Promise.all(media.map((item) => deleteProductMediaFile(item.url)));
@@ -302,7 +335,10 @@ export async function updateProductFields(
     return existingId ? { _id: existingId, ...variant } : variant;
   });
 
-  const slug = await generateUniqueSlug(input.name, id);
+  // Same "admin-provided slug is used as-is" behavior as `createProduct` -
+  // left blank, the existing auto-regenerate-from-name behavior is
+  // unchanged.
+  const slug = input.slug ? input.slug : await generateUniqueSlug(input.name, id);
   const complementaryProductIds = await resolveComplementaryProductIds(input.complementaryProductIds, id);
   const update = {
     ...input,
@@ -311,6 +347,7 @@ export async function updateProductFields(
     stock: resolveTopLevelStock(input),
     complementaryProductIds,
     sku: input.sku?.trim() ? input.sku.toUpperCase() : undefined,
+    seo: buildProductSeoUpdate(input) ?? null,
   };
   if (!update.sku) {
     delete update.sku;

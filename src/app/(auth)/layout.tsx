@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import { AuthBrandPanel } from "@/components/auth/AuthBrandPanel";
+
+// Covers all four auth pages (sign in, sign up, forgot/reset password) in
+// one place - none of them are real search-landing pages, and indexing a
+// reset-password link is actively harmful (it's a one-time token URL).
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (

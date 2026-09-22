@@ -10,6 +10,7 @@ import { buttonVariants } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "My orders",
+  robots: { index: false, follow: false },
 };
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", { dateStyle: "medium" });

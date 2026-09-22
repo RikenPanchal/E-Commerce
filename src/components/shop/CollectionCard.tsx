@@ -63,7 +63,12 @@ function PreviewMosaic({ images }: { images: PreviewImage[] }) {
 function Tile({ image, className = "" }: { image: PreviewImage; className?: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={image.url} alt={image.alt} className={`h-full w-full object-cover ${className}`} />
+    <img
+      src={image.url}
+      alt={image.alt}
+      className={`h-full w-full object-cover ${className}`}
+      loading="lazy"
+    />
   );
 }
 

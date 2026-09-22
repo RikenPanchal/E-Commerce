@@ -338,3 +338,26 @@ export async function getPublicProductBySlug(slug: string): Promise<ProductView 
   const product = await Product.findOne({ slug, isDeleted: false });
   return product ? toProductView(product) : null;
 }
+
+export interface SitemapEntry {
+  slug: string;
+  updatedAt: Date;
+}
+
+/** Every real, currently-public product's slug + last-modified date, for
+ *  the sitemap only - a lean projection (no media/variants/description
+ *  etc.) rather than reusing `getPublicProducts`' full `ProductView`
+ *  mapping, since the sitemap needs none of that. Excludes any product an
+ *  admin has explicitly set to `noindex` via its SEO fields - the sitemap
+ *  is a list of pages worth crawling, and listing a page the page itself
+ *  tells crawlers not to index would be a direct contradiction. */
+export async function getAllProductSlugsForSitemap(): Promise<SitemapEntry[]> {
+  await connectDB();
+  const products = await Product.find({
+    isDeleted: false,
+    "seo.metaRobots": { $nin: ["noindex,follow", "noindex,nofollow"] },
+  })
+    .select("slug updatedAt")
+    .lean();
+  return products.map((product) => ({ slug: product.slug, updatedAt: product.updatedAt }));
+}

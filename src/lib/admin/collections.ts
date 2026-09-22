@@ -16,8 +16,44 @@ export function toCollectionView(collection: CollectionDocument): CollectionView
     image: collection.image ? { url: collection.image.url, alt: collection.image.alt } : undefined,
     productIds: collection.productIds.map((id) => id.toString()),
     isActive: collection.isActive,
+    seo: collection.seo
+      ? {
+          title: collection.seo.title,
+          description: collection.seo.description,
+          canonicalUrl: collection.seo.canonicalUrl,
+          metaRobots: collection.seo.metaRobots ?? "index,follow",
+          ogTitle: collection.seo.ogTitle,
+          ogDescription: collection.seo.ogDescription,
+          ogImageUrl: collection.seo.ogImageUrl,
+        }
+      : undefined,
     createdAt: collection.createdAt.toISOString(),
     updatedAt: collection.updatedAt.toISOString(),
+  };
+}
+
+/** Builds the nested `seo` sub-document from the flat form-input fields -
+ *  `undefined` (never an empty object) when the admin left every SEO field
+ *  blank, so a plain collection save doesn't start persisting a meaningless
+ *  `{ metaRobots: "index,follow" }` stub forever. */
+function buildSeoUpdate(input: CollectionInput) {
+  const hasOverrides =
+    input.seoTitle ||
+    input.seoDescription ||
+    input.seoCanonicalUrl ||
+    input.seoOgTitle ||
+    input.seoOgDescription ||
+    input.seoOgImageUrl ||
+    input.seoMetaRobots !== "index,follow";
+  if (!hasOverrides) return undefined;
+  return {
+    title: input.seoTitle,
+    description: input.seoDescription,
+    canonicalUrl: input.seoCanonicalUrl,
+    metaRobots: input.seoMetaRobots,
+    ogTitle: input.seoOgTitle,
+    ogDescription: input.seoOgDescription,
+    ogImageUrl: input.seoOgImageUrl,
   };
 }
 
@@ -101,6 +137,7 @@ export async function createCollection(input: CollectionInput, imageFile?: File)
       productIds,
       isActive: input.isActive,
       image,
+      seo: buildSeoUpdate(input),
     });
     return { collection };
   } catch (error) {
@@ -152,6 +189,7 @@ export async function updateCollection(
       productIds,
       isActive: input.isActive,
       image: image ?? null,
+      seo: buildSeoUpdate(input) ?? null,
     },
     { new: true, runValidators: true }
   );

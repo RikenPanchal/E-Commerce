@@ -3,10 +3,30 @@ import Link from "next/link";
 import { getActiveCollections, getCollectionProducts } from "@/lib/shop/collections";
 import { CollectionCard } from "@/components/shop/CollectionCard";
 import { buttonVariants } from "@/components/ui/Button";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbSchema } from "@/lib/seo/structuredData";
+
+const COLLECTIONS_DESCRIPTION =
+  "Browse our curated edits - themed collections of women's fashion, hand-picked from the catalog for every occasion.";
 
 export const metadata: Metadata = {
   title: "Collections",
+  description: COLLECTIONS_DESCRIPTION,
+  alternates: { canonical: "/collections" },
+  openGraph: {
+    type: "website",
+    title: "Collections",
+    description: COLLECTIONS_DESCRIPTION,
+    url: "/collections",
+  },
+  twitter: {
+    card: "summary",
+    title: "Collections",
+    description: COLLECTIONS_DESCRIPTION,
+  },
 };
+
+const breadcrumbSchema = buildBreadcrumbSchema([{ name: "Home", path: "/" }, { name: "Collections" }]);
 
 const PREVIEW_PRODUCTS_PER_CARD = 4;
 
@@ -20,6 +40,7 @@ export default async function CollectionsPage() {
 
   return (
     <div className="flex flex-col">
+      <JsonLd data={breadcrumbSchema} />
       <div className="bg-background">
         <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
           <nav

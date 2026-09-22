@@ -78,7 +78,10 @@ function FieldError({ message }: { message?: string }) {
   return <p className="text-xs text-red-500">{message}</p>;
 }
 
-export function ProductForm({ product, complementaryProducts = [] }: ProductFormProps) {
+export function ProductForm({
+  product,
+  complementaryProducts = [],
+}: ProductFormProps) {
   const router = useRouter();
   const isEdit = Boolean(product);
 
@@ -120,23 +123,54 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
           color: variant.color,
           sku: variant.sku ?? "",
           price: variant.price !== undefined ? String(variant.price) : "",
-          compareAtPrice: variant.compareAtPrice !== undefined ? String(variant.compareAtPrice) : "",
+          compareAtPrice:
+            variant.compareAtPrice !== undefined
+              ? String(variant.compareAtPrice)
+              : "",
           stock: String(variant.stock),
           isActive: variant.isActive,
         }),
       ) ?? [],
   );
-  const [complements, setComplements] = useState<{ id: string; name: string }[]>(
-    () => complementaryProducts.map((item) => ({ id: item.id, name: item.name })),
+  const [complements, setComplements] = useState<
+    { id: string; name: string }[]
+  >(() =>
+    complementaryProducts.map((item) => ({ id: item.id, name: item.name })),
   );
   const [complementQuery, setComplementQuery] = useState("");
-  const [complementResults, setComplementResults] = useState<{ id: string; name: string }[]>([]);
+  const [complementResults, setComplementResults] = useState<
+    { id: string; name: string }[]
+  >([]);
   const [isSearchingComplements, setIsSearchingComplements] = useState(false);
 
   const [material, setMaterial] = useState(product?.material ?? "");
   const [brand, setBrand] = useState(product?.brand ?? "");
   const [tags, setTags] = useState<string[]>(product?.tags ?? []);
   const [tagDraft, setTagDraft] = useState("");
+
+  const [slug, setSlug] = useState(product?.slug ?? "");
+  const [seoTitle, setSeoTitle] = useState(product?.seo?.title ?? "");
+  const [seoDescription, setSeoDescription] = useState(
+    product?.seo?.description ?? "",
+  );
+  const [seoKeywords, setSeoKeywords] = useState<string[]>(
+    product?.seo?.keywords ?? [],
+  );
+  const [seoKeywordDraft, setSeoKeywordDraft] = useState("");
+  const [seoCanonicalUrl, setSeoCanonicalUrl] = useState(
+    product?.seo?.canonicalUrl ?? "",
+  );
+  const [seoMetaRobots, setSeoMetaRobots] = useState(
+    product?.seo?.metaRobots ?? "index,follow",
+  );
+  const [seoOgTitle, setSeoOgTitle] = useState(product?.seo?.ogTitle ?? "");
+  const [seoOgDescription, setSeoOgDescription] = useState(
+    product?.seo?.ogDescription ?? "",
+  );
+  const [seoOgImageUrl, setSeoOgImageUrl] = useState(
+    product?.seo?.ogImageUrl ?? "",
+  );
+  const [seoImageAlt, setSeoImageAlt] = useState(product?.seo?.imageAlt ?? "");
   const [isFeatured, setIsFeatured] = useState(product?.isFeatured ?? false);
 
   const [newFiles, setNewFiles] = useState<File[]>([]);
@@ -172,7 +206,12 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
       previous.map((color) => {
         if (color.id !== id) return color;
         const matchedHex = color.hexTouched ? undefined : hexForColorName(name);
-        return { ...color, name, hex: matchedHex ?? color.hex, nameTouched: true };
+        return {
+          ...color,
+          name,
+          hex: matchedHex ?? color.hex,
+          nameTouched: true,
+        };
       }),
     );
   }
@@ -185,7 +224,12 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
         // typed one - picking a swatch on a color they've named "Dusty
         // Rose" shouldn't rename it to whatever the nearest match is.
         const matchedName = color.nameTouched ? undefined : nameForHex(hex);
-        return { ...color, hex, hexTouched: true, name: matchedName ?? color.name };
+        return {
+          ...color,
+          hex,
+          hexTouched: true,
+          name: matchedName ?? color.name,
+        };
       }),
     );
   }
@@ -201,7 +245,9 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
   // discard work already done on the others.
   function generateVariantRows() {
     const colorNames = colors.map((color) => color.name.trim()).filter(Boolean);
-    const existingCombos = new Set(variants.map((row) => variantComboKey(row.size, row.color)));
+    const existingCombos = new Set(
+      variants.map((row) => variantComboKey(row.size, row.color)),
+    );
 
     const toAdd: VariantRow[] = [];
     if (sizes.length > 0 && colorNames.length > 0) {
@@ -239,7 +285,9 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
   }
 
   function updateVariantRow(id: string, patch: Partial<VariantRow>) {
-    setVariants((previous) => previous.map((row) => (row.id === id ? { ...row, ...patch } : row)));
+    setVariants((previous) =>
+      previous.map((row) => (row.id === id ? { ...row, ...patch } : row)),
+    );
   }
 
   function removeVariantRow(id: string) {
@@ -257,7 +305,10 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
     const key = row.sku.trim().toUpperCase();
     variantSkuCounts.set(key, (variantSkuCounts.get(key) ?? 0) + 1);
   }
-  const totalVariantStock = variants.reduce((sum, row) => sum + (Number(row.stock) || 0), 0);
+  const totalVariantStock = variants.reduce(
+    (sum, row) => sum + (Number(row.stock) || 0),
+    0,
+  );
   const MAX_COMPLEMENTS = 8;
 
   // Debounced live search against the existing public catalog search - the
@@ -277,10 +328,18 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
     setIsSearchingComplements(true);
     const timeout = window.setTimeout(() => {
       fetch(`/api/products?q=${encodeURIComponent(query)}&page=0`)
-        .then((res) => (res.ok ? (res.json() as Promise<ProductsPageResponse>) : Promise.reject()))
+        .then((res) =>
+          res.ok
+            ? (res.json() as Promise<ProductsPageResponse>)
+            : Promise.reject(),
+        )
         .then((data) => {
           if (cancelled) return;
-          const selectedIds = new Set([product?.id, ...complements.map((item) => item.id)].filter(Boolean));
+          const selectedIds = new Set(
+            [product?.id, ...complements.map((item) => item.id)].filter(
+              Boolean,
+            ),
+          );
           setComplementResults(
             data.products
               .filter((item) => !selectedIds.has(item.id))
@@ -304,7 +363,11 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
 
   function addComplement(item: { id: string; name: string }) {
     if (complements.length >= MAX_COMPLEMENTS) return;
-    setComplements((previous) => (previous.some((row) => row.id === item.id) ? previous : [...previous, item]));
+    setComplements((previous) =>
+      previous.some((row) => row.id === item.id)
+        ? previous
+        : [...previous, item],
+    );
     setComplementQuery("");
     setComplementResults([]);
   }
@@ -326,6 +389,25 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
       event.preventDefault();
       addTag();
     }
+  }
+
+  function addSeoKeyword() {
+    const value = seoKeywordDraft.trim();
+    if (value && !seoKeywords.includes(value) && seoKeywords.length < 15) {
+      setSeoKeywords((previous) => [...previous, value]);
+    }
+    setSeoKeywordDraft("");
+  }
+
+  function handleSeoKeywordKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter" || event.key === ",") {
+      event.preventDefault();
+      addSeoKeyword();
+    }
+  }
+
+  function removeSeoKeyword(keyword: string) {
+    setSeoKeywords((previous) => previous.filter((item) => item !== keyword));
   }
 
   function removeTag(tag: string) {
@@ -364,17 +446,35 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
           color: row.color,
           sku: row.sku.trim() || undefined,
           price: row.price.trim() ? row.price : undefined,
-          compareAtPrice: row.compareAtPrice.trim() ? row.compareAtPrice : undefined,
+          compareAtPrice: row.compareAtPrice.trim()
+            ? row.compareAtPrice
+            : undefined,
           stock: row.stock,
           isActive: row.isActive,
         })),
       ),
     );
-    formData.append("complementaryProductIds", JSON.stringify(complements.map((item) => item.id)));
+    formData.append(
+      "complementaryProductIds",
+      JSON.stringify(complements.map((item) => item.id)),
+    );
     if (material.trim()) formData.append("material", material);
     if (brand.trim()) formData.append("brand", brand);
     formData.append("tags", JSON.stringify(tags));
     formData.append("isFeatured", String(isFeatured));
+    if (slug.trim()) formData.append("slug", slug);
+    if (seoTitle.trim()) formData.append("seoTitle", seoTitle);
+    if (seoDescription.trim())
+      formData.append("seoDescription", seoDescription);
+    formData.append("seoKeywords", JSON.stringify(seoKeywords));
+    if (seoCanonicalUrl.trim())
+      formData.append("seoCanonicalUrl", seoCanonicalUrl);
+    formData.append("seoMetaRobots", seoMetaRobots);
+    if (seoOgTitle.trim()) formData.append("seoOgTitle", seoOgTitle);
+    if (seoOgDescription.trim())
+      formData.append("seoOgDescription", seoOgDescription);
+    if (seoOgImageUrl.trim()) formData.append("seoOgImageUrl", seoOgImageUrl);
+    if (seoImageAlt.trim()) formData.append("seoImageAlt", seoImageAlt);
     newFiles.forEach((file) => formData.append("media", file));
     if (isEdit && removedMediaIds.length > 0) {
       formData.append("removeMediaIds", JSON.stringify(removedMediaIds));
@@ -526,7 +626,9 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
               className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 disabled:bg-black/[.03] disabled:text-foreground/50 dark:border-white/15 dark:disabled:bg-white/[.03]"
             />
             {variants.length > 0 ? (
-              <p className="text-xs text-foreground/50">Calculated automatically from variant stock below</p>
+              <p className="text-xs text-foreground/50">
+                Calculated automatically from variant stock below
+              </p>
             ) : null}
             <FieldError message={fieldErrors.stock} />
           </div>
@@ -583,8 +685,8 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
             const suggestedHex = hexForColorName(color.name);
             const hasMismatch = Boolean(
               suggestedHex &&
-                color.name.trim().length > 0 &&
-                suggestedHex.toLowerCase() !== color.hex.toLowerCase(),
+              color.name.trim().length > 0 &&
+              suggestedHex.toLowerCase() !== color.hex.toLowerCase(),
             );
             return (
               <div key={color.id} className="flex flex-col gap-1.5">
@@ -620,7 +722,8 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
                       style={{ backgroundColor: suggestedHex }}
                     />
                     <span>
-                      This swatch doesn&apos;t look like &quot;{color.name}&quot; - customers will see the wrong color.
+                      This swatch doesn&apos;t look like &quot;{color.name}
+                      &quot; - customers will see the wrong color.
                     </span>
                     <button
                       type="button"
@@ -650,10 +753,13 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
         <div className="flex flex-col gap-2 border-t border-black/10 pt-4 dark:border-white/10">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex flex-col gap-0.5">
-              <span className="text-sm font-medium text-foreground">Variant pricing &amp; stock (optional)</span>
+              <span className="text-sm font-medium text-foreground">
+                Variant pricing &amp; stock (optional)
+              </span>
               <span className="text-xs text-foreground/50">
-                Give a specific size/color combination its own SKU, price, or stock. Leave empty to use one shared
-                price and stock for every combination.
+                Give a specific size/color combination its own SKU, price, or
+                stock. Leave empty to use one shared price and stock for every
+                combination.
               </span>
             </div>
             <div className="flex gap-2">
@@ -681,14 +787,52 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
               <table className="w-full min-w-[720px] border-collapse text-left text-xs">
                 <thead>
                   <tr className="border-b border-black/10 bg-black/[.02] dark:border-white/15 dark:bg-white/[.03]">
-                    <th scope="col" className="px-2.5 py-2 font-medium text-foreground/70">Color</th>
-                    <th scope="col" className="px-2.5 py-2 font-medium text-foreground/70">Size</th>
-                    <th scope="col" className="px-2.5 py-2 font-medium text-foreground/70">SKU</th>
-                    <th scope="col" className="px-2.5 py-2 font-medium text-foreground/70">Price</th>
-                    <th scope="col" className="px-2.5 py-2 font-medium text-foreground/70">Compare-at</th>
-                    <th scope="col" className="px-2.5 py-2 font-medium text-foreground/70">Stock</th>
-                    <th scope="col" className="px-2.5 py-2 font-medium text-foreground/70">Active</th>
-                    <th scope="col" className="px-2.5 py-2 font-medium text-foreground/70">
+                    <th
+                      scope="col"
+                      className="px-2.5 py-2 font-medium text-foreground/70"
+                    >
+                      Color
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-2.5 py-2 font-medium text-foreground/70"
+                    >
+                      Size
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-2.5 py-2 font-medium text-foreground/70"
+                    >
+                      SKU
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-2.5 py-2 font-medium text-foreground/70"
+                    >
+                      Price
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-2.5 py-2 font-medium text-foreground/70"
+                    >
+                      Compare-at
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-2.5 py-2 font-medium text-foreground/70"
+                    >
+                      Stock
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-2.5 py-2 font-medium text-foreground/70"
+                    >
+                      Active
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-2.5 py-2 font-medium text-foreground/70"
+                    >
                       <span className="sr-only">Actions</span>
                     </th>
                   </tr>
@@ -696,22 +840,32 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
                 <tbody>
                   {variants.map((row) => {
                     const comboKey = variantComboKey(row.size, row.color);
-                    const isDuplicateCombo = (variantComboCounts.get(comboKey) ?? 0) > 1;
+                    const isDuplicateCombo =
+                      (variantComboCounts.get(comboKey) ?? 0) > 1;
                     const isDuplicateSku =
-                      row.sku.trim().length > 0 && (variantSkuCounts.get(row.sku.trim().toUpperCase()) ?? 0) > 1;
+                      row.sku.trim().length > 0 &&
+                      (variantSkuCounts.get(row.sku.trim().toUpperCase()) ??
+                        0) > 1;
                     return (
-                      <tr key={row.id} className="border-b border-black/10 last:border-0 dark:border-white/10">
+                      <tr
+                        key={row.id}
+                        className="border-b border-black/10 last:border-0 dark:border-white/10"
+                      >
                         <td className="px-2.5 py-2">
                           <select
                             value={row.color ?? ""}
                             onChange={(event) =>
-                              updateVariantRow(row.id, { color: event.target.value || undefined })
+                              updateVariantRow(row.id, {
+                                color: event.target.value || undefined,
+                              })
                             }
                             className={`rounded-md border bg-background px-2 py-1.5 text-xs text-foreground outline-none focus:border-rose-400 ${
-                              isDuplicateCombo ? "border-red-400" : "border-black/10 dark:border-white/15"
+                              isDuplicateCombo
+                                ? "border-red-400"
+                                : "border-black/10 dark:border-white/15"
                             }`}
                           >
-                            <option value="">—</option>
+                            <option value="">-</option>
                             {colors
                               .filter((color) => color.name.trim())
                               .map((color) => (
@@ -726,14 +880,18 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
                             value={row.size ?? ""}
                             onChange={(event) =>
                               updateVariantRow(row.id, {
-                                size: (event.target.value || undefined) as ProductSize | undefined,
+                                size: (event.target.value || undefined) as
+                                  | ProductSize
+                                  | undefined,
                               })
                             }
                             className={`rounded-md border bg-background px-2 py-1.5 text-xs text-foreground outline-none focus:border-rose-400 ${
-                              isDuplicateCombo ? "border-red-400" : "border-black/10 dark:border-white/15"
+                              isDuplicateCombo
+                                ? "border-red-400"
+                                : "border-black/10 dark:border-white/15"
                             }`}
                           >
-                            <option value="">—</option>
+                            <option value="">-</option>
                             {sizes.map((sizeValue) => (
                               <option key={sizeValue} value={sizeValue}>
                                 {sizeValue}
@@ -744,10 +902,16 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
                         <td className="px-2.5 py-2">
                           <input
                             value={row.sku}
-                            onChange={(event) => updateVariantRow(row.id, { sku: event.target.value })}
+                            onChange={(event) =>
+                              updateVariantRow(row.id, {
+                                sku: event.target.value,
+                              })
+                            }
                             placeholder="Auto"
                             className={`w-24 rounded-md border bg-transparent px-2 py-1.5 text-xs outline-none focus:border-rose-400 ${
-                              isDuplicateSku ? "border-red-400" : "border-black/10 dark:border-white/15"
+                              isDuplicateSku
+                                ? "border-red-400"
+                                : "border-black/10 dark:border-white/15"
                             }`}
                           />
                         </td>
@@ -757,7 +921,11 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
                             min="0"
                             step="0.01"
                             value={row.price}
-                            onChange={(event) => updateVariantRow(row.id, { price: event.target.value })}
+                            onChange={(event) =>
+                              updateVariantRow(row.id, {
+                                price: event.target.value,
+                              })
+                            }
                             placeholder={price || "Base"}
                             className="w-20 rounded-md border border-black/10 bg-transparent px-2 py-1.5 text-xs outline-none focus:border-rose-400 dark:border-white/15"
                           />
@@ -768,8 +936,12 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
                             min="0"
                             step="0.01"
                             value={row.compareAtPrice}
-                            onChange={(event) => updateVariantRow(row.id, { compareAtPrice: event.target.value })}
-                            placeholder="—"
+                            onChange={(event) =>
+                              updateVariantRow(row.id, {
+                                compareAtPrice: event.target.value,
+                              })
+                            }
+                            placeholder="-"
                             className="w-20 rounded-md border border-black/10 bg-transparent px-2 py-1.5 text-xs outline-none focus:border-rose-400 dark:border-white/15"
                           />
                         </td>
@@ -779,7 +951,11 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
                             min="0"
                             step="1"
                             value={row.stock}
-                            onChange={(event) => updateVariantRow(row.id, { stock: event.target.value })}
+                            onChange={(event) =>
+                              updateVariantRow(row.id, {
+                                stock: event.target.value,
+                              })
+                            }
                             className="w-16 rounded-md border border-black/10 bg-transparent px-2 py-1.5 text-xs outline-none focus:border-rose-400 dark:border-white/15"
                           />
                         </td>
@@ -787,7 +963,11 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
                           <input
                             type="checkbox"
                             checked={row.isActive}
-                            onChange={(event) => updateVariantRow(row.id, { isActive: event.target.checked })}
+                            onChange={(event) =>
+                              updateVariantRow(row.id, {
+                                isActive: event.target.checked,
+                              })
+                            }
                             className="accent-rose-600"
                             aria-label="Variant active"
                           />
@@ -806,16 +986,25 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
                   })}
                 </tbody>
               </table>
-              {variants.some((row) => (variantComboCounts.get(variantComboKey(row.size, row.color)) ?? 0) > 1) ? (
+              {variants.some(
+                (row) =>
+                  (variantComboCounts.get(
+                    variantComboKey(row.size, row.color),
+                  ) ?? 0) > 1,
+              ) ? (
                 <p className="border-t border-black/10 px-2.5 py-2 text-xs text-red-500 dark:border-white/10">
-                  Two or more variants share the same size and color - each combination must be unique.
+                  Two or more variants share the same size and color - each
+                  combination must be unique.
                 </p>
               ) : null}
               {variants.some(
-                (row) => row.sku.trim() && (variantSkuCounts.get(row.sku.trim().toUpperCase()) ?? 0) > 1,
+                (row) =>
+                  row.sku.trim() &&
+                  (variantSkuCounts.get(row.sku.trim().toUpperCase()) ?? 0) > 1,
               ) ? (
                 <p className="border-t border-black/10 px-2.5 py-2 text-xs text-red-500 dark:border-white/10">
-                  Two or more variants share the same SKU - each SKU must be unique.
+                  Two or more variants share the same SKU - each SKU must be
+                  unique.
                 </p>
               ) : null}
             </div>
@@ -826,10 +1015,13 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
 
       <section className="flex flex-col gap-4">
         <div>
-          <h2 className="text-sm font-semibold text-foreground">Complete the Look</h2>
+          <h2 className="text-sm font-semibold text-foreground">
+            Complete the Look
+          </h2>
           <p className="text-xs text-foreground/50">
-            Pick real products from the catalog that pair well with this one (e.g. a bag or jewelry for a dress).
-            Shown on the product page instead of a generic recommendation when set.
+            Pick real products from the catalog that pair well with this one
+            (e.g. a bag or jewelry for a dress). Shown on the product page
+            instead of a generic recommendation when set.
           </p>
         </div>
 
@@ -866,7 +1058,9 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
               {complementQuery.trim() ? (
                 <div className="absolute z-10 mt-1 w-full rounded-md border border-black/10 bg-background shadow-lg dark:border-white/15">
                   {isSearchingComplements ? (
-                    <p className="px-3 py-2 text-xs text-foreground/50">Searching...</p>
+                    <p className="px-3 py-2 text-xs text-foreground/50">
+                      Searching...
+                    </p>
                   ) : complementResults.length > 0 ? (
                     complementResults.map((item) => (
                       <button
@@ -879,13 +1073,17 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
                       </button>
                     ))
                   ) : (
-                    <p className="px-3 py-2 text-xs text-foreground/50">No matching products</p>
+                    <p className="px-3 py-2 text-xs text-foreground/50">
+                      No matching products
+                    </p>
                   )}
                 </div>
               ) : null}
             </div>
           ) : (
-            <p className="text-xs text-foreground/50">Maximum of {MAX_COMPLEMENTS} reached.</p>
+            <p className="text-xs text-foreground/50">
+              Maximum of {MAX_COMPLEMENTS} reached.
+            </p>
           )}
           <FieldError message={fieldErrors.complementaryProductIds} />
         </div>
@@ -965,6 +1163,222 @@ export function ProductForm({ product, complementaryProducts = [] }: ProductForm
           />
           Feature on the homepage
         </label>
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <div>
+          <h2 className="text-sm font-semibold text-foreground">SEO</h2>
+          <p className="text-xs text-foreground/50">
+            Every field here is optional - left blank, the product page builds
+            real metadata from the name/description/category/brand/price above
+            instead.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="slug" className="text-sm font-medium text-foreground">
+            URL slug
+          </label>
+          <input
+            id="slug"
+            value={slug}
+            onChange={(event) => setSlug(event.target.value)}
+            placeholder="Leave blank to generate from the name"
+            className="rounded-md border border-black/10 bg-transparent px-3 py-2 font-mono text-sm outline-none focus:border-rose-400 dark:border-white/15"
+          />
+          <p className="text-xs text-foreground/50">
+            Lowercase letters, numbers and hyphens only.
+          </p>
+          <FieldError message={fieldErrors.slug} />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="seoTitle"
+            className="text-sm font-medium text-foreground"
+          >
+            SEO title
+          </label>
+          <input
+            id="seoTitle"
+            value={seoTitle}
+            onChange={(event) => setSeoTitle(event.target.value)}
+            placeholder={name || "Falls back to the product name"}
+            maxLength={70}
+            className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+          />
+          <p className="text-xs text-foreground/50">{seoTitle.length}/70</p>
+          <FieldError message={fieldErrors.seoTitle} />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="seoDescription"
+            className="text-sm font-medium text-foreground"
+          >
+            Meta description
+          </label>
+          <textarea
+            id="seoDescription"
+            value={seoDescription}
+            onChange={(event) => setSeoDescription(event.target.value)}
+            rows={2}
+            maxLength={160}
+            placeholder="Falls back to the start of the product description"
+            className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+          />
+          <p className="text-xs text-foreground/50">
+            {seoDescription.length}/160
+          </p>
+          <FieldError message={fieldErrors.seoDescription} />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <span className="text-sm font-medium text-foreground">
+            Focus keywords
+          </span>
+          <div className="flex flex-wrap items-center gap-2 rounded-md border border-black/10 px-2 py-1.5 dark:border-white/15">
+            {seoKeywords.map((keyword) => (
+              <span
+                key={keyword}
+                className="flex items-center gap-1 rounded-full bg-black/5 px-2.5 py-1 text-xs text-foreground/80 dark:bg-white/10"
+              >
+                {keyword}
+                <button
+                  type="button"
+                  onClick={() => removeSeoKeyword(keyword)}
+                  className="text-foreground/50"
+                >
+                  &times;
+                </button>
+              </span>
+            ))}
+            <input
+              value={seoKeywordDraft}
+              onChange={(event) => setSeoKeywordDraft(event.target.value)}
+              onKeyDown={handleSeoKeywordKeyDown}
+              onBlur={addSeoKeyword}
+              placeholder="Type and press Enter"
+              className="min-w-[8rem] flex-1 bg-transparent px-1 py-1 text-sm outline-none"
+            />
+          </div>
+          <p className="text-xs text-foreground/50">
+            Falls back to the product name, category, brand and tags when left
+            empty.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-1.5">
+            <label
+              htmlFor="seoCanonicalUrl"
+              className="text-sm font-medium text-foreground"
+            >
+              Canonical URL
+            </label>
+            <input
+              id="seoCanonicalUrl"
+              value={seoCanonicalUrl}
+              onChange={(event) => setSeoCanonicalUrl(event.target.value)}
+              placeholder="Falls back to this product's own URL"
+              className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+            />
+            <FieldError message={fieldErrors.seoCanonicalUrl} />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label
+              htmlFor="seoMetaRobots"
+              className="text-sm font-medium text-foreground"
+            >
+              Meta robots
+            </label>
+            <select
+              id="seoMetaRobots"
+              value={seoMetaRobots}
+              onChange={(event) =>
+                setSeoMetaRobots(event.target.value as typeof seoMetaRobots)
+              }
+              className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+            >
+              <option value="index,follow">Index, follow (default)</option>
+              <option value="noindex,follow">Noindex, follow</option>
+              <option value="noindex,nofollow">Noindex, nofollow</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-1.5">
+            <label
+              htmlFor="seoOgTitle"
+              className="text-sm font-medium text-foreground"
+            >
+              OG title
+            </label>
+            <input
+              id="seoOgTitle"
+              value={seoOgTitle}
+              onChange={(event) => setSeoOgTitle(event.target.value)}
+              placeholder="Falls back to the SEO title / product name"
+              maxLength={70}
+              className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label
+              htmlFor="seoOgImageUrl"
+              className="text-sm font-medium text-foreground"
+            >
+              OG image URL
+            </label>
+            <input
+              id="seoOgImageUrl"
+              value={seoOgImageUrl}
+              onChange={(event) => setSeoOgImageUrl(event.target.value)}
+              placeholder="Falls back to the first product photo"
+              className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="seoOgDescription"
+            className="text-sm font-medium text-foreground"
+          >
+            OG description
+          </label>
+          <textarea
+            id="seoOgDescription"
+            value={seoOgDescription}
+            onChange={(event) => setSeoOgDescription(event.target.value)}
+            rows={2}
+            maxLength={200}
+            placeholder="Falls back to the meta description"
+            className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+          />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="seoImageAlt"
+            className="text-sm font-medium text-foreground"
+          >
+            Primary image alt text
+          </label>
+          <input
+            id="seoImageAlt"
+            value={seoImageAlt}
+            onChange={(event) => setSeoImageAlt(event.target.value)}
+            placeholder="Falls back to the product name"
+            maxLength={125}
+            className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+          />
+          <p className="text-xs text-foreground/50">
+            Overrides the first photo&apos;s alt text specifically - every other
+            gallery photo keeps its own.
+          </p>
+        </div>
       </section>
 
       <section className="flex flex-col gap-4">

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { isValidObjectId } from "mongoose";
+import { seoMetaRobotsSchema } from "@/lib/validations/seo";
 
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
@@ -28,6 +29,17 @@ export const collectionSchema = z.object({
     .default([])
     .refine((ids) => new Set(ids).size === ids.length, { message: "Duplicate product in collection" }),
   isActive: z.boolean().default(true),
+  // Every field below is an optional override - left blank, the collection
+  // page derives real metadata from name/description/image instead (see
+  // `buildCollectionMetadata`), so SEO never breaks just because these
+  // weren't filled in.
+  seoTitle: z.string().trim().max(70, "SEO title should be under 70 characters").optional(),
+  seoDescription: z.string().trim().max(160, "Meta description should be under 160 characters").optional(),
+  seoCanonicalUrl: z.string().trim().max(300, "Canonical URL is too long").optional(),
+  seoMetaRobots: seoMetaRobotsSchema,
+  seoOgTitle: z.string().trim().max(70, "OG title should be under 70 characters").optional(),
+  seoOgDescription: z.string().trim().max(200, "OG description is too long").optional(),
+  seoOgImageUrl: z.string().trim().max(500, "OG image URL is too long").optional(),
 });
 
 export type CollectionInput = z.infer<typeof collectionSchema>;
@@ -58,5 +70,12 @@ export function collectionFormDataToObject(formData: FormData): Record<string, u
     slug: readString("slug") ?? "",
     productIds: readJsonArray(formData, "productIds"),
     isActive: formData.get("isActive") === "true",
+    seoTitle: readString("seoTitle"),
+    seoDescription: readString("seoDescription"),
+    seoCanonicalUrl: readString("seoCanonicalUrl"),
+    seoMetaRobots: readString("seoMetaRobots") ?? "index,follow",
+    seoOgTitle: readString("seoOgTitle"),
+    seoOgDescription: readString("seoOgDescription"),
+    seoOgImageUrl: readString("seoOgImageUrl"),
   };
 }

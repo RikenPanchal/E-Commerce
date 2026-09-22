@@ -3,6 +3,16 @@ export interface CollectionImageView {
   alt?: string;
 }
 
+export interface CollectionSeoView {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  metaRobots: "index,follow" | "noindex,follow" | "noindex,nofollow";
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImageUrl?: string;
+}
+
 /** Collection shape sent to the client - Mongo internals mapped to plain values. */
 export interface CollectionView {
   id: string;
@@ -10,6 +20,7 @@ export interface CollectionView {
   slug: string;
   description?: string;
   image?: CollectionImageView;
+  seo?: CollectionSeoView;
   /** Real Product ids, in display order. Hydrate with `getPublicProductsByIds`
    *  (storefront) or `getProductViewsByIds` (admin) to render them - this
    *  view alone never carries embedded product data. */

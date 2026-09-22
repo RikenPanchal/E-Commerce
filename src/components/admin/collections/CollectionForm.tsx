@@ -7,6 +7,7 @@ import type { ProductView } from "@/types/product";
 import type { ProductsPageResponse } from "@/app/api/products/route";
 import { formatCurrency } from "@/lib/utils/currency";
 import { ArrowDownIcon, ArrowUpIcon } from "@/components/admin/collections/icons";
+import { SEO_META_ROBOTS_OPTIONS } from "@/lib/validations/seo";
 
 interface CollectionFormProps {
   collection?: CollectionView;
@@ -44,6 +45,14 @@ export function CollectionForm({ collection, initialProducts = [] }: CollectionF
   const [description, setDescription] = useState(collection?.description ?? "");
   const [slug, setSlug] = useState(collection?.slug ?? "");
   const [isActive, setIsActive] = useState(collection?.isActive ?? true);
+
+  const [seoTitle, setSeoTitle] = useState(collection?.seo?.title ?? "");
+  const [seoDescription, setSeoDescription] = useState(collection?.seo?.description ?? "");
+  const [seoCanonicalUrl, setSeoCanonicalUrl] = useState(collection?.seo?.canonicalUrl ?? "");
+  const [seoMetaRobots, setSeoMetaRobots] = useState(collection?.seo?.metaRobots ?? "index,follow");
+  const [seoOgTitle, setSeoOgTitle] = useState(collection?.seo?.ogTitle ?? "");
+  const [seoOgDescription, setSeoOgDescription] = useState(collection?.seo?.ogDescription ?? "");
+  const [seoOgImageUrl, setSeoOgImageUrl] = useState(collection?.seo?.ogImageUrl ?? "");
 
   const [existingImageUrl, setExistingImageUrl] = useState(collection?.image?.url);
   const [imageRemoved, setImageRemoved] = useState(false);
@@ -168,6 +177,13 @@ export function CollectionForm({ collection, initialProducts = [] }: CollectionF
     formData.append("productIds", JSON.stringify(products.map((item) => item.id)));
     if (newImageFile) formData.append("image", newImageFile);
     if (imageRemoved) formData.append("removeImage", "true");
+    if (seoTitle.trim()) formData.append("seoTitle", seoTitle);
+    if (seoDescription.trim()) formData.append("seoDescription", seoDescription);
+    if (seoCanonicalUrl.trim()) formData.append("seoCanonicalUrl", seoCanonicalUrl);
+    formData.append("seoMetaRobots", seoMetaRobots);
+    if (seoOgTitle.trim()) formData.append("seoOgTitle", seoOgTitle);
+    if (seoOgDescription.trim()) formData.append("seoOgDescription", seoOgDescription);
+    if (seoOgImageUrl.trim()) formData.append("seoOgImageUrl", seoOgImageUrl);
 
     try {
       const response = await fetch(
@@ -299,6 +315,125 @@ export function CollectionForm({ collection, initialProducts = [] }: CollectionF
           />
         </div>
         <p className="text-xs text-foreground/50">JPG, PNG, WEBP or GIF, up to 8MB.</p>
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <div>
+          <h2 className="text-sm font-semibold text-foreground">SEO</h2>
+          <p className="text-xs text-foreground/50">
+            Every field here is optional - left blank, the collection page builds real metadata from the
+            name/description/image above instead.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="seoTitle" className="text-sm font-medium text-foreground">
+            SEO title
+          </label>
+          <input
+            id="seoTitle"
+            value={seoTitle}
+            onChange={(event) => setSeoTitle(event.target.value)}
+            placeholder={name || "Falls back to the collection name"}
+            maxLength={70}
+            className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+          />
+          <p className="text-xs text-foreground/50">{seoTitle.length}/70</p>
+          <FieldError message={fieldErrors.seoTitle} />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="seoDescription" className="text-sm font-medium text-foreground">
+            Meta description
+          </label>
+          <textarea
+            id="seoDescription"
+            value={seoDescription}
+            onChange={(event) => setSeoDescription(event.target.value)}
+            rows={2}
+            maxLength={160}
+            placeholder="Falls back to the collection description"
+            className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+          />
+          <p className="text-xs text-foreground/50">{seoDescription.length}/160</p>
+          <FieldError message={fieldErrors.seoDescription} />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="seoCanonicalUrl" className="text-sm font-medium text-foreground">
+              Canonical URL
+            </label>
+            <input
+              id="seoCanonicalUrl"
+              value={seoCanonicalUrl}
+              onChange={(event) => setSeoCanonicalUrl(event.target.value)}
+              placeholder="Falls back to this collection's own URL"
+              className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+            />
+            <FieldError message={fieldErrors.seoCanonicalUrl} />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="seoMetaRobots" className="text-sm font-medium text-foreground">
+              Meta robots
+            </label>
+            <select
+              id="seoMetaRobots"
+              value={seoMetaRobots}
+              onChange={(event) => setSeoMetaRobots(event.target.value as typeof seoMetaRobots)}
+              className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+            >
+              {SEO_META_ROBOTS_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option === "index,follow" ? "Index, follow (default)" : option}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="seoOgTitle" className="text-sm font-medium text-foreground">
+              OG title
+            </label>
+            <input
+              id="seoOgTitle"
+              value={seoOgTitle}
+              onChange={(event) => setSeoOgTitle(event.target.value)}
+              placeholder="Falls back to the SEO title / collection name"
+              maxLength={70}
+              className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="seoOgImageUrl" className="text-sm font-medium text-foreground">
+              OG image URL
+            </label>
+            <input
+              id="seoOgImageUrl"
+              value={seoOgImageUrl}
+              onChange={(event) => setSeoOgImageUrl(event.target.value)}
+              placeholder="Falls back to the collection image"
+              className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="seoOgDescription" className="text-sm font-medium text-foreground">
+            OG description
+          </label>
+          <textarea
+            id="seoOgDescription"
+            value={seoOgDescription}
+            onChange={(event) => setSeoOgDescription(event.target.value)}
+            rows={2}
+            maxLength={200}
+            placeholder="Falls back to the meta description"
+            className="rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+          />
+        </div>
       </section>
 
       <section className="flex flex-col gap-4">

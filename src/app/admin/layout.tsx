@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { SignOutButton } from "@/components/auth/SignOutButton";
+
+// Covers every nested admin page in one place (Next merges metadata up the
+// segment tree) - none of the admin console is public content, and it's
+// also already blocked in robots.txt, so this is belt-and-suspenders for
+// crawlers that ignore robots.txt or reach a page via a stray link.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   // The proxy (src/proxy.ts) already gatekeeps `/admin/*`, but every

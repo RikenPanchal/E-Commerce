@@ -60,7 +60,13 @@ export async function Hero() {
 
         <Reveal delayMs={100} className="order-1 relative h-[380px] w-full overflow-hidden sm:h-[430px] lg:order-2 lg:h-[600px]">
           {hero ? (
-            <ProductImage media={hero.media} name={hero.name} category={hero.category} className="absolute inset-0 h-full w-full" />
+            <ProductImage
+              media={hero.media}
+              name={hero.name}
+              category={hero.category}
+              className="absolute inset-0 h-full w-full"
+              priority
+            />
           ) : null}
         </Reveal>
       </div>
