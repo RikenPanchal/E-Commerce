@@ -46,17 +46,17 @@ export default async function AdminOverviewPage() {
         <StatCard label="Revenue" value={formatCurrency(orderStats.totalRevenue)} />
       </div>
 
-      <div className="rounded-2xl border border-black/5 p-6 dark:border-white/10">
+      <div className="min-w-0 rounded-2xl border border-black/5 p-4 sm:p-6 dark:border-white/10">
         <h2 className="mb-4 text-sm font-semibold text-foreground">Revenue</h2>
         <RevenueChart data={revenueOverTime} />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl border border-black/5 p-6 dark:border-white/10">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="min-w-0 rounded-2xl border border-black/5 p-4 sm:p-6 dark:border-white/10">
           <h2 className="mb-4 text-sm font-semibold text-foreground">Top products</h2>
           <TopProductsList products={topProducts} />
         </div>
-        <div className="rounded-2xl border border-black/5 p-6 dark:border-white/10">
+        <div className="min-w-0 rounded-2xl border border-black/5 p-4 sm:p-6 dark:border-white/10">
           <h2 className="mb-4 text-sm font-semibold text-foreground">Orders by status</h2>
           <StatusBreakdown breakdown={statusBreakdown} />
         </div>

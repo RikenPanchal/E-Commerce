@@ -34,22 +34,22 @@ export default async function AccountPage() {
 
       <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
         <section className="flex flex-col gap-4 rounded-2xl border border-surface-border bg-background p-6 shadow-sm">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-rose-800">Profile</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-rose-400">Profile</h2>
           <ProfileForm user={user} />
         </section>
 
         <section className="mt-6 flex flex-col gap-4 rounded-2xl border border-surface-border bg-background p-6 shadow-sm">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-rose-800">Password</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-rose-400">Password</h2>
           <PasswordForm />
         </section>
 
         <section className="mt-6 flex flex-col gap-4 rounded-2xl border border-surface-border bg-background p-6 shadow-sm">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-rose-800">Addresses</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-rose-400">Addresses</h2>
           <AddressBook addresses={addresses} />
         </section>
 
         <section className="mt-6 flex flex-col gap-4 rounded-2xl border border-surface-border bg-background p-6 shadow-sm">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-rose-800">Back-in-stock alerts</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-rose-400">Back-in-stock alerts</h2>
           <BackInStockAlerts alerts={backInStockAlerts} />
         </section>
       </div>

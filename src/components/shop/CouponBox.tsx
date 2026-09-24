@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/Button";
 import { formatCurrency } from "@/lib/utils/currency";
 
 /**
- * The one coupon input/applied-state UI, shared by the Cart page and
- * Checkout - both read the same `useCart()` coupon state, so applying (or
- * removing) it on either page is instantly reflected on the other, and
- * survives navigating between them.
+ * The coupon input/applied-state UI on the Cart page. The coupon lives in
+ * `useCart()` state, so Checkout (which only summarizes it, with a link
+ * back here to change it) always sees the same applied coupon, and it
+ * survives navigating between the two.
  */
 export function CouponBox() {
   const { appliedCoupon, couponError, isApplyingCoupon, applyCoupon, removeCoupon } = useCart();
@@ -26,7 +26,7 @@ export function CouponBox() {
     return (
       <div className="flex items-center justify-between gap-3 rounded-md border border-blush-line bg-blush px-4 py-3">
         <div className="flex flex-col gap-0.5">
-          <span className="text-sm font-semibold tracking-wide text-rose-800 uppercase">{appliedCoupon.code}</span>
+          <span className="text-sm font-semibold tracking-wide text-rose-400 uppercase">{appliedCoupon.code}</span>
           <span className="text-xs text-foreground/60">
             You saved {formatCurrency(appliedCoupon.discountAmount)}
           </span>

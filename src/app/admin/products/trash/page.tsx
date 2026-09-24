@@ -30,7 +30,7 @@ export default async function AdminProductsTrashPage() {
         </Link>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-black/5 dark:border-white/10">
+      <div className="relative overflow-x-auto rounded-2xl border border-black/5 dark:border-white/10">
         <table className="w-full min-w-[640px] text-left text-sm">
           <thead className="border-b border-black/5 text-xs uppercase tracking-wide text-foreground/50 dark:border-white/10">
             <tr>

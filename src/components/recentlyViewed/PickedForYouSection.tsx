@@ -23,7 +23,7 @@ function PickedForYouCard({ product }: { product: ProductWithRating }) {
       </div>
       <div className="flex flex-col gap-0.5 pt-2">
         <span className="block truncate text-xs font-medium text-foreground">{product.name}</span>
-        <span className="text-xs font-semibold text-rose-800">{formatCurrency(product.price)}</span>
+        <span className="text-xs font-semibold text-rose-400">{formatCurrency(product.price)}</span>
       </div>
     </Link>
   );
@@ -51,7 +51,7 @@ export function PickedForYouSection() {
   return (
     <section className="bg-rose-800 py-14 text-background sm:py-20">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8">
-        <div className="grid gap-8 lg:grid-cols-[280px_240px_1fr] lg:items-center lg:gap-10">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[280px_240px_minmax(0,1fr)] lg:items-center lg:gap-10">
           <Reveal className="flex flex-col justify-center">
             <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-rose-200 uppercase">
               <HeartIcon className="h-4 w-4" />

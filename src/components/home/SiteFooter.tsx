@@ -6,7 +6,7 @@ import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 const assurances = [
   { icon: TruckIcon, label: "Free shipping across India" },
   { icon: CheckIcon, label: "All sales are final" },
-  { icon: ShieldIcon, label: "Pay on delivery, no risk" },
+  { icon: ShieldIcon, label: "100% secure payments via Razorpay" },
 ];
 
 const legalLinks = [

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "make-admin": "node scripts/make-admin.mjs"
+    "make-admin": "node scripts/make-admin.mjs",
+    "seed": "node scripts/seed.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -16,6 +17,7 @@
     "mongoose": "^9.9.4",
     "next": "16.3.4",
     "nodemailer": "^10.0.10",
+    "razorpay": "^2.9.8",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "zod": "^4.5.4"

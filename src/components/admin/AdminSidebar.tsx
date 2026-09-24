@@ -22,7 +22,7 @@ export function AdminSidebar() {
       <div className="mb-6 px-2 text-sm font-semibold tracking-[0.2em] text-foreground">
         ADMIN
       </div>
-      <nav className="flex gap-1 overflow-x-auto lg:flex-col lg:overflow-visible">
+      <nav className="flex gap-1 relative overflow-x-auto lg:flex-col lg:overflow-visible">
         {links.map((link) => {
           const isActive =
             link.href === "/admin" ? pathname === "/admin" : pathname?.startsWith(link.href);

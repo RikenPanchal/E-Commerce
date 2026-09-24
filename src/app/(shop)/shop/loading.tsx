@@ -41,7 +41,7 @@ export default function ShopLoading() {
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[240px_1fr]">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[240px_minmax(0,1fr)]">
           <div className="hidden flex-col gap-6 lg:flex">
             <Skeleton className="h-5 w-16" />
             <Skeleton className="h-40 w-full" />

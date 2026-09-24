@@ -66,10 +66,15 @@ export async function evaluateCoupon(
     return { error: "This coupon isn't valid for the items in your bag" };
   }
   if (userId) {
+    // Paid, not just "not cancelled" - an order can sit at `status:
+    // "pending"` while its Razorpay payment is still in flight (or never
+    // completes). Checking fulfillment status alone would wrongly block a
+    // customer from re-applying a coupon after an abandoned/failed
+    // checkout that never actually redeemed it.
     const alreadyUsed = await Order.exists({
       user: userId,
       couponCode: code,
-      status: { $ne: "cancelled" },
+      paymentStatus: "paid",
     });
     if (alreadyUsed) {
       return { error: "You've already used this coupon" };
@@ -132,7 +137,7 @@ export async function getPublicOffers(userId?: string): Promise<PublicOfferView[
   }
 
   const usedCodes = new Set(
-    await Order.distinct("couponCode", { user: userId, couponCode: { $ne: null }, status: { $ne: "cancelled" } })
+    await Order.distinct("couponCode", { user: userId, couponCode: { $ne: null }, paymentStatus: "paid" })
   );
   return usable.filter((coupon) => !usedCodes.has(coupon.code)).map(toPublicOfferView);
 }

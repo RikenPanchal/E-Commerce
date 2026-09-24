@@ -35,14 +35,14 @@ export async function CollectionsSection() {
       <div className="mx-auto max-w-[1380px] px-4 sm:px-8">
         <Reveal className="mb-10 flex items-end justify-between gap-4">
           <div>
-            <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-rose-800 uppercase">
+            <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-rose-400 uppercase">
               Shop by collection
             </p>
             <h2 className="mt-2 font-serif text-3xl font-semibold text-foreground sm:text-4xl">Curated Edits</h2>
           </div>
           <Link
             href="/collections"
-            className="group hidden shrink-0 items-center gap-1.5 text-sm font-medium text-rose-800 sm:flex"
+            className="group hidden shrink-0 items-center gap-1.5 text-sm font-medium text-rose-400 sm:flex"
           >
             View all
             <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -55,7 +55,7 @@ export async function CollectionsSection() {
           ))}
         </Reveal>
 
-        <Link href="/collections" className="mt-6 flex items-center justify-center gap-1.5 text-sm font-medium text-rose-800 sm:hidden">
+        <Link href="/collections" className="mt-6 flex items-center justify-center gap-1.5 text-sm font-medium text-rose-400 sm:hidden">
           View all collections
           <ArrowRightIcon className="h-4 w-4" />
         </Link>

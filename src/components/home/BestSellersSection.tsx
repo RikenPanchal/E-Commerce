@@ -26,9 +26,9 @@ export function BestSellersSection({
   return (
     <section className="bg-cream py-14 sm:py-20">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8">
-        <div className="grid gap-8 lg:grid-cols-[300px_1fr] lg:gap-12">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-12">
           <Reveal className="flex flex-col justify-center lg:pb-10">
-            <p className="text-xs font-semibold tracking-[0.2em] text-rose-800 uppercase">Best sellers</p>
+            <p className="text-xs font-semibold tracking-[0.2em] text-rose-400 uppercase">Best sellers</p>
             <h2 className="mt-3 font-serif text-4xl leading-[1.1] font-semibold text-foreground sm:text-5xl">
               Loved by Thousands
             </h2>

@@ -31,7 +31,7 @@ import { truncateForMeta, buildKeywords } from "@/lib/seo/text";
 const assurances = [
   { icon: TruckIcon, label: "Free shipping across India" },
   { icon: CheckIcon, label: "All sales are final - no returns" },
-  { icon: ShieldIcon, label: "Pay on delivery, no risk" },
+  { icon: ShieldIcon, label: "100% secure payments via Razorpay" },
 ];
 
 export async function generateMetadata({
@@ -165,7 +165,7 @@ export default async function ProductPage({
             deliberate size instead of ballooning to fill half the page -
             the details column gets the rest, which text needs more of
             anyway. */}
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-10">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-10">
           {/* Stays in view while scrolling through description/reviews on
               desktop, instead of scrolling away with everything else - a
               standard modern-PDP touch that keeps the product visible
@@ -240,7 +240,7 @@ export default async function ProductPage({
         </div>
 
         <div className="mt-16 rounded-3xl border border-rose-100 bg-white/70 p-6 shadow-sm dark:border-rose-950/40 dark:bg-transparent dark:shadow-none sm:p-8">
-          <div className="grid gap-10 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
             <div>
               <div className="mb-6 flex items-center gap-5">
                 <div className="flex flex-col items-center justify-center rounded-2xl bg-rose-50 px-5 py-3 dark:bg-rose-950/30">

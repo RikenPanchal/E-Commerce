@@ -33,3 +33,15 @@ export const updateOrderStatusSchema = z.object({
 });
 
 export type UpdateOrderStatusInput = z.infer<typeof updateOrderStatusSchema>;
+
+/** The three fields Razorpay Checkout's client-side `handler` callback
+ *  hands back on a successful payment - never trusted as-is, only ever used
+ *  to re-derive and verify the HMAC signature server-side (see
+ *  `verifyPaymentSignature` in src/lib/payments/razorpay.ts). */
+export const verifyPaymentSchema = z.object({
+  razorpayOrderId: z.string().trim().min(1, "Missing Razorpay order id"),
+  razorpayPaymentId: z.string().trim().min(1, "Missing Razorpay payment id"),
+  razorpaySignature: z.string().trim().min(1, "Missing Razorpay signature"),
+});
+
+export type VerifyPaymentInput = z.infer<typeof verifyPaymentSchema>;

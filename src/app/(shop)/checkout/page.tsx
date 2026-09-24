@@ -30,7 +30,7 @@ export default async function CheckoutPage() {
       />
 
       <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-        <CheckoutForm defaultName={user.name} savedAddresses={addresses} />
+        <CheckoutForm defaultName={user.name} defaultEmail={user.email} savedAddresses={addresses} />
       </div>
     </div>
   );

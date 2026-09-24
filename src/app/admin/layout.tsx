@@ -24,7 +24,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="flex flex-1 flex-col lg:flex-row">
       <AdminSidebar />
-      <div className="flex flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center justify-between gap-4 border-b border-black/5 px-4 py-4 dark:border-white/10 sm:px-6">
           <div className="flex min-w-0 flex-col">
             <span className="text-xs text-foreground/60">Signed in as</span>

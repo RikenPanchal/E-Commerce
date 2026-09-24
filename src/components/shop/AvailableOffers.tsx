@@ -60,7 +60,7 @@ export function AvailableOffers() {
               className="flex items-center justify-between gap-3 rounded-md border border-blush-line bg-blush/60 px-3.5 py-2.5"
             >
               <div className="flex flex-col gap-0.5">
-                <span className="text-sm font-semibold tracking-wide text-rose-800 uppercase">{offer.code}</span>
+                <span className="text-sm font-semibold tracking-wide text-rose-400 uppercase">{offer.code}</span>
                 <span className="text-xs text-foreground/60">
                   {discountLabel(offer)}
                   {offer.minOrderAmount ? ` on orders above ${formatCurrency(offer.minOrderAmount)}` : ""}
@@ -74,7 +74,7 @@ export function AvailableOffers() {
                 type="button"
                 onClick={() => handleApply(offer.code)}
                 disabled={isApplied || applyingCode === offer.code}
-                className="shrink-0 text-xs font-medium text-rose-800 underline underline-offset-4 hover:text-burgundy disabled:opacity-50 disabled:no-underline"
+                className="shrink-0 text-xs font-medium text-rose-400 underline underline-offset-4 hover:text-rose-300 disabled:opacity-50 disabled:no-underline"
               >
                 {isApplied ? "Applied" : applyingCode === offer.code ? "Applying..." : "Apply"}
               </button>

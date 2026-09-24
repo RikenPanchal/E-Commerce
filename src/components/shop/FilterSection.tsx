@@ -19,9 +19,9 @@ export function FilterSection({
 }) {
   return (
     <details className="group border-t border-surface-border pt-5 first:border-t-0 first:pt-0" open={defaultOpen}>
-      <summary className="flex cursor-pointer list-none items-center justify-between text-xs font-semibold tracking-[0.15em] text-foreground uppercase transition-colors hover:text-rose-800 [&::-webkit-details-marker]:hidden">
+      <summary className="flex cursor-pointer list-none items-center justify-between text-xs font-semibold tracking-[0.15em] text-foreground uppercase transition-colors hover:text-rose-400 [&::-webkit-details-marker]:hidden">
         {title}
-        <ChevronRightIcon className="h-3.5 w-3.5 rotate-90 text-muted-soft transition-transform duration-200 group-open:-rotate-90 group-open:text-rose-800" />
+        <ChevronRightIcon className="h-3.5 w-3.5 rotate-90 text-muted-soft transition-transform duration-200 group-open:-rotate-90 group-open:text-rose-400" />
       </summary>
       <div className="pt-3">{children}</div>
     </details>

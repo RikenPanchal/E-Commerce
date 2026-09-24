@@ -24,7 +24,7 @@ export function ShopFilterDrawer({ children, activeCount }: { children: ReactNod
         onClick={() => setIsOpen(true)}
         className="flex w-full items-center justify-center gap-2 rounded-md border border-surface-border bg-surface px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-rose-800/40"
       >
-        <FilterIcon className="h-4 w-4 text-rose-800" />
+        <FilterIcon className="h-4 w-4 text-rose-400" />
         Filters
         {activeCount > 0 ? (
           <span

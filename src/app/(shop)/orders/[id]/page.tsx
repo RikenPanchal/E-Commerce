@@ -4,6 +4,8 @@ import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { getOrderForUser } from "@/lib/shop/orders";
 import { formatCurrency } from "@/lib/utils/currency";
 import { OrderStatusTimeline } from "@/components/orders/OrderStatusTimeline";
+import { PaymentStatusBadge } from "@/components/orders/PaymentStatusBadge";
+import { RetryPaymentButton } from "@/components/orders/RetryPaymentButton";
 import { PageHero } from "@/components/shop/PageHero";
 
 export const metadata: Metadata = {
@@ -45,7 +47,28 @@ export default async function OrderDetailPage({
       />
 
       <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
+        {order.paymentStatus === "pending" && order.status !== "cancelled" && order.razorpayOrderId ? (
+          <div className="mb-6 flex flex-col items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-900/40 dark:bg-amber-900/10">
+            <div className="flex items-center gap-2">
+              <PaymentStatusBadge status={order.paymentStatus} />
+              <span className="text-sm text-foreground/70">We haven&apos;t received payment for this order yet.</span>
+            </div>
+            <RetryPaymentButton
+              orderId={order.id}
+              razorpayOrderId={order.razorpayOrderId}
+              amount={order.total}
+              customerName={order.shippingAddress.fullName}
+              customerEmail={user.email}
+              customerPhone={order.shippingAddress.phone}
+            />
+          </div>
+        ) : null}
+
         <div className="rounded-2xl border border-surface-border bg-background p-5 shadow-sm">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-foreground">Status</h2>
+            <PaymentStatusBadge status={order.paymentStatus} />
+          </div>
           <OrderStatusTimeline status={order.status} />
         </div>
 
@@ -93,7 +116,7 @@ export default async function OrderDetailPage({
                 <span className="text-foreground/60">
                   Discount {order.couponCode ? `(${order.couponCode})` : ""}
                 </span>
-                <span className="text-rose-800">
+                <span className="text-rose-400">
                   −{formatCurrency(order.discountAmount)}
                 </span>
               </div>

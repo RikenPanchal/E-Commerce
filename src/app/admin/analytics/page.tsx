@@ -154,7 +154,7 @@ export default async function AdminAnalyticsPage({
         <StatCard label="Low stock products" value={stockCounts.low} description="Right now, across all time" />
       </div>
 
-      <div className="rounded-2xl border border-black/5 p-6 dark:border-white/10">
+      <div className="min-w-0 rounded-2xl border border-black/5 p-4 sm:p-6 dark:border-white/10">
         <h2 className="mb-4 text-sm font-semibold text-foreground">Revenue over time</h2>
         <TimeSeriesChart
           data={dailySeries.map((point) => ({ date: point.date, value: point.revenue }))}
@@ -163,8 +163,8 @@ export default async function AdminAnalyticsPage({
         />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl border border-black/5 p-6 dark:border-white/10">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="min-w-0 rounded-2xl border border-black/5 p-4 sm:p-6 dark:border-white/10">
           <h2 className="mb-4 text-sm font-semibold text-foreground">Orders over time</h2>
           <TimeSeriesChart
             data={dailySeries.map((point) => ({ date: point.date, value: point.orders }))}
@@ -172,7 +172,7 @@ export default async function AdminAnalyticsPage({
             format={{ unit: "order" }}
           />
         </div>
-        <div className="rounded-2xl border border-black/5 p-6 dark:border-white/10">
+        <div className="min-w-0 rounded-2xl border border-black/5 p-4 sm:p-6 dark:border-white/10">
           <h2 className="mb-4 text-sm font-semibold text-foreground">New customers</h2>
           <TimeSeriesChart
             data={newCustomers.map((point) => ({ date: point.date, value: point.count }))}
@@ -182,12 +182,12 @@ export default async function AdminAnalyticsPage({
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl border border-black/5 p-6 dark:border-white/10">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="min-w-0 rounded-2xl border border-black/5 p-4 sm:p-6 dark:border-white/10">
           <h2 className="mb-4 text-sm font-semibold text-foreground">Top-selling products</h2>
           <TopProductsList products={topProducts} />
         </div>
-        <div className="rounded-2xl border border-black/5 p-6 dark:border-white/10">
+        <div className="min-w-0 rounded-2xl border border-black/5 p-4 sm:p-6 dark:border-white/10">
           <h2 className="mb-4 text-sm font-semibold text-foreground">Best-performing categories</h2>
           <RankedBarList
             items={categories.map((entry) => ({
@@ -203,7 +203,7 @@ export default async function AdminAnalyticsPage({
       </div>
 
       {coupons.length > 0 ? (
-        <div className="rounded-2xl border border-black/5 p-6 dark:border-white/10">
+        <div className="min-w-0 rounded-2xl border border-black/5 p-4 sm:p-6 dark:border-white/10">
           <h2 className="mb-4 text-sm font-semibold text-foreground">Coupon usage</h2>
           <RankedBarList
             items={coupons.map((entry) => ({

@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { getCurrentUser } from "@/lib/auth/getCurrentUser";
+import { getHeaderUser } from "@/lib/auth/getHeaderUser";
 import { AccountMenu } from "@/components/auth/AccountMenu";
 
 export async function AuthStatus() {
-  const user = await getCurrentUser();
+  const user = await getHeaderUser();
 
   if (!user) {
     return (

@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { placeOrder, toOrderView } from "@/lib/shop/orders";
-import { sendOrderConfirmationEmail } from "@/lib/email/orderConfirmationEmail";
 import { placeOrderSchema } from "@/lib/validations/order";
 import { nestedFieldErrors } from "@/lib/validations/formatZodError";
-import type { OrderResponse } from "@/types/order";
+import type { PlaceOrderResponse } from "@/types/order";
 
-export async function POST(request: Request): Promise<NextResponse<OrderResponse>> {
+export async function POST(request: Request): Promise<NextResponse<PlaceOrderResponse>> {
   const user = await getCurrentUser();
   if (!user) {
     return NextResponse.json(
@@ -48,19 +47,35 @@ export async function POST(request: Request): Promise<NextResponse<OrderResponse
     }
 
     const order = toOrderView(result.order);
-
-    // The order is already placed and the stock side of things is done - a
-    // slow or unconfigured mail provider must never turn that into a failed
-    // order response, so this is awaited (this is a long-lived Node
-    // process, not a serverless function that could be frozen mid-request)
-    // but its own failure is only ever logged, never rethrown.
-    try {
-      await sendOrderConfirmationEmail(order, user.email, user.name);
-    } catch (error) {
-      console.error(`Failed to send order confirmation email for order ${order.id}:`, error);
+    const keyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+    if (!keyId) {
+      // Stock is already reserved and a real Razorpay order exists at this
+      // point - this is a misconfiguration (env var missing), not a normal
+      // failure path, but the customer still can't pay without it, so this
+      // is surfaced as an error rather than silently proceeding.
+      console.error("NEXT_PUBLIC_RAZORPAY_KEY_ID is not set - cannot open Razorpay Checkout.");
+      return NextResponse.json(
+        { success: false, message: "Payments aren't configured yet. Please try again later." },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json({ success: true, order }, { status: 201 });
+    // The confirmation email is sent once payment is verified
+    // (src/app/api/orders/[id]/verify-payment/route.ts), not here - this
+    // order isn't paid for yet.
+    return NextResponse.json(
+      {
+        success: true,
+        order,
+        razorpay: {
+          keyId,
+          orderId: result.razorpayOrder.id,
+          amount: result.razorpayOrder.amount,
+          currency: result.razorpayOrder.currency,
+        },
+      },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Failed to place order:", error);
     return NextResponse.json(

@@ -47,18 +47,18 @@ export default async function CollectionsPage() {
             aria-label="Breadcrumb"
             className="flex items-center gap-2 text-[11px] font-medium tracking-[0.12em] text-muted-soft uppercase"
           >
-            <Link href="/" className="transition-colors hover:text-rose-800">
+            <Link href="/" className="transition-colors hover:text-rose-400">
               Home
             </Link>
             <span aria-hidden="true">/</span>
-            <span className="text-rose-800">Collections</span>
+            <span className="text-rose-400">Collections</span>
           </nav>
         </div>
       </div>
 
       <div className="border-b border-surface-border bg-background">
         <div className="mx-auto max-w-[820px] px-4 py-8 text-center sm:px-6 sm:py-10 lg:px-8">
-          <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.2em] text-rose-800 uppercase">
+          <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.2em] text-rose-400 uppercase">
             <span className="h-px w-6 bg-blush-line" aria-hidden="true" />
             Curated edits
             <span className="h-px w-6 bg-blush-line" aria-hidden="true" />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter, Playfair_Display } from "next/font/google";
+import { Geist_Mono, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { WishlistProvider } from "@/components/wishlist/WishlistProvider";
 import { RecentlyViewedProvider } from "@/components/recentlyViewed/RecentlyViewedProvider";
@@ -28,10 +29,17 @@ const geistMono = Geist_Mono({
 // section titles use this elegant serif for a premium fashion-editorial
 // look; body text stays on Inter, a clean modern sans-serif that already
 // suits UI copy, so it's kept rather than swapped for its own sake.
-const heading = Playfair_Display({
+// Self-hosted (the Latin subset of the variable font, weights 400-900)
+// rather than loaded through next/font/google: Turbopack's Google Fonts
+// fetch was receiving `fonts.gstatic.com/l/font?kit=...&...` URLs it can't
+// parse ("next/font/google queries have exactly one entry"), which broke the
+// whole build.
+const heading = localFont({
+  src: "./fonts/PlayfairDisplay-Variable-latin.woff2",
   variable: "--font-heading",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "400 900",
+  display: "swap",
+  fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
 const DEFAULT_TITLE = `${SITE_NAME} | Women's Fashion`;

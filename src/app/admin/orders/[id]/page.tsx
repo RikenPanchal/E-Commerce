@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getOrderForAdmin } from "@/lib/admin/orders";
 import { OrderStatusBadge } from "@/components/orders/OrderStatusBadge";
+import { PaymentStatusBadge } from "@/components/orders/PaymentStatusBadge";
 import { OrderStatusControl } from "@/components/admin/orders/OrderStatusControl";
 import { formatCurrency } from "@/lib/utils/currency";
-import { describeShippingZone, getShippingZone } from "@/lib/shop/shipping";
 
 export const metadata: Metadata = {
   title: "Order details",
@@ -24,8 +24,6 @@ export default async function AdminOrderDetailPage({
     notFound();
   }
 
-  const shippingZone = getShippingZone(order.shippingAddress);
-
   return (
     <div className="flex max-w-3xl flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -35,7 +33,10 @@ export default async function AdminOrderDetailPage({
             Placed {dateFormatter.format(new Date(order.createdAt))}
           </p>
         </div>
-        <OrderStatusBadge status={order.status} />
+        <div className="flex items-center gap-2">
+          <PaymentStatusBadge status={order.paymentStatus} />
+          <OrderStatusBadge status={order.status} />
+        </div>
       </div>
 
       <div className="rounded-2xl border border-black/5 p-5 dark:border-white/10">
@@ -47,12 +48,23 @@ export default async function AdminOrderDetailPage({
         </p>
       </div>
 
+      <div className="rounded-2xl border border-black/5 p-5 dark:border-white/10">
+        <h2 className="mb-3 text-sm font-semibold text-foreground">Payment</h2>
+        <div className="flex flex-col gap-1 text-sm text-foreground/70">
+          <span>Provider: Razorpay</span>
+          {order.razorpayOrderId ? <span>Razorpay order: {order.razorpayOrderId}</span> : null}
+          {order.razorpayPaymentId ? <span>Razorpay payment: {order.razorpayPaymentId}</span> : null}
+          {order.paidAt ? <span>Paid: {dateFormatter.format(new Date(order.paidAt))}</span> : null}
+        </div>
+      </div>
+
       {/* Keyed on status so the control resets its local form state cleanly
           after each transition, instead of carrying stale selections over. */}
       <OrderStatusControl
         key={order.status}
         orderId={order.id}
         currentStatus={order.status}
+        paymentStatus={order.paymentStatus}
         trackingNumber={order.trackingNumber}
         carrier={order.carrier}
       />
@@ -92,15 +104,13 @@ export default async function AdminOrderDetailPage({
         ))}
       </div>
 
-      {/* Admin-only pricing breakdown - the storefront only ever shows the
-          customer "Free shipping" and a final total, never this. This is
-          where the gap between what the product is actually worth and what
-          the customer was actually charged (the location-based delivery
-          markup, folded silently into Total) is made fully visible. */}
+      {/* Same pricing breakdown the customer sees at checkout/order
+          confirmation - shipping is free on every order (see
+          src/lib/shop/shipping.ts), so there's nothing hidden here. */}
       <div className="flex flex-col gap-1.5 rounded-2xl border border-black/5 p-5 dark:border-white/10">
         <h2 className="mb-1 text-sm font-semibold text-foreground">Pricing breakdown</h2>
         <div className="flex items-center justify-between text-sm">
-          <span className="text-foreground/60">Actual rate (products)</span>
+          <span className="text-foreground/60">Subtotal</span>
           <span className="text-foreground">{formatCurrency(order.subtotal)}</span>
         </div>
         {order.discountAmount > 0 ? (
@@ -114,18 +124,13 @@ export default async function AdminOrderDetailPage({
           </div>
         ) : null}
         <div className="flex items-center justify-between text-sm">
-          <span className="text-foreground/60">
-            Delivery markup
-            <span className="block text-xs text-foreground/40">
-              {describeShippingZone(shippingZone)} - not shown to customer
-            </span>
-          </span>
+          <span className="text-foreground/60">Shipping</span>
           <span className="text-foreground">
-            {order.shippingCost > 0 ? `+${formatCurrency(order.shippingCost)}` : "None"}
+            {order.shippingCost > 0 ? formatCurrency(order.shippingCost) : "Free"}
           </span>
         </div>
         <div className="mt-1 flex items-center justify-between border-t border-black/5 pt-2 text-base dark:border-white/10">
-          <span className="font-medium text-foreground">Selling rate (charged)</span>
+          <span className="font-medium text-foreground">Total</span>
           <span className="font-semibold text-foreground">{formatCurrency(order.total)}</span>
         </div>
       </div>

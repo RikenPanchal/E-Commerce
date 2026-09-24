@@ -113,7 +113,7 @@ export function InfiniteProductGrid({
               <button
                 type="button"
                 onClick={loadMore}
-                className="rounded-md border border-rose-800 px-5 py-2 text-sm font-medium text-rose-800 transition-colors hover:bg-blush"
+                className="rounded-md border border-rose-800 px-5 py-2 text-sm font-medium text-rose-400 transition-colors hover:bg-blush"
               >
                 Couldn&apos;t load more - tap to retry
               </button>

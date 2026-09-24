@@ -82,7 +82,7 @@ export function SizeGuideModal({
             <>
               <div className="flex flex-col gap-2">
                 <h3 className="text-xs font-semibold tracking-[0.08em] text-foreground uppercase">How to measure</h3>
-                <dl className="grid gap-3 sm:grid-cols-3">
+                <dl className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   {measurements.map((key) => (
                     <div key={key} className="rounded-md bg-background px-3 py-2.5">
                       <dt className="text-xs font-semibold text-foreground">{MEASUREMENT_LABELS[key]}</dt>
@@ -119,7 +119,7 @@ export function SizeGuideModal({
                   </div>
                 </div>
 
-                <div className="overflow-x-auto rounded-md border border-surface-border">
+                <div className="relative overflow-x-auto rounded-md border border-surface-border">
                   <table className="w-full min-w-[420px] border-collapse text-left text-xs">
                     <caption className="sr-only">
                       General size chart with {measurements.map((key) => MEASUREMENT_LABELS[key]).join(", ")}{" "}

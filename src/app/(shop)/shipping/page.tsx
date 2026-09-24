@@ -40,11 +40,12 @@ export default function ShippingPage() {
         </p>
       </LegalSection>
 
-      <LegalSection heading="4. Cash on delivery">
+      <LegalSection heading="4. Payment methods">
         <p>
-          Cash on delivery (COD) is available on most pin codes, shown automatically at checkout
-          when eligible. A small COD handling fee may apply and, when it does, is shown before you
-          confirm your order - never added afterward.
+          All orders are paid for online at checkout through Razorpay, our secure payment
+          partner - UPI, credit/debit cards, netbanking and wallets are all supported. We don&apos;t
+          offer cash on delivery. Your order is confirmed as soon as payment is verified, and no
+          card or bank details are ever stored on our servers.
         </p>
       </LegalSection>
 

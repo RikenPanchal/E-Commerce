@@ -261,7 +261,10 @@ export function SmartSearch() {
                   placeholder="Search dresses, tops, collections..."
                   aria-label="Search products"
                   autoComplete="off"
-                  className="w-full rounded-md border border-surface-border bg-background py-2.5 pr-8 pl-9 text-sm text-foreground outline-none transition-colors focus:border-rose-500"
+                  // Hides the browser's built-in type="search" clear (x) button -
+                  // the custom "Clear search" button below replaces it, and
+                  // showing both put two x icons side by side in the field.
+                  className="w-full rounded-md border border-surface-border bg-background py-2.5 pr-8 pl-9 text-sm text-foreground outline-none transition-colors focus:border-rose-500 [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none"
                 />
                 {query ? (
                   <button

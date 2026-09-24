@@ -43,7 +43,7 @@ export function QuickViewGallery({
       </div>
 
       {images.length > 1 ? (
-        <div className="flex gap-2 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex gap-2 relative overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {images.map((item) => {
             const isActive = item.id === active?.id;
             return (

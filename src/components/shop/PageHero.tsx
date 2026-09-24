@@ -35,11 +35,11 @@ export function PageHero({
             <span key={crumb.label} className="flex items-center gap-2">
               {index > 0 ? <span aria-hidden="true">/</span> : null}
               {crumb.href ? (
-                <Link href={crumb.href} className="transition-colors hover:text-rose-800">
+                <Link href={crumb.href} className="transition-colors hover:text-rose-400">
                   {crumb.label}
                 </Link>
               ) : (
-                <span className="text-rose-800">{crumb.label}</span>
+                <span className="text-rose-400">{crumb.label}</span>
               )}
             </span>
           ))}
@@ -48,7 +48,7 @@ export function PageHero({
 
       <div className="border-b border-surface-border">
         <div className="mx-auto max-w-[820px] px-4 py-8 text-center sm:px-6 sm:py-10 lg:px-8">
-          <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.2em] text-rose-800 uppercase">
+          <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.2em] text-rose-400 uppercase">
             <span className="h-px w-6 bg-blush-line" aria-hidden="true" />
             {eyebrow}
             <span className="h-px w-6 bg-blush-line" aria-hidden="true" />

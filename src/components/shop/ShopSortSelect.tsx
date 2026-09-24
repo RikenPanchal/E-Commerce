@@ -25,7 +25,7 @@ export function ShopSortSelect({
   hiddenFields: { name: string; value: string }[];
 }) {
   return (
-    <form method="get" action="/shop" className="shrink-0">
+    <form method="get" action="/shop" className="min-w-0 flex-1 sm:flex-none sm:shrink-0">
       {hiddenFields.map((field, index) => (
         <input key={`${field.name}-${index}`} type="hidden" name={field.name} value={field.value} />
       ))}

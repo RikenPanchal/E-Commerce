@@ -149,7 +149,7 @@ export function CartView() {
           {appliedCoupon ? (
             <div className="flex items-center justify-between text-sm">
               <span className="text-foreground/60">Discount</span>
-              <span className="text-rose-800">−{formatCurrency(appliedCoupon.discountAmount)}</span>
+              <span className="text-rose-400">−{formatCurrency(appliedCoupon.discountAmount)}</span>
             </div>
           ) : null}
           <div className="flex items-center justify-between border-t border-black/5 pt-2 text-base font-semibold dark:border-white/10">

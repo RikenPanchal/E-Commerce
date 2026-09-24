@@ -127,15 +127,15 @@ export default async function CollectionDetailPage({
             aria-label="Breadcrumb"
             className="flex items-center gap-2 text-[11px] font-medium tracking-[0.12em] text-muted-soft uppercase"
           >
-            <Link href="/" className="transition-colors hover:text-rose-800">
+            <Link href="/" className="transition-colors hover:text-rose-400">
               Home
             </Link>
             <span aria-hidden="true">/</span>
-            <Link href="/collections" className="transition-colors hover:text-rose-800">
+            <Link href="/collections" className="transition-colors hover:text-rose-400">
               Collections
             </Link>
             <span aria-hidden="true">/</span>
-            <span className="text-rose-800">{collection.name}</span>
+            <span className="text-rose-400">{collection.name}</span>
           </nav>
         </div>
       </div>
@@ -152,7 +152,7 @@ export default async function CollectionDetailPage({
         <div className="relative mx-auto max-w-[820px] px-4 sm:px-6">
           <span
             className={`inline-flex items-center gap-2 text-xs font-medium tracking-[0.2em] uppercase ${
-              bannerImage ? "text-rose-300" : "text-rose-800"
+              bannerImage ? "text-rose-300" : "text-rose-400"
             }`}
           >
             <span className="h-px w-6 bg-current opacity-60" aria-hidden="true" />
@@ -193,7 +193,7 @@ export default async function CollectionDetailPage({
                 collection's own actual first product (its own curated
                 order), never a separate "featured" flag. */}
             {heroProduct ? (
-              <div className="mb-14 grid gap-6 overflow-hidden rounded-2xl border border-surface-border bg-surface lg:grid-cols-2 lg:gap-0">
+              <div className="mb-14 grid grid-cols-1 gap-6 overflow-hidden rounded-2xl border border-surface-border bg-surface lg:grid-cols-2 lg:gap-0">
                 <Link
                   href={`/products/${heroProduct.slug}`}
                   className="group relative block aspect-[4/5] w-full overflow-hidden lg:aspect-auto"

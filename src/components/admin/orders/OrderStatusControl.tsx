@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { OrderResponse, OrderStatus } from "@/types/order";
+import type { OrderResponse, OrderStatus, PaymentStatus } from "@/types/order";
 
 type ChangeableStatus = "pending" | "processing" | "shipped";
 
@@ -27,6 +27,7 @@ function isChangeable(status: OrderStatus): status is ChangeableStatus {
 interface OrderStatusControlProps {
   orderId: string;
   currentStatus: OrderStatus;
+  paymentStatus: PaymentStatus;
   trackingNumber?: string;
   carrier?: string;
 }
@@ -34,11 +35,22 @@ interface OrderStatusControlProps {
 export function OrderStatusControl({
   orderId,
   currentStatus,
+  paymentStatus,
   trackingNumber,
   carrier,
 }: OrderStatusControlProps) {
   const router = useRouter();
-  const options = isChangeable(currentStatus) ? NEXT_STATUS_OPTIONS[currentStatus] : [];
+  // Nothing to process/ship/deliver until Razorpay has actually confirmed
+  // the payment - cancelling (to release the reserved stock) is the only
+  // action offered until then. The server enforces this same rule
+  // independently (see `updateOrderStatus` in src/lib/admin/orders.ts) -
+  // this is what keeps the option from ever being offered in the first
+  // place, not what makes it safe to skip there.
+  const options = isChangeable(currentStatus)
+    ? paymentStatus === "paid"
+      ? NEXT_STATUS_OPTIONS[currentStatus]
+      : ["cancelled" as const]
+    : [];
 
   const [status, setStatus] = useState<OrderStatus>(options[0] ?? currentStatus);
   const [tracking, setTracking] = useState(trackingNumber ?? "");

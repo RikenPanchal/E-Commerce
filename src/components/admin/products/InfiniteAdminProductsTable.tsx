@@ -191,7 +191,7 @@ export function InfiniteAdminProductsTable({
                   <button
                     type="button"
                     onClick={loadMore}
-                    className="rounded-md border border-rose-800 px-4 py-1.5 text-xs font-medium text-rose-800 transition-colors hover:bg-blush"
+                    className="rounded-md border border-rose-800 px-4 py-1.5 text-xs font-medium text-rose-400 transition-colors hover:bg-blush"
                   >
                     Couldn&apos;t load more - tap to retry
                   </button>

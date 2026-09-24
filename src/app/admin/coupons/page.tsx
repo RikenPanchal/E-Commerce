@@ -49,7 +49,7 @@ export default async function AdminCouponsPage() {
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-black/5 dark:border-white/10">
+      <div className="relative overflow-x-auto rounded-2xl border border-black/5 dark:border-white/10">
         <table className="w-full min-w-[820px] text-left text-sm">
           <thead className="border-b border-black/5 text-xs uppercase tracking-wide text-foreground/50 dark:border-white/10">
             <tr>

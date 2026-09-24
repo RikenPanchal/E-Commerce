@@ -4,11 +4,10 @@ import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart/CartProvider";
-import { CouponBox } from "@/components/shop/CouponBox";
-import { AvailableOffers } from "@/components/shop/AvailableOffers";
 import { formatCurrency } from "@/lib/utils/currency";
 import { calculateShippingCost } from "@/lib/shop/shipping";
-import type { OrderResponse } from "@/types/order";
+import { openRazorpayCheckout } from "@/lib/payments/razorpayCheckout";
+import type { OrderResponse, PlaceOrderResponse } from "@/types/order";
 import type { AddressView } from "@/types/account";
 
 interface AddressForm {
@@ -44,9 +43,11 @@ function validateAddressForm(form: AddressForm): Record<string, string> {
 
 export function CheckoutForm({
   defaultName,
+  defaultEmail,
   savedAddresses,
 }: {
   defaultName: string;
+  defaultEmail: string;
   savedAddresses: AddressView[];
 }) {
   const router = useRouter();
@@ -68,11 +69,9 @@ export function CheckoutForm({
   const effectiveState = selectedSaved?.state ?? address.state;
   const hasCompleteAddress = effectiveCity.trim().length > 0 && effectiveState.trim().length > 0;
 
-  // Storefront markets this as free shipping everywhere in India - the
-  // location-based delivery cost is still real and still gets folded into
-  // Total below (mirroring the exact same calculation the server uses, so
-  // it never drifts from what the order actually gets charged), it's just
-  // never shown as its own line item.
+  // Shipping is free everywhere in India (see src/lib/shop/shipping.ts) -
+  // computed via the same shared function the server uses for the actual
+  // charge, so this preview can never drift from what the order is billed.
   const shippingCost = hasCompleteAddress ? calculateShippingCost({ city: effectiveCity, state: effectiveState }) : 0;
 
   const total = Math.max(subtotal - (appliedCoupon?.discountAmount ?? 0), 0) + shippingCost;
@@ -141,11 +140,12 @@ export function CheckoutForm({
           couponCode: appliedCoupon?.code,
         }),
       });
-      const data = (await response.json()) as OrderResponse;
+      const data = (await response.json()) as PlaceOrderResponse;
 
       if (!data.success) {
         setFormError(data.message);
         setFieldErrors(data.fieldErrors ?? {});
+        setIsSubmitting(false);
         return;
       }
 
@@ -159,12 +159,93 @@ export function CheckoutForm({
         }).catch(() => {});
       }
 
-      clearCart();
-      router.push(`/orders/${data.order.id}`);
+      // Stock is reserved and the Razorpay order exists at this point, but
+      // nothing is actually confirmed yet - Checkout opens next, and the
+      // order is only ever finalized by verifyPayment below (or, if the
+      // browser never gets to report success, the Razorpay webhook).
+      const orderId = data.order.id;
+
+      await openRazorpayCheckout(
+        {
+          key: data.razorpay.keyId,
+          amount: data.razorpay.amount,
+          currency: data.razorpay.currency,
+          order_id: data.razorpay.orderId,
+          name: "E-Commerce",
+          description: `Order #${orderId.slice(-8).toUpperCase()}`,
+          prefill: {
+            name: shippingAddress.fullName,
+            email: defaultEmail,
+            contact: shippingAddress.phone,
+          },
+          theme: { color: "#e11d48" },
+          handler: (paymentResponse) => {
+            void verifyPayment(orderId, paymentResponse);
+          },
+          modal: {
+            ondismiss: () => {
+              void cancelUnpaidOrder(orderId, "Payment cancelled. Your bag is unchanged - you can try again.");
+            },
+          },
+        },
+        (failure) => {
+          void cancelUnpaidOrder(
+            orderId,
+            failure.error.description || "Payment failed. Please try again or use a different payment method."
+          );
+        }
+      );
     } catch {
       setFormError("Something went wrong. Please try again.");
-    } finally {
       setIsSubmitting(false);
+    }
+  }
+
+  /** Razorpay Checkout's own success callback - reports what the customer
+   *  just paid, never trusted as-is (the server re-derives and checks the
+   *  signature before marking anything paid). */
+  async function verifyPayment(
+    orderId: string,
+    response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }
+  ) {
+    try {
+      const verifyResponse = await fetch(`/api/orders/${orderId}/verify-payment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          razorpayOrderId: response.razorpay_order_id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpaySignature: response.razorpay_signature,
+        }),
+      });
+      const data = (await verifyResponse.json()) as OrderResponse;
+      if (!data.success) {
+        setFormError(`${data.message} Your order is saved as #${orderId.slice(-8).toUpperCase()} - contact us if you need help.`);
+        setIsSubmitting(false);
+        return;
+      }
+
+      clearCart();
+      router.push(`/orders/${orderId}`);
+    } catch {
+      setFormError(
+        `We couldn't confirm your payment just now. Your order is saved as #${orderId.slice(-8).toUpperCase()} - check "My orders" in a moment, or contact us if it doesn't update.`
+      );
+      setIsSubmitting(false);
+    }
+  }
+
+  /** Releases the order's reserved stock after a dismissed/failed payment
+   *  attempt - best-effort from the client's side (the Razorpay webhook and
+   *  the stale-checkout cleanup job both also cover this independently),
+   *  so its own failure only logs rather than blocking the retry message. */
+  async function cancelUnpaidOrder(orderId: string, message: string) {
+    setFormError(message);
+    setIsSubmitting(false);
+    try {
+      await fetch(`/api/orders/${orderId}/cancel-payment`, { method: "POST" });
+    } catch (error) {
+      console.error(`Failed to release stock for unpaid order ${orderId}:`, error);
     }
   }
 
@@ -183,7 +264,7 @@ export function CheckoutForm({
   }
 
   return (
-    <div className="mt-8 grid gap-10 lg:grid-cols-[2fr_1fr]">
+    <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
         <h2 className="text-sm font-semibold text-foreground">Shipping address</h2>
 
@@ -310,9 +391,12 @@ export function CheckoutForm({
           disabled={isSubmitting || items.length === 0}
           className="mt-2 w-fit rounded-full bg-rose-600 px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-rose-500 disabled:opacity-50"
         >
-          {isSubmitting ? "Placing order..." : "Place order"}
+          {isSubmitting ? "Opening secure checkout..." : `Pay ${formatCurrency(total)}`}
         </button>
-        <p className="text-xs text-foreground/50">Pay on delivery. No payment is collected online.</p>
+        <p className="text-xs text-foreground/50">
+          You&apos;ll pay securely via Razorpay - UPI, cards, netbanking and wallets are all supported. No cash on
+          delivery.
+        </p>
       </form>
 
       <div className="flex flex-col gap-4 rounded-2xl border border-black/5 p-5 shadow-sm dark:border-white/10 dark:shadow-none">
@@ -328,9 +412,31 @@ export function CheckoutForm({
           ))}
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-black/5 pt-3 dark:border-white/10">
-          <AvailableOffers />
-          <CouponBox />
+        {/* Coupons are picked on the Cart page (every route here - including
+            "Buy now" - goes through it), so checkout only summarizes the
+            result instead of repeating the full offer list and code input. */}
+        <div className="border-t border-black/5 pt-3 dark:border-white/10">
+          {appliedCoupon ? (
+            <div className="flex items-center justify-between gap-3 rounded-md border border-blush-line bg-blush px-4 py-3">
+              <div className="flex min-w-0 flex-col gap-0.5">
+                <span className="text-sm font-semibold tracking-wide text-rose-400 uppercase">{appliedCoupon.code}</span>
+                <span className="text-xs text-foreground/60">Coupon applied</span>
+              </div>
+              <Link
+                href="/cart"
+                className="shrink-0 text-xs font-medium text-foreground/60 underline underline-offset-4 transition-colors hover:text-foreground"
+              >
+                Change
+              </Link>
+            </div>
+          ) : (
+            <p className="text-xs text-foreground/60">
+              Have a coupon?{" "}
+              <Link href="/cart" className="font-medium text-rose-400 underline underline-offset-4 hover:text-rose-300">
+                Apply it in your bag
+              </Link>
+            </p>
+          )}
         </div>
 
         <div className="flex flex-col gap-1.5 border-t border-black/5 pt-3 dark:border-white/10">
@@ -341,7 +447,7 @@ export function CheckoutForm({
           {appliedCoupon ? (
             <div className="flex items-center justify-between text-sm">
               <span className="text-foreground/70">Discount</span>
-              <span className="text-rose-800">−{formatCurrency(appliedCoupon.discountAmount)}</span>
+              <span className="text-rose-400">−{formatCurrency(appliedCoupon.discountAmount)}</span>
             </div>
           ) : null}
           <div className="flex items-center justify-between text-sm">

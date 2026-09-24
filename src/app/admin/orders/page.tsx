@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllOrdersForAdmin } from "@/lib/admin/orders";
 import { OrderStatusBadge } from "@/components/orders/OrderStatusBadge";
+import { PaymentStatusBadge } from "@/components/orders/PaymentStatusBadge";
 import { formatCurrency } from "@/lib/utils/currency";
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export default async function AdminOrdersPage() {
         <p className="text-sm text-foreground/60">{orders.length} orders placed</p>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-black/5 dark:border-white/10">
+      <div className="relative overflow-x-auto rounded-2xl border border-black/5 dark:border-white/10">
         <table className="w-full min-w-[720px] text-left text-sm">
           <thead className="border-b border-black/5 text-xs uppercase tracking-wide text-foreground/50 dark:border-white/10">
             <tr>
@@ -28,6 +29,7 @@ export default async function AdminOrdersPage() {
               <th className="px-6 py-3 font-medium">Customer</th>
               <th className="px-6 py-3 font-medium">Items</th>
               <th className="px-6 py-3 font-medium">Total</th>
+              <th className="px-6 py-3 font-medium">Payment</th>
               <th className="px-6 py-3 font-medium">Status</th>
               <th className="px-6 py-3 font-medium">Placed</th>
             </tr>
@@ -35,7 +37,7 @@ export default async function AdminOrdersPage() {
           <tbody className="divide-y divide-black/5 dark:divide-white/10">
             {orders.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-foreground/60">
+                <td colSpan={7} className="px-6 py-8 text-center text-foreground/60">
                   No orders yet.
                 </td>
               </tr>
@@ -58,6 +60,9 @@ export default async function AdminOrdersPage() {
                   </td>
                   <td className="px-6 py-3 text-foreground/70">{order.items.length}</td>
                   <td className="px-6 py-3 text-foreground/70">{formatCurrency(order.total)}</td>
+                  <td className="px-6 py-3">
+                    <PaymentStatusBadge status={order.paymentStatus} />
+                  </td>
                   <td className="px-6 py-3">
                     <OrderStatusBadge status={order.status} />
                   </td>

@@ -37,6 +37,16 @@ export function StickyBuyBar({ product, isOutOfStock }: { product: ProductView; 
     return () => observer.disconnect();
   }, []);
 
+  // Lets other bottom-anchored floating UI (BackToTopButton) lift itself
+  // above this bar while it's showing instead of covering its Buy button.
+  useEffect(() => {
+    if (visible) document.body.dataset.stickyBuyBar = "";
+    else delete document.body.dataset.stickyBuyBar;
+    return () => {
+      delete document.body.dataset.stickyBuyBar;
+    };
+  }, [visible]);
+
   return (
     <div
       className={`fixed inset-x-0 bottom-0 z-30 border-t border-rose-100 bg-white/95 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur transition-transform duration-300 dark:border-rose-950/40 dark:bg-background/95 ${

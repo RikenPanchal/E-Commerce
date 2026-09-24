@@ -24,7 +24,7 @@ export async function Hero() {
 
   return (
     <section className="w-full bg-cream">
-      <div className="grid lg:grid-cols-[42fr_58fr]">
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,42fr)_minmax(0,58fr)]">
         <div className="order-2 flex flex-col justify-center px-6 py-14 sm:px-10 sm:py-20 lg:order-1 lg:h-[600px] lg:px-14 lg:py-0 xl:px-16">
           <Reveal className="max-w-md">
             <p className="mb-5 flex items-center gap-2 text-xs font-medium tracking-[0.25em] text-rose-600 uppercase">

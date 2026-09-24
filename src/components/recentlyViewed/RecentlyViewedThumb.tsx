@@ -49,11 +49,11 @@ export function RecentlyViewedThumb({
       <div className="flex flex-col gap-0.5 pt-2">
         <Link
           href={`/products/${product.slug}`}
-          className="block truncate text-xs font-medium text-foreground transition-colors hover:text-rose-800"
+          className="block truncate text-xs font-medium text-foreground transition-colors hover:text-rose-400"
         >
           {product.name}
         </Link>
-        <span className="text-xs font-semibold text-rose-800">{formatCurrency(product.price)}</span>
+        <span className="text-xs font-semibold text-rose-400">{formatCurrency(product.price)}</span>
       </div>
     </div>
   );

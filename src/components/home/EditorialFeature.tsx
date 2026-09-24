@@ -20,7 +20,7 @@ export async function EditorialFeature() {
   return (
     <section id="new-season" className="w-full scroll-mt-20 bg-sand">
       <div className="mx-auto max-w-[1380px] px-4 py-14 sm:px-8 sm:py-16 lg:py-0">
-        <div className="grid items-center gap-10 lg:h-[460px] lg:grid-cols-2 lg:gap-16">
+        <div className="grid grid-cols-1 items-center gap-10 lg:h-[460px] lg:grid-cols-2 lg:gap-16">
           <Reveal className="max-w-md">
             <p className="mb-4 flex items-center gap-2 text-xs font-medium tracking-[0.25em] text-rose-600 uppercase">
               <span className="h-px w-8 bg-rose-400" aria-hidden="true" />

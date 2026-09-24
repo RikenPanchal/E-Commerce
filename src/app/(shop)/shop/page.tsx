@@ -84,7 +84,7 @@ const railUnderlineClass = "absolute inset-x-0 -bottom-0.5 h-px origin-left bg-r
 // CSS `peer-checked` so the pill highlights immediately on click with no
 // JS, even though the filter itself only takes effect on "Apply filters".
 const pillLabelClass =
-  "flex h-9 min-w-9 cursor-pointer items-center justify-center rounded-md border border-surface-border px-3 text-xs font-medium text-foreground/70 transition-colors peer-checked:border-rose-800 peer-checked:bg-blush peer-checked:text-rose-800 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-500 peer-focus-visible:ring-offset-2";
+  "flex h-9 min-w-9 cursor-pointer items-center justify-center rounded-md border border-surface-border px-3 text-xs font-medium text-foreground/70 transition-colors peer-checked:border-rose-800 peer-checked:bg-blush peer-checked:text-rose-400 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-500 peer-focus-visible:ring-offset-2";
 
 /**
  * The Shop page - same underlying real data/filtering as before this pass
@@ -287,7 +287,7 @@ export default async function ShopPage({
 
       {/* Side-by-side in the roomy mobile/tablet drawer, stacked full-width
           in the desktop sidebar - that column is a fixed 240px
-          (`lg:grid-cols-[240px_1fr]` below), too narrow to fit both
+          (`lg:grid-cols-[240px_minmax(0,1fr)]` below), too narrow to fit both
           uppercase, tracked-out labels on one row without the second
           button's text clipping. */}
       <div className="flex flex-row items-stretch gap-3 border-t border-surface-border pt-5 lg:flex-col">
@@ -342,20 +342,20 @@ export default async function ShopPage({
             aria-label="Breadcrumb"
             className="flex items-center gap-2 text-[11px] font-medium tracking-[0.12em] text-muted-soft uppercase"
           >
-            <Link href="/" className="transition-colors hover:text-rose-800">
+            <Link href="/" className="transition-colors hover:text-rose-400">
               Home
             </Link>
             <span aria-hidden="true">/</span>
             {singleCategory ? (
               <>
-                <Link href="/shop" className="transition-colors hover:text-rose-800">
+                <Link href="/shop" className="transition-colors hover:text-rose-400">
                   Shop
                 </Link>
                 <span aria-hidden="true">/</span>
-                <span className="text-rose-800">{singleCategory}</span>
+                <span className="text-rose-400">{singleCategory}</span>
               </>
             ) : (
-              <span className="text-rose-800">Shop</span>
+              <span className="text-rose-400">Shop</span>
             )}
           </nav>
         </div>
@@ -364,7 +364,7 @@ export default async function ShopPage({
       {/* Compact intro - not a hero. Reaches the product grid quickly. */}
       <div className="border-b border-surface-border bg-background">
         <div className="mx-auto max-w-[820px] px-4 py-8 text-center sm:px-6 sm:py-10 lg:px-8">
-          <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.2em] text-rose-800 uppercase">
+          <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.2em] text-rose-400 uppercase">
             <span className="h-px w-6 bg-blush-line" aria-hidden="true" />
             Explore the collection
             <span className="h-px w-6 bg-blush-line" aria-hidden="true" />
@@ -388,15 +388,15 @@ export default async function ShopPage({
           categories at once, both writing to the same `category` filter. */}
       <nav aria-label="Shop by category" className="border-b border-surface-border bg-surface">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-6 overflow-x-auto py-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <Link href={hrefWith({ categories: [] })} className={cn(railLinkClass, categories.length === 0 && "text-rose-800")}>
+          <div className="flex items-center gap-6 relative overflow-x-auto py-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <Link href={hrefWith({ categories: [] })} className={cn(railLinkClass, categories.length === 0 && "text-rose-400")}>
               All
               <span className={cn(railUnderlineClass, categories.length === 0 ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100")} />
             </Link>
             {PRODUCT_CATEGORIES.map((option) => {
               const isActive = categories.length === 1 && categories[0] === option;
               return (
-                <Link key={option} href={hrefWith({ categories: [option] })} className={cn(railLinkClass, isActive && "text-rose-800")}>
+                <Link key={option} href={hrefWith({ categories: [option] })} className={cn(railLinkClass, isActive && "text-rose-400")}>
                   {option}
                   <span className={cn(railUnderlineClass, isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100")} />
                 </Link>
@@ -463,7 +463,7 @@ export default async function ShopPage({
                 <Link
                   key={chip.key}
                   href={chip.href}
-                  className="inline-flex items-center gap-1.5 rounded-md border border-blush-line bg-blush px-2.5 py-1 text-xs font-medium text-rose-800 transition-colors hover:border-rose-800/40 hover:bg-blush-line"
+                  className="inline-flex items-center gap-1.5 rounded-md border border-blush-line bg-blush px-2.5 py-1 text-xs font-medium text-rose-400 transition-colors hover:border-rose-800/40 hover:bg-blush-line"
                 >
                   {chip.label}
                   <CloseIcon className="h-2.5 w-2.5" />
@@ -471,7 +471,7 @@ export default async function ShopPage({
               ))}
               <Link
                 href="/shop"
-                className="text-xs font-medium text-rose-800 underline underline-offset-4 hover:text-burgundy"
+                className="text-xs font-medium text-rose-400 underline underline-offset-4 hover:text-rose-300"
               >
                 Clear all
               </Link>
@@ -481,10 +481,10 @@ export default async function ShopPage({
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[240px_1fr]">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[240px_minmax(0,1fr)]">
           <aside className="hidden h-fit flex-col gap-6 lg:flex">
             <h2 className="flex items-center gap-1.5 text-xs font-semibold tracking-[0.15em] text-foreground uppercase">
-              <FilterIcon className="h-4 w-4 text-rose-800" />
+              <FilterIcon className="h-4 w-4 text-rose-400" />
               Filters
             </h2>
             {filterPanelContent}
@@ -493,7 +493,7 @@ export default async function ShopPage({
           <div>
             {totalCount === 0 ? (
               <div className="mx-auto mt-8 flex max-w-sm flex-col items-center gap-3 py-12 text-center">
-                <span className="flex h-14 w-14 items-center justify-center rounded-full border border-blush-line bg-blush text-rose-800">
+                <span className="flex h-14 w-14 items-center justify-center rounded-full border border-blush-line bg-blush text-rose-400">
                   <SearchIcon className="h-6 w-6" />
                 </span>
                 <p className="font-serif text-xl font-semibold text-foreground uppercase">

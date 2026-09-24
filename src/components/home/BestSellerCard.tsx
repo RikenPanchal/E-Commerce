@@ -49,12 +49,12 @@ export function BestSellerCard({
       <div className="flex flex-col gap-1 pt-3">
         <Link
           href={`/products/${product.slug}`}
-          className="block truncate font-serif text-base font-semibold text-foreground transition-colors hover:text-rose-800"
+          className="block truncate font-serif text-base font-semibold text-foreground transition-colors hover:text-rose-400"
         >
           {product.name}
         </Link>
         <StarRating rating={rating?.average ?? 0} count={rating?.count ?? 0} />
-        <span className="text-sm font-semibold text-rose-800">{formatCurrency(product.price)}</span>
+        <span className="text-sm font-semibold text-rose-400">{formatCurrency(product.price)}</span>
       </div>
     </div>
   );

@@ -59,7 +59,7 @@ export function ProductGallery({
       </div>
 
       {media.length > 1 ? (
-        <div className="flex gap-3 overflow-x-auto pb-1">
+        <div className="flex gap-3 relative overflow-x-auto pb-1">
           {media.map((item) => {
             const isActive = item.id === active?.id;
             return (

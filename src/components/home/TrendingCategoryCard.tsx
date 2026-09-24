@@ -45,7 +45,7 @@ export function TrendingCategoryCard({
       <div className="mt-4 text-center">
         <span className="block font-serif text-lg font-semibold text-foreground">{category}</span>
         <span className="mt-1 truncate text-xs text-muted-foreground">{product.name}</span>
-        <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-medium text-rose-800">
+        <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-medium text-rose-400">
           {formatCurrency(product.price)}
           <ArrowRightIcon className="h-3 w-3 transition-transform duration-300 ease-out group-hover:translate-x-1" />
         </span>

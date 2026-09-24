@@ -57,8 +57,12 @@ export function AccountMenu({
     };
   }, [isOpen]);
 
+  // Not positioned below sm, so the dropdown anchors to the full-width
+  // sticky header instead of the avatar - the avatar sits left of the
+  // wishlist/bag icons, and a right-aligned w-56 menu anchored to it would
+  // run off the left edge of a narrow phone.
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="sm:relative">
       <button
         type="button"
         onClick={() => setIsOpen((previous) => !previous)}
@@ -76,7 +80,7 @@ export function AccountMenu({
       {isOpen ? (
         <div
           role="menu"
-          className="absolute top-full right-0 z-50 mt-2 w-56 overflow-hidden rounded-lg border border-surface-border bg-surface py-1.5 shadow-lg"
+          className="absolute top-full right-3 z-50 mt-2 w-56 max-w-[calc(100vw-1.5rem)] overflow-hidden sm:right-0 rounded-lg border border-surface-border bg-surface py-1.5 shadow-lg"
         >
           <div className="border-b border-surface-border px-4 py-3">
             <p className="truncate text-sm font-medium text-foreground">{name}</p>
@@ -87,7 +91,7 @@ export function AccountMenu({
             <Link
               href={isAdmin ? "/admin" : "/account"}
               onClick={() => setIsOpen(false)}
-              className="px-4 py-2 text-sm text-foreground/80 transition-colors hover:bg-rose-50 hover:text-rose-700"
+              className="px-4 py-2 text-sm text-foreground/80 transition-colors hover:bg-rose-50 hover:text-rose-400"
               role="menuitem"
             >
               {isAdmin ? "Admin dashboard" : "My account"}
@@ -96,7 +100,7 @@ export function AccountMenu({
               <Link
                 href="/orders"
                 onClick={() => setIsOpen(false)}
-                className="px-4 py-2 text-sm text-foreground/80 transition-colors hover:bg-rose-50 hover:text-rose-700"
+                className="px-4 py-2 text-sm text-foreground/80 transition-colors hover:bg-rose-50 hover:text-rose-400"
                 role="menuitem"
               >
                 My orders

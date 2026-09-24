@@ -18,7 +18,9 @@ export function BackToTopButton() {
     <a
       href="#top"
       aria-label="Back to top"
-      className="fixed bottom-5 right-5 z-30 flex h-11 w-11 items-center justify-center rounded-md border border-black/10 bg-surface text-foreground shadow-lg transition-colors hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/10"
+      // Lifts above StickyBuyBar (which sets data-sticky-buy-bar on <body>)
+      // so it never covers that bar's Buy button on small screens.
+      className="fixed bottom-5 right-5 z-30 flex h-11 w-11 items-center justify-center rounded-md border border-black/10 bg-surface text-foreground shadow-lg transition-all hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/10 [body[data-sticky-buy-bar]_&]:bottom-24"
     >
       <ArrowUpIcon />
     </a>

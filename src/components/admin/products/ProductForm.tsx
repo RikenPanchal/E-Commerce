@@ -705,12 +705,12 @@ export function ProductForm({
                       updateColorName(color.id, event.target.value)
                     }
                     placeholder="Color name (e.g. Rose)"
-                    className="flex-1 rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
+                    className="min-w-0 flex-1 rounded-md border border-black/10 bg-transparent px-3 py-2 text-sm outline-none focus:border-rose-400 dark:border-white/15"
                   />
                   <button
                     type="button"
                     onClick={() => removeColor(color.id)}
-                    className="text-xs font-medium text-foreground/50 hover:text-red-500"
+                    className="shrink-0 text-xs font-medium text-foreground/50 hover:text-red-500"
                   >
                     Remove
                   </button>
@@ -783,7 +783,7 @@ export function ProductForm({
           </div>
 
           {variants.length > 0 ? (
-            <div className="overflow-x-auto rounded-md border border-black/10 dark:border-white/15">
+            <div className="relative overflow-x-auto rounded-md border border-black/10 dark:border-white/15">
               <table className="w-full min-w-[720px] border-collapse text-left text-xs">
                 <thead>
                   <tr className="border-b border-black/10 bg-black/[.02] dark:border-white/15 dark:bg-white/[.03]">

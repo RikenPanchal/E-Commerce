@@ -5,6 +5,18 @@ export type OrderStatus = "pending" | "processing" | "shipped" | "delivered" | "
 /** Once an order reaches one of these, its status can no longer change. */
 export const TERMINAL_ORDER_STATUSES: OrderStatus[] = ["delivered", "cancelled"];
 
+/** Independent of `OrderStatus` (fulfillment stage) - an order is created,
+ *  with stock already reserved, the moment checkout starts (see `placeOrder`
+ *  in src/lib/shop/orders.ts), before Razorpay payment is confirmed. Its
+ *  `status` stays "pending" throughout; `paymentStatus` is what actually
+ *  tracks whether real money has arrived.
+ *  - "pending": Razorpay order created, payment not yet confirmed.
+ *  - "paid": payment signature verified (or webhook-confirmed) - the only
+ *    state in which an order should ever be processed/shipped.
+ *  - "failed": payment was declined, or the checkout was abandoned/
+ *    cancelled - stock has been released back (see `failOrderPayment`). */
+export type PaymentStatus = "pending" | "paid" | "failed";
+
 export interface OrderItemAttributes {
   product: Types.ObjectId;
   /** The exact variant purchased, when the product used the variant system
@@ -45,6 +57,20 @@ export interface OrderAttributes {
   shippingCost: number;
   total: number;
   status: OrderStatus;
+  /** Always "razorpay" today - kept as a field (not a hardcoded assumption
+   *  elsewhere) so a second provider could be added later without a schema
+   *  migration. */
+  paymentProvider: "razorpay";
+  paymentStatus: PaymentStatus;
+  /** Razorpay's own order id (`order_...`) - created alongside this order
+   *  and used to verify the payment signature, look the order up from a
+   *  webhook event, and let the customer retry payment against the exact
+   *  same Razorpay order if their first attempt failed. */
+  razorpayOrderId?: string;
+  /** Set only once payment is verified - the specific payment (`pay_...`)
+   *  that actually paid for this order. */
+  razorpayPaymentId?: string;
+  paidAt?: Date | null;
   trackingNumber?: string;
   carrier?: string;
   shippedAt?: Date | null;
@@ -106,6 +132,16 @@ const orderSchema = new Schema<OrderAttributes>(
       enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
       default: "pending",
     },
+    paymentProvider: { type: String, enum: ["razorpay"], required: true, default: "razorpay" },
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "paid", "failed"],
+      required: true,
+      default: "pending",
+    },
+    razorpayOrderId: { type: String, trim: true },
+    razorpayPaymentId: { type: String, trim: true },
+    paidAt: { type: Date, default: null },
     trackingNumber: { type: String, trim: true },
     carrier: { type: String, trim: true },
     shippedAt: { type: Date, default: null },
@@ -116,6 +152,13 @@ const orderSchema = new Schema<OrderAttributes>(
 );
 
 orderSchema.index({ user: 1, createdAt: -1 });
+// Looked up by Razorpay's own order id from both the webhook handler and
+// the client-side verify call - sparse since only orders that reached
+// checkout have one (and it's set exactly once, at creation).
+orderSchema.index({ razorpayOrderId: 1 }, { sparse: true });
+// The stale-checkout cleanup job (src/app/api/cron/expire-pending-orders)
+// scans exactly this shape - unpaid orders, oldest first.
+orderSchema.index({ paymentStatus: 1, createdAt: 1 });
 
 const Order: Model<OrderAttributes> =
   (models.Order as Model<OrderAttributes>) || model<OrderAttributes>("Order", orderSchema);

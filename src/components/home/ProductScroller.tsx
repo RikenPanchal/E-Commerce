@@ -130,7 +130,7 @@ export function ProductScroller({
         ref={scrollerRef}
         onScroll={handleScroll}
         style={{ WebkitMaskImage: maskImage, maskImage }}
-        className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory gap-4 relative overflow-x-auto pb-2 sm:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {products.map((product, index) => (
           <Reveal

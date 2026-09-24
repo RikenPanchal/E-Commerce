@@ -23,7 +23,7 @@ export function OrderStatusTimeline({ status }: { status: OrderStatus }) {
       {STEPS.map((step, index) => {
         const isComplete = index <= currentIndex;
         return (
-          <div key={step.key} className="flex flex-1 items-center last:flex-none">
+          <div key={step.key} className="flex min-w-0 flex-1 items-center last:flex-none">
             <div className="flex flex-col items-center gap-1.5">
               <div
                 className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
@@ -35,14 +35,14 @@ export function OrderStatusTimeline({ status }: { status: OrderStatus }) {
                 {isComplete ? "✓" : index + 1}
               </div>
               <span
-                className={`text-center text-xs ${isComplete ? "text-foreground" : "text-foreground/40"}`}
+                className={`text-center text-[10px] sm:text-xs ${isComplete ? "text-foreground" : "text-foreground/40"}`}
               >
                 {step.label}
               </span>
             </div>
             {index < STEPS.length - 1 ? (
               <div
-                className={`mx-2 h-0.5 flex-1 ${
+                className={`mx-1 h-0.5 min-w-2 flex-1 sm:mx-2 ${
                   index < currentIndex ? "bg-rose-600" : "bg-black/10 dark:bg-white/10"
                 }`}
               />

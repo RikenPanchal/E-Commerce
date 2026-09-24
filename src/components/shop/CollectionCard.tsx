@@ -49,10 +49,14 @@ function PreviewMosaic({ images }: { images: PreviewImage[] }) {
       </div>
     );
   }
+  // The large tile spans every row of the right-hand stack - 2 rows for 2
+  // smaller tiles, 3 rows for 3 - so the grid never spills into an extra,
+  // empty implicit row.
   const rest = images.slice(1);
+  const stacked = rest.length === 3;
   return (
-    <div className="grid aspect-square w-full grid-cols-2 grid-rows-2 gap-0.5">
-      <Tile image={images[0]} className="row-span-2" />
+    <div className={`grid aspect-square w-full grid-cols-2 gap-0.5 ${stacked ? "grid-rows-3" : "grid-rows-2"}`}>
+      <Tile image={images[0]} className={stacked ? "row-span-3" : "row-span-2"} />
       {rest.map((image) => (
         <Tile key={image.url} image={image} />
       ))}
@@ -66,7 +70,7 @@ function Tile({ image, className = "" }: { image: PreviewImage; className?: stri
     <img
       src={image.url}
       alt={image.alt}
-      className={`h-full w-full object-cover ${className}`}
+      className={`h-full min-h-0 w-full object-cover ${className}`}
       loading="lazy"
     />
   );

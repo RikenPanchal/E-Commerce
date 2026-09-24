@@ -72,10 +72,10 @@ export function buildOrderConfirmationEmail(order: OrderView, customerName: stri
             </tr>
             <tr>
               <td style="padding:32px 32px 8px 32px;">
-                <p style="margin:0;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:${ACCENT};font-family:Arial,sans-serif;">Order confirmed</p>
+                <p style="margin:0;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:${ACCENT};font-family:Arial,sans-serif;">Payment received &middot; Order confirmed</p>
                 <h1 style="margin:6px 0 0 0;font-size:24px;color:${TEXT};">Thank you, ${escapeHtml(customerName)}!</h1>
                 <p style="margin:10px 0 0 0;font-size:14px;color:${MUTED_TEXT};font-family:Arial,sans-serif;">
-                  Order #${orderNumber} &middot; Placed ${dateFormatter.format(new Date(order.createdAt))}
+                  Order #${orderNumber} &middot; Placed ${dateFormatter.format(new Date(order.createdAt))} &middot; Paid via Razorpay
                 </p>
               </td>
             </tr>
@@ -150,10 +150,10 @@ export function buildOrderConfirmationEmail(order: OrderView, customerName: stri
   </body>
 </html>`;
 
-  const text = `${BRAND_NAME} - Order confirmed
+  const text = `${BRAND_NAME} - Payment received, order confirmed
 
 Thank you, ${customerName}!
-Order #${orderNumber} - Placed ${dateFormatter.format(new Date(order.createdAt))}
+Order #${orderNumber} - Placed ${dateFormatter.format(new Date(order.createdAt))} - Paid via Razorpay
 
 Items:
 ${order.items.map(itemRowText).join("\n")}

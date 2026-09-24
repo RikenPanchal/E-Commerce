@@ -5,7 +5,7 @@ import { CartLink } from "@/components/cart/CartLink";
 import { WishlistLink } from "@/components/wishlist/WishlistLink";
 import { SmartSearch } from "@/components/search/SmartSearch";
 import { BrandMark } from "@/components/home/icons";
-import { MobileNav } from "@/components/home/MobileNav";
+import { MobileNavServer } from "@/components/home/MobileNavServer";
 import { StickyHeader } from "@/components/home/StickyHeader";
 
 const navLinks = [
@@ -50,9 +50,9 @@ export function SiteHeader({ announcementVariant = "light" }: { announcementVari
             on the outer columns stops either cluster's content from
             forcing the grid wider than the viewport at narrower desktop
             widths (1024-1279px). */}
-        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 px-3 py-4 sm:gap-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-4 sm:gap-4 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-8">
           <div className="flex min-w-0 items-center gap-1 justify-self-start sm:gap-2">
-            <MobileNav />
+            <MobileNavServer />
             <Link href="/" className="flex min-w-0 items-center gap-1.5 sm:gap-2">
               <BrandMark className="h-6 w-6 shrink-0 text-rose-500" />
               <span className="hidden truncate font-serif text-lg font-semibold tracking-[0.1em] text-foreground sm:inline">

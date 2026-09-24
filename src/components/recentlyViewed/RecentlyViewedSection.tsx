@@ -107,7 +107,7 @@ export function RecentlyViewedSection({
         <div className="mx-auto max-w-[1440px] px-4 sm:px-8">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-rose-800 uppercase">
+              <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-rose-400 uppercase">
                 <EyeIcon className="h-3.5 w-3.5" />
                 Recently viewed
               </p>
@@ -129,7 +129,7 @@ export function RecentlyViewedSection({
               onScroll={handleScroll}
               onPointerDown={handlePointerDown}
               onClickCapture={handleClickCapture}
-              className="flex snap-x snap-mandatory gap-3 overflow-x-auto pt-1 pb-1 select-none [-ms-overflow-style:none] [scrollbar-width:none] sm:cursor-grab sm:gap-4 [&::-webkit-scrollbar]:hidden"
+              className="flex snap-x snap-mandatory gap-3 relative overflow-x-auto pt-1 pb-1 select-none [-ms-overflow-style:none] [scrollbar-width:none] sm:cursor-grab sm:gap-4 [&::-webkit-scrollbar]:hidden"
             >
               {resolved.products.map((product) => (
                 <div key={product.id} className="w-[34%] shrink-0 snap-start sm:w-[19%] md:w-[15%] lg:w-[12%]">

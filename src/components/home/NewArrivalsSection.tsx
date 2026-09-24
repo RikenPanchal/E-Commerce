@@ -25,9 +25,9 @@ export function NewArrivalsSection({
   return (
     <section id="featured" className="scroll-mt-20 bg-background py-14 sm:py-20">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8">
-        <div className="grid gap-8 lg:grid-cols-[300px_1fr] lg:gap-12">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-12">
           <Reveal className="flex flex-col justify-center lg:pb-10">
-            <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-rose-800 uppercase">
+            <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-rose-400 uppercase">
               <SparkleIcon className="h-4 w-4" />
               New arrivals
             </p>

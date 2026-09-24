@@ -53,10 +53,11 @@ export default function TermsPage() {
 
       <LegalSection heading="4. Orders &amp; payment">
         <p>
-          Placing an order is an offer to purchase, which we accept when we confirm and ship it.
-          We accept the payment methods shown at checkout, including cash on delivery where
-          eligible. We may cancel or refuse any order at our discretion - for example, on suspicion
-          of fraud, pricing errors, or if an item turns out to be out of stock.
+          Placing an order is an offer to purchase, which we accept when payment is confirmed. All
+          orders are paid online at checkout via Razorpay - UPI, cards, netbanking and wallets are
+          supported; we don&apos;t offer cash on delivery. We may cancel or refuse any order at our
+          discretion - for example, on suspicion of fraud, pricing errors, or if an item turns out
+          to be out of stock - in which case any payment already made is refunded in full.
         </p>
       </LegalSection>
 

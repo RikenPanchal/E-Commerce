@@ -1,9 +1,8 @@
 import { isValidObjectId } from "mongoose";
 import { connectDB } from "@/lib/db/connectDB";
 import Order, { TERMINAL_ORDER_STATUSES, type OrderDocument } from "@/models/Order";
-import Product from "@/models/Product";
 import User from "@/models/User";
-import { toOrderView } from "@/lib/shop/orders";
+import { toOrderView, restockOrderItems } from "@/lib/shop/orders";
 import { processBackInStockTransition } from "@/lib/shop/backInStock";
 import type { UpdateOrderStatusInput } from "@/lib/validations/order";
 import type { OrderView } from "@/types/order";
@@ -55,6 +54,13 @@ export type UpdateOrderStatusResult = { order: OrderDocument } | { error: string
  * Moves an order to a new status. Once an order is `delivered` or
  * `cancelled` it's terminal - restore stock and cancel became a one-way
  * door on purpose, matching how a real fulfillment flow works.
+ *
+ * An order whose payment hasn't been confirmed yet (`paymentStatus` isn't
+ * `"paid"`) can only ever be moved to `"cancelled"` - there is nothing to
+ * process/ship/deliver until Razorpay has actually confirmed the money
+ * arrived, and `OrderStatusControl` (the admin UI) already only offers
+ * "cancel" as an option in that case, but this is re-checked here too since
+ * the UI's own restriction is never the actual authority.
  */
 export async function updateOrderStatus(
   orderId: string,
@@ -74,46 +80,23 @@ export async function updateOrderStatus(
     return { error: `This order is already ${order.status} and can't be changed.` };
   }
 
+  if (input.status !== "cancelled" && order.paymentStatus !== "paid") {
+    return { error: "This order's payment hasn't been confirmed yet - it can only be cancelled." };
+  }
+
   // Populated only when cancelling, and only used after `order.save()`
   // below succeeds, so a back-in-stock notification never fires for a
   // cancellation that didn't actually go through.
-  let restocked: { productId: string; variantId: string | null; oldStock: number; newStock: number }[] = [];
+  let restocked: Awaited<ReturnType<typeof restockOrderItems>> = [];
 
   if (input.status === "cancelled") {
-    // The order never shipped, so give the stock it reserved back - and,
-    // unlike a bare `{ _id: item.product }` filter, a variant line must
-    // restore that exact variant's own stock, not just the product's
-    // top-level total (mirrors `placeOrder`'s `rollback()` in
-    // `src/lib/shop/orders.ts`, the correct existing pattern for this).
-    const productIds = [...new Set(order.items.map((item) => item.product.toString()))];
-    const products = await Product.find({ _id: { $in: productIds } });
-    const productMap = new Map(products.map((product) => [product._id.toString(), product]));
-
-    restocked = (
-      await Promise.all(
-        order.items.map(async (item) => {
-          const product = productMap.get(item.product.toString());
-          if (!product) return null; // Deleted since the order was placed - nothing to restock.
-
-          if (item.variantId) {
-            const variantId = item.variantId.toString();
-            const variant = product.variants.find((entry) => entry._id.toString() === variantId);
-            const oldStock = variant?.stock ?? 0;
-            await Product.updateOne(
-              { _id: item.product },
-              { $inc: { "variants.$[target].stock": item.quantity, stock: item.quantity } },
-              { arrayFilters: [{ "target._id": variantId }] }
-            );
-            return { productId: item.product.toString(), variantId, oldStock, newStock: oldStock + item.quantity };
-          }
-
-          const oldStock = product.stock;
-          await Product.updateOne({ _id: item.product }, { $inc: { stock: item.quantity } });
-          return { productId: item.product.toString(), variantId: null, oldStock, newStock: oldStock + item.quantity };
-        })
-      )
-    ).filter((entry): entry is NonNullable<typeof entry> => entry !== null);
-
+    // The order never shipped, so give the stock it reserved back - shared
+    // with `failOrderPayment` (src/lib/shop/orders.ts), the same restore
+    // a failed/abandoned Razorpay payment triggers automatically.
+    restocked = await restockOrderItems(order);
+    if (order.paymentStatus === "pending") {
+      order.paymentStatus = "failed";
+    }
     order.cancelledAt = new Date();
   }
 
@@ -150,10 +133,13 @@ export interface OrderStats {
 
 export async function getOrderStats(): Promise<OrderStats> {
   await connectDB();
+  // Paid, not just "not cancelled" - an order can now sit at `status:
+  // "pending"` while payment is still in flight (or never completes), and
+  // counting those as real orders/revenue would overstate both.
   const [totalOrders, revenueResult] = await Promise.all([
-    Order.countDocuments({ status: { $ne: "cancelled" } }),
+    Order.countDocuments({ paymentStatus: "paid" }),
     Order.aggregate<{ _id: null; total: number }>([
-      { $match: { status: { $ne: "cancelled" } } },
+      { $match: { paymentStatus: "paid" } },
       { $group: { _id: null, total: { $sum: "$total" } } },
     ]),
   ]);
