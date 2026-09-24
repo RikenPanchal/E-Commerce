@@ -17,10 +17,12 @@ const PENDING_ORDER_TIMEOUT_MINUTES = 60;
  * abandoned," not the same reliably-abandoned close Checkout itself
  * already reports.
  *
- * Not wired to run automatically - add a Vercel Cron entry pointed at this
- * route (see vercel.json) if you want it to run on a schedule, or trigger
- * it from any other scheduler that can send a GET/POST with this header.
- * Until then, this is inert and changes nothing about existing behavior.
+ * Scheduled by vercel.json once a day (03:00 UTC) - the most often Vercel's
+ * Hobby plan allows; a more frequent schedule makes every deployment fail.
+ * Vercel Cron sends `Authorization: Bearer $CRON_SECRET` automatically when
+ * CRON_SECRET is set in the project's env vars. To release abandoned
+ * checkouts sooner, upgrade to Pro (e.g. "*\/30 * * * *") or call this route
+ * from an external scheduler with the same header.
  */
 async function expirePendingOrders(): Promise<{ expiredCount: number }> {
   await connectDB();
