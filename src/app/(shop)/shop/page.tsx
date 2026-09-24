@@ -25,6 +25,7 @@ import { getRatingSummaries } from "@/lib/shop/reviews";
 import type { ProductWithRating } from "@/app/api/products/route";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildBreadcrumbSchema } from "@/lib/seo/structuredData";
+import { swatchStyle } from "@/lib/shop/colors";
 
 /**
  * Only the base `/shop` and a single `?category=` selection are real SEO
@@ -244,8 +245,8 @@ export default async function ShopPage({
                     className="peer sr-only"
                   />
                   <span
-                    className="block h-8 w-8 rounded-full border border-black/10 ring-offset-2 ring-offset-background transition-shadow peer-checked:ring-2 peer-checked:ring-rose-800 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-500 dark:border-white/20"
-                    style={{ backgroundColor: color.hex ?? "#e5e5e5" }}
+                    className="block h-8 w-8 rounded-full border border-black/10 ring-offset-2 ring-offset-background transition-shadow peer-checked:ring-2 peer-checked:ring-rose-400 peer-focus-visible:ring-2 peer-focus-visible:ring-rose-500 dark:border-white/20"
+                    style={swatchStyle(color.name, color.hex)}
                   />
                 </span>
                 <span className="text-[10px] text-muted-foreground">{color.name}</span>

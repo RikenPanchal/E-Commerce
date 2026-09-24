@@ -14,6 +14,12 @@ export class EmailNotConfiguredError extends Error {
   }
 }
 
+/** True when `EMAIL_USER`/`EMAIL_PASS` are set - lets a caller decide up
+ *  front (without attempting a send) whether email can go out at all. */
+export function isEmailConfigured(): boolean {
+  return Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS);
+}
+
 function getTransporter(): Transporter {
   if (cachedTransporter) {
     return cachedTransporter;

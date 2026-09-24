@@ -12,6 +12,7 @@ import { formatCurrency } from "@/lib/utils/currency";
 import { hasVariants, isColorAvailable, isSizeAvailable, resolveVariant } from "@/lib/shop/variants";
 import { LOW_STOCK_THRESHOLD } from "@/lib/shop/stock";
 import type { ProductView } from "@/types/product";
+import { swatchStyle } from "@/lib/shop/colors";
 
 /**
  * The one Add to Cart implementation - rendered directly by the product
@@ -242,7 +243,7 @@ export function AddToCartForm({ product }: { product: ProductView }) {
                     // (or near-white) swatch on this white-themed page - a
                     // stronger, fixed-opacity border keeps it visible always.
                     className="h-5 w-5 rounded-full border-2 border-black/20 shadow-sm dark:border-white/30"
-                    style={{ backgroundColor: option.hex ?? "#e5e5e5" }}
+                    style={swatchStyle(option.name, option.hex)}
                   />
                 </button>
               );

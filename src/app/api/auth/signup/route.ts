@@ -9,6 +9,7 @@ import { signAuthToken } from "@/lib/auth/jwt";
 import { setAuthCookie } from "@/lib/auth/session";
 import { toSafeUser } from "@/lib/auth/mappers";
 import type { AuthResponse } from "@/types/auth";
+import { checkRateLimits, getClientIp, RATE_LIMITS, tooManyRequestsResponse } from "@/lib/security/rateLimit";
 
 export async function POST(request: Request): Promise<NextResponse<AuthResponse>> {
   let body: unknown;
@@ -34,6 +35,9 @@ export async function POST(request: Request): Promise<NextResponse<AuthResponse>
   }
 
   const { name, email, password } = parsed.data;
+
+  const limited = await checkRateLimits([{ rule: RATE_LIMITS.signupIp, identifier: getClientIp(request) }]);
+  if (!limited.allowed) return tooManyRequestsResponse(limited);
 
   try {
     await connectDB();

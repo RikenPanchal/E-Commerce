@@ -50,7 +50,7 @@ export type AuthResponse = AuthSuccessResponse | AuthErrorResponse;
 export interface ForgotPasswordSuccessResponse {
   success: true;
   message: string;
-  /** Only set outside production, since no email provider is wired up yet - see the route handler. */
+  /** Only set in local development when email isn't configured (no EMAIL_USER/EMAIL_PASS) - never in production. See the route handler. */
   devResetUrl?: string;
 }
 

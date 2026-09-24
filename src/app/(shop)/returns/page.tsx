@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage, LegalSection } from "@/components/legal/LegalPage";
+import { SUPPORT_EMAIL } from "@/lib/seo/site";
+
+const linkClass = "font-medium text-rose-400 underline underline-offset-4 hover:text-rose-300";
 
 export const metadata: Metadata = {
   title: "Return Policy",
@@ -10,8 +13,8 @@ export default function ReturnsPage() {
   return (
     <LegalPage
       title="Return Policy"
-      updatedAt="2026-01-01"
-      intro="Please read this policy carefully before placing an order - all sales made through E-Commerce are final."
+      updatedAt="2026-09-24"
+      intro="Please read this policy carefully before placing an order. Sales made through E-Commerce are final, except for items that arrive damaged, defective, or incorrect - see Section 2."
     >
       <LegalSection heading="1. All sales are final">
         <p>
@@ -43,6 +46,18 @@ export default function ReturnsPage() {
           <li>A brief description of what&apos;s wrong</li>
         </ul>
         <p>
+          <strong className="font-semibold text-foreground">How to report a problem:</strong> email{" "}
+          <a href={`mailto:${SUPPORT_EMAIL}`} className={linkClass}>
+            {SUPPORT_EMAIL}
+          </a>{" "}
+          with the details above, using a subject line like &quot;Damaged item - Order #1234ABCD&quot;.
+          You can find your order number under{" "}
+          <Link href="/orders" className={linkClass}>
+            My orders
+          </Link>
+          . We&apos;ll review your claim and reply by email with next steps.
+        </p>
+        <p>
           Claims made after 48 hours, or for items that have been worn, washed, or altered, cannot
           be honored.
         </p>
@@ -52,8 +67,8 @@ export default function ReturnsPage() {
         <p>
           If your order is cancelled by us before it ships (for example, due to a stock
           discrepancy), or if it is confirmed lost in transit by our courier partner, you will be
-          refunded in full to your original payment method. Cash-on-delivery orders that never
-          arrive are simply not charged.
+          refunded in full to your original payment method. If your payment didn&apos;t go through,
+          nothing was charged and there&apos;s nothing to refund.
         </p>
       </LegalSection>
 
@@ -69,12 +84,12 @@ export default function ReturnsPage() {
         <p>
           If you&apos;re unsure about sizing, color, or fit, please reach out to us before placing
           your order rather than after - see our{" "}
-          <Link href="/shipping" className="font-medium text-rose-600 underline underline-offset-4 dark:text-rose-400">
+          <Link href="/shipping" className={linkClass}>
             Shipping Policy
           </Link>{" "}
           for delivery details, or review a product&apos;s reviews and size chart on its product
           page. This policy is part of our{" "}
-          <Link href="/terms" className="font-medium text-rose-600 underline underline-offset-4 dark:text-rose-400">
+          <Link href="/terms" className={linkClass}>
             Terms &amp; Conditions
           </Link>
           .

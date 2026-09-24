@@ -5,7 +5,7 @@ import Order from "@/models/Order";
 import Product from "@/models/Product";
 import User from "@/models/User";
 import type { ReviewInput } from "@/lib/validations/review";
-import type { RatingSummary, ReviewView } from "@/types/review";
+import type { RatingSummary, ReviewPage, ReviewSort, ReviewView } from "@/types/review";
 
 function toReviewView(review: ReviewDocument, userName: string): ReviewView {
   return {
@@ -47,18 +47,56 @@ export async function getUserReviewForProduct(
   return toReviewView(review, user?.name ?? "You");
 }
 
-export async function getProductReviews(productId: string, limit = 50): Promise<ReviewView[]> {
+/** Reviews shown per page on the product page - kept small so the section
+ *  stays a compact block on every screen size. */
+export const REVIEWS_PAGE_SIZE = 4;
+
+// `_id` is the final tiebreaker so skip/limit paging is stable - two
+// reviews with the same rating (or timestamp) can never swap places between
+// requests and show up twice, or not at all, across pages.
+const REVIEW_SORT_ORDER: Record<ReviewSort, Record<string, 1 | -1>> = {
+  newest: { createdAt: -1, _id: -1 },
+  highest: { rating: -1, createdAt: -1, _id: -1 },
+  lowest: { rating: 1, createdAt: -1, _id: -1 },
+};
+
+/** One page of a product's reviews. An out-of-range `page` is clamped to the
+ *  last real page (e.g. after reviews change between requests) rather than
+ *  returning an empty page. */
+export async function getProductReviewsPage(
+  productId: string,
+  { page = 1, pageSize = REVIEWS_PAGE_SIZE, sort = "newest" }: { page?: number; pageSize?: number; sort?: ReviewSort } = {}
+): Promise<ReviewPage> {
+  const empty: ReviewPage = { reviews: [], page: 1, pageSize, total: 0, pageCount: 0, sort };
   if (!isValidObjectId(productId)) {
-    return [];
+    return empty;
   }
   await connectDB();
-  const reviews = await Review.find({ product: productId }).sort({ createdAt: -1 }).limit(limit);
+
+  const total = await Review.countDocuments({ product: productId });
+  if (total === 0) {
+    return empty;
+  }
+  const pageCount = Math.ceil(total / pageSize);
+  const currentPage = Math.min(Math.max(1, Math.floor(page)), pageCount);
+
+  const reviews = await Review.find({ product: productId })
+    .sort(REVIEW_SORT_ORDER[sort])
+    .skip((currentPage - 1) * pageSize)
+    .limit(pageSize);
 
   const userIds = [...new Set(reviews.map((review) => review.user.toString()))];
   const users = await User.find({ _id: { $in: userIds } }).select("name");
   const nameMap = new Map(users.map((user) => [user._id.toString(), user.name]));
 
-  return reviews.map((review) => toReviewView(review, nameMap.get(review.user.toString()) ?? "A customer"));
+  return {
+    reviews: reviews.map((review) => toReviewView(review, nameMap.get(review.user.toString()) ?? "A customer")),
+    page: currentPage,
+    pageSize,
+    total,
+    pageCount,
+    sort,
+  };
 }
 
 export async function getRatingSummary(productId: string): Promise<RatingSummary> {
@@ -71,6 +109,24 @@ export async function getRatingSummary(productId: string): Promise<RatingSummary
     { $group: { _id: null, average: { $avg: "$rating" }, count: { $sum: 1 } } },
   ]);
   return { average: result?.average ?? 0, count: result?.count ?? 0 };
+}
+
+/** How many reviews gave each star rating - index 0 is 5 stars down to
+ *  index 4 for 1 star, the order the product page's breakdown bars show. */
+export async function getRatingBreakdown(productId: string): Promise<number[]> {
+  const counts = [0, 0, 0, 0, 0];
+  if (!isValidObjectId(productId)) {
+    return counts;
+  }
+  await connectDB();
+  const results = await Review.aggregate<{ _id: number; count: number }>([
+    { $match: { product: new Types.ObjectId(productId) } },
+    { $group: { _id: "$rating", count: { $sum: 1 } } },
+  ]);
+  for (const result of results) {
+    if (result._id >= 1 && result._id <= 5) counts[5 - result._id] = result.count;
+  }
+  return counts;
 }
 
 /** Batch version of `getRatingSummary` for listing pages - one query instead of N. */

@@ -6,7 +6,8 @@ import { getRecommendedProducts, getCompleteTheLookProducts } from "@/lib/shop/r
 import { ProductScroller } from "@/components/home/ProductScroller";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import {
-  getProductReviews,
+  getProductReviewsPage,
+  getRatingBreakdown,
   getRatingSummary,
   getRatingSummaries,
   getUserReviewForProduct,
@@ -16,7 +17,7 @@ import { ProductGallery } from "@/components/shop/ProductGallery";
 import { AddToCartForm } from "@/components/shop/AddToCartForm";
 import { StarRating } from "@/components/shop/StarRating";
 import { ReviewForm } from "@/components/shop/ReviewForm";
-import { ReviewList } from "@/components/shop/ReviewList";
+import { PaginatedReviews } from "@/components/shop/PaginatedReviews";
 import { ShareButton } from "@/components/shop/ShareButton";
 import { StickyBuyBar } from "@/components/shop/StickyBuyBar";
 import { ProductCard } from "@/components/shop/ProductCard";
@@ -30,7 +31,7 @@ import { truncateForMeta, buildKeywords } from "@/lib/seo/text";
 
 const assurances = [
   { icon: TruckIcon, label: "Free shipping across India" },
-  { icon: CheckIcon, label: "All sales are final - no returns" },
+  { icon: CheckIcon, label: "Final sale - damaged or wrong items replaced" },
   { icon: ShieldIcon, label: "100% secure payments via Razorpay" },
 ];
 
@@ -93,10 +94,11 @@ export default async function ProductPage({
     notFound();
   }
 
-  const [user, rating, reviews] = await Promise.all([
+  const [user, rating, reviewPage, ratingBreakdown] = await Promise.all([
     getCurrentUser(),
     getRatingSummary(product.id),
-    getProductReviews(product.id),
+    getProductReviewsPage(product.id),
+    getRatingBreakdown(product.id),
   ]);
 
   const [existingReview, canReview] = user
@@ -130,7 +132,7 @@ export default async function ProductPage({
   const productSchema = buildProductSchema({
     product,
     rating,
-    reviews,
+    reviews: reviewPage.reviews,
     url: productUrl,
     imageUrls: productImageUrls,
   });
@@ -239,40 +241,76 @@ export default async function ProductPage({
           </div>
         </div>
 
-        <div className="mt-16 rounded-3xl border border-rose-100 bg-white/70 p-6 shadow-sm dark:border-rose-950/40 dark:bg-transparent dark:shadow-none sm:p-8">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
-            <div>
-              <div className="mb-6 flex items-center gap-5">
-                <div className="flex flex-col items-center justify-center rounded-2xl bg-rose-50 px-5 py-3 dark:bg-rose-950/30">
-                  <span className="font-serif text-3xl font-bold text-rose-700 dark:text-rose-300">
-                    {rating.average.toFixed(1)}
-                  </span>
-                  <StarRating rating={rating.average} />
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  <span className="font-serif text-lg font-semibold text-foreground">
-                    {rating.count > 0 ? `${rating.count} review${rating.count === 1 ? "" : "s"}` : "No reviews yet"}
-                  </span>
-                  <span className="text-sm text-foreground/50">
-                    {rating.count > 0 ? "See what customers are saying" : "Be the first to share your thoughts"}
-                  </span>
+        {/* Three grid blocks: from lg up, summary + write-a-review stack in
+            the narrow left column and the review list spans the wider right
+            one; below lg they stack as summary -> reviews -> write-a-review,
+            so a purchaser's review form never pushes the reviews themselves
+            down. The star breakdown bars are dropped on phones to save height. */}
+        <section
+          aria-labelledby="reviews-heading"
+          className="mt-12 rounded-2xl border border-surface-border p-4 sm:p-6"
+        >
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-[260px_minmax(0,1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-10 lg:gap-y-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8 lg:col-start-1 lg:row-start-1 lg:flex-col lg:items-stretch lg:justify-start lg:gap-4">
+              <div>
+                <h2 id="reviews-heading" className="font-serif text-lg font-semibold text-foreground sm:text-xl">
+                  Customer reviews
+                </h2>
+                <div className="mt-2 flex items-center gap-3">
+                  <span className="font-serif text-3xl font-bold text-rose-300">{rating.average.toFixed(1)}</span>
+                  <div className="flex flex-col gap-0.5">
+                    <StarRating rating={rating.average} />
+                    <span className="text-xs text-muted-foreground">
+                      {rating.count > 0
+                        ? `Based on ${rating.count} review${rating.count === 1 ? "" : "s"}`
+                        : "No reviews yet"}
+                    </span>
+                  </div>
                 </div>
               </div>
-              <ReviewList reviews={reviews} />
+
+              {rating.count > 0 ? (
+                <ul className="hidden flex-col gap-1.5 sm:flex sm:w-64 lg:w-full" aria-label="Rating breakdown">
+                  {ratingBreakdown.map((count, index) => {
+                    const stars = 5 - index;
+                    const percent = Math.round((count / rating.count) * 100);
+                    return (
+                      <li key={stars} className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <span className="w-6 shrink-0 tabular-nums">{stars}★</span>
+                        <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-foreground/10">
+                          <span className="block h-full rounded-full bg-amber-500" style={{ width: `${percent}%` }} />
+                        </span>
+                        <span className="w-6 shrink-0 text-right tabular-nums">{count}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : null}
             </div>
 
-            <div>
+            <div className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:border-l lg:border-surface-border lg:pl-10">
+              {/* Keyed on what a newly submitted/edited review changes, so
+                  ReviewForm's router.refresh() resets the pager to fresh
+                  server data instead of keeping a stale client-side page. */}
+              <PaginatedReviews
+                key={`${rating.count}:${rating.average}:${existingReview?.updatedAt ?? ""}`}
+                slug={product.slug}
+                initialPage={reviewPage}
+              />
+            </div>
+
+            <div className="border-t border-surface-border pt-4 lg:col-start-1 lg:row-start-2">
               {canReview ? (
                 <ReviewForm slug={product.slug} existingReview={existingReview} />
               ) : user ? (
-                <p className="text-sm text-foreground/60">
+                <p className="text-sm text-muted-foreground">
                   Only customers who&apos;ve purchased this product can leave a review.
                 </p>
               ) : (
-                <p className="text-sm text-foreground/60">
+                <p className="text-sm text-muted-foreground">
                   <Link
                     href={`/signin?from=/products/${product.slug}`}
-                    className="font-medium text-rose-600 underline underline-offset-4 dark:text-rose-400"
+                    className="font-medium text-rose-400 underline underline-offset-4 hover:text-rose-300"
                   >
                     Sign in
                   </Link>{" "}
@@ -281,7 +319,7 @@ export default async function ProductPage({
               )}
             </div>
           </div>
-        </div>
+        </section>
 
         {completeTheLook.length > 0 ? (
           <div className="mt-16">

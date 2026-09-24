@@ -7,6 +7,10 @@ import BackInStockSubscription, {
 } from "@/models/BackInStockSubscription";
 import { toProductView } from "@/lib/products/mapper";
 import { hasVariants } from "@/lib/shop/variants";
+import { isEmailConfigured } from "@/lib/email/mailer";
+import { sendBackInStockEmail } from "@/lib/email/backInStockEmail";
+import { absoluteUrl } from "@/lib/seo/site";
+import { runAfterResponse } from "@/lib/utils/afterResponse";
 import type { SafeUser } from "@/types/auth";
 import type { ProductView, ProductVariantView } from "@/types/product";
 
@@ -178,33 +182,45 @@ export async function getActiveBackInStockSubscriptionsForUser(userId: string): 
   return alerts;
 }
 
+/** How many restock emails go out at once - small on purpose: Gmail (the
+ *  default transport, see mailer.ts) throttles or rejects bursts of
+ *  parallel SMTP connections from one account. */
+const SEND_CONCURRENCY = 3;
+
 /**
- * No real email provider is configured anywhere in this app yet (the same
- * is true of password reset - see `forgot-password/route.ts`), so this
- * mirrors that exact precedent: log what would be sent and report success,
- * rather than fabricate a provider. Swapping in a real one later is a
- * drop-in change to this one function; nothing else needs to change since
- * `processBackInStockTransition` already only marks a subscriber
- * `"notified"` when this returns `true`.
+ * Emails one subscriber. The subscription is *claimed* first with a single
+ * atomic active -> notified update, so two restocks landing at the same
+ * moment (e.g. an admin save and an order-cancellation restock) can never
+ * email the same person twice; if the send then fails, it's put back to
+ * active so the next restock tries again instead of silently dropping it.
  */
-export async function sendBackInStockEmail(
+async function notifySubscriber(
   subscription: BackInStockSubscriptionDocument,
   product: ProductView,
   variant?: ProductVariantView
-): Promise<boolean> {
-  const variantLabel = variant ? [variant.size, variant.color].filter(Boolean).join(" / ") : undefined;
-  const productUrl = `/products/${product.slug}`;
-  const unsubscribeUrl = `/unsubscribe/back-in-stock?token=${subscription.unsubscribeToken}`;
+): Promise<void> {
+  const claimed = await BackInStockSubscription.findOneAndUpdate(
+    { _id: subscription._id, status: "active" },
+    { $set: { status: "notified", notifiedAt: new Date() } }
+  );
+  if (!claimed) return; // Already notified by a concurrent run, or cancelled meanwhile.
+
+  const image = product.media.find((item) => item.type === "image")?.url;
   try {
-    console.log(
-      `[back-in-stock email:stub] To: ${subscription.email} - "${product.name}"` +
-        (variantLabel ? ` (${variantLabel})` : "") +
-        ` is back in stock. Link: ${productUrl} | Unsubscribe: ${unsubscribeUrl}`
-    );
-    return true;
+    await sendBackInStockEmail({
+      to: subscription.email,
+      productName: product.name,
+      variantLabel: variant ? [variant.size, variant.color].filter(Boolean).join(" / ") || undefined : undefined,
+      price: variant?.price ?? product.price,
+      productUrl: absoluteUrl(`/products/${product.slug}`),
+      imageUrl: image ? absoluteUrl(image) : undefined,
+    });
   } catch (error) {
-    console.error("Failed to send back-in-stock email:", error);
-    return false;
+    await BackInStockSubscription.updateOne(
+      { _id: subscription._id, status: "notified" },
+      { $set: { status: "active", notifiedAt: null } }
+    );
+    console.error(`Failed to send back-in-stock email for subscription ${subscription._id.toString()}:`, error);
   }
 }
 
@@ -213,13 +229,13 @@ export async function sendBackInStockEmail(
  * notification" - fires only on an unavailable -> available transition
  * (`previousStock <= 0` and `newStock > 0`), driven by whatever the real
  * mutation just wrote, never a separate polled stock check. Called from the
- * exact two places that change stock outside of checkout: an admin product
- * update and an order cancellation restock.
+ * places that change stock outside of checkout: an admin product update,
+ * an admin order cancellation, and a failed/abandoned payment's restock.
  *
- * No queue/background-job system exists anywhere in this app, so this runs
- * inline, synchronously, with each subscriber's send isolated (a failed one
- * is logged and skipped) so one failure can't affect the others or block
- * the rest of the batch.
+ * The subscriber lookup happens here; the emails themselves go out after
+ * the response (see `runAfterResponse` in src/lib/utils/afterResponse.ts), a few at a time, each isolated so
+ * one failure can't affect the others. When email isn't configured at all,
+ * nobody is marked notified - their alerts stay active for a later restock.
  */
 export async function processBackInStockTransition(
   productId: Types.ObjectId | string,
@@ -233,27 +249,27 @@ export async function processBackInStockTransition(
   const product = await Product.findById(productId);
   if (!product) return; // Deleted concurrently - nothing to notify about.
 
-  const productView = toProductView(product);
-  const variant = variantId ? productView.variants.find((item) => item.id === variantId.toString()) : undefined;
-
   const subscriptions = await BackInStockSubscription.find({
     product: productId,
     variantId: variantId ?? null,
     status: "active",
-  }).select("+unsubscribeToken");
+  });
+  if (subscriptions.length === 0) return;
 
-  await Promise.allSettled(
-    subscriptions.map(async (subscription) => {
-      try {
-        const sent = await sendBackInStockEmail(subscription, productView, variant);
-        if (sent) {
-          subscription.status = "notified";
-          subscription.notifiedAt = new Date();
-          await subscription.save();
-        }
-      } catch (error) {
-        console.error(`Failed to notify subscriber ${subscription._id.toString()}:`, error);
-      }
-    })
-  );
+  if (!isEmailConfigured()) {
+    console.error(
+      `Back in stock: ${subscriptions.length} subscriber(s) for product ${product._id.toString()} were not emailed because EMAIL_USER/EMAIL_PASS aren't set - their alerts stay active.`
+    );
+    return;
+  }
+
+  const productView = toProductView(product);
+  const variant = variantId ? productView.variants.find((item) => item.id === variantId.toString()) : undefined;
+
+  runAfterResponse("Back-in-stock notification batch", async () => {
+    for (let index = 0; index < subscriptions.length; index += SEND_CONCURRENCY) {
+      const batch = subscriptions.slice(index, index + SEND_CONCURRENCY);
+      await Promise.allSettled(batch.map((subscription) => notifySubscriber(subscription, productView, variant)));
+    }
+  });
 }

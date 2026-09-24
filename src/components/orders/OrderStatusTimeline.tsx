@@ -1,4 +1,5 @@
-import type { OrderStatus } from "@/types/order";
+import { formatCurrency } from "@/lib/utils/currency";
+import type { OrderStatus, PaymentStatus } from "@/types/order";
 
 const STEPS: { key: OrderStatus; label: string }[] = [
   { key: "pending", label: "Order placed" },
@@ -7,11 +8,29 @@ const STEPS: { key: OrderStatus; label: string }[] = [
   { key: "delivered", label: "Delivered" },
 ];
 
-export function OrderStatusTimeline({ status }: { status: OrderStatus }) {
-  if (status === "cancelled") {
+export function OrderStatusTimeline({
+  status,
+  paymentStatus,
+  total,
+}: {
+  status: OrderStatus;
+  paymentStatus: PaymentStatus;
+  total: number;
+}) {
+  // A failed payment always ends the order (see `failOrderPayment`), so it
+  // gets the same "stopped" box as a cancellation, with wording that says
+  // what happened to the customer's money - matching the cancellation email
+  // (src/lib/email/orderStatusEmail.ts) and the Shipping Policy's refund terms.
+  if (status === "cancelled" || paymentStatus === "failed") {
+    const message =
+      paymentStatus === "paid"
+        ? `This order was cancelled. ${formatCurrency(total)} will be refunded in full to your original payment method within 7-10 business days.`
+        : paymentStatus === "failed"
+          ? "Your payment didn't go through, so this order was cancelled. You haven't been charged."
+          : "This order was cancelled before payment, so you haven't been charged.";
     return (
       <div className="rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700 dark:bg-red-900/20 dark:text-red-300">
-        This order was cancelled.
+        {message}
       </div>
     );
   }

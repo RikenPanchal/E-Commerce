@@ -4,6 +4,7 @@ import { changePassword } from "@/lib/account/profile";
 import { changePasswordSchema } from "@/lib/validations/account";
 import { firstFieldErrors } from "@/lib/validations/formatZodError";
 import type { PasswordChangeResponse } from "@/types/account";
+import { checkRateLimits, RATE_LIMITS, tooManyRequestsResponse } from "@/lib/security/rateLimit";
 
 export async function PATCH(request: Request): Promise<NextResponse<PasswordChangeResponse>> {
   const currentUser = await getCurrentUser();
@@ -32,6 +33,9 @@ export async function PATCH(request: Request): Promise<NextResponse<PasswordChan
       { status: 400 }
     );
   }
+
+  const limited = await checkRateLimits([{ rule: RATE_LIMITS.changePasswordUser, identifier: currentUser.id }]);
+  if (!limited.allowed) return tooManyRequestsResponse(limited);
 
   try {
     const result = await changePassword(currentUser.id, parsed.data);

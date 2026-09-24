@@ -4,6 +4,9 @@ import Order, { TERMINAL_ORDER_STATUSES, type OrderDocument } from "@/models/Ord
 import User from "@/models/User";
 import { toOrderView, restockOrderItems } from "@/lib/shop/orders";
 import { processBackInStockTransition } from "@/lib/shop/backInStock";
+import { isEmailConfigured } from "@/lib/email/mailer";
+import { isOrderStatusEmailKind, sendOrderStatusEmail } from "@/lib/email/orderStatusEmail";
+import { runAfterResponse } from "@/lib/utils/afterResponse";
 import type { UpdateOrderStatusInput } from "@/lib/validations/order";
 import type { OrderView } from "@/types/order";
 
@@ -116,6 +119,25 @@ export async function updateOrderStatus(
 
   order.status = input.status;
   await order.save();
+
+  // Tell the customer about shipped / delivered / cancelled - after the
+  // response, so the admin's save never waits on the mail server, and only
+  // now that the change is actually saved. Best-effort: a failed email is
+  // logged, never turned into a failed status update.
+  const newStatus = order.status;
+  if (isOrderStatusEmailKind(newStatus)) {
+    const orderView = toOrderView(order);
+    const customerId = order.user;
+    runAfterResponse(`Order ${newStatus} email for ${orderView.id}`, async () => {
+      if (!isEmailConfigured()) {
+        console.error(`Order ${orderView.id} is now ${newStatus}, but EMAIL_USER/EMAIL_PASS aren't set - the customer wasn't emailed.`);
+        return;
+      }
+      const customer = await User.findById(customerId).select("name email");
+      if (!customer) return;
+      await sendOrderStatusEmail(newStatus, orderView, customer.email, customer.name);
+    });
+  }
 
   if (restocked.length > 0) {
     await Promise.all(

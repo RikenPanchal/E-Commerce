@@ -26,3 +26,18 @@ export interface ReviewErrorResponse {
 }
 
 export type ReviewResponse = ReviewSuccessResponse | ReviewErrorResponse;
+
+export const REVIEW_SORTS = ["newest", "highest", "lowest"] as const;
+export type ReviewSort = (typeof REVIEW_SORTS)[number];
+
+/** One page of a product's reviews, plus what the pager needs to render. */
+export interface ReviewPage {
+  reviews: ReviewView[];
+  page: number;
+  pageSize: number;
+  total: number;
+  pageCount: number;
+  sort: ReviewSort;
+}
+
+export type ReviewPageResponse = ({ success: true } & ReviewPage) | ReviewErrorResponse;

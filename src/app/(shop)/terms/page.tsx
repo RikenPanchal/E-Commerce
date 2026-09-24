@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage, LegalSection } from "@/components/legal/LegalPage";
+import { SUPPORT_EMAIL } from "@/lib/seo/site";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions",
@@ -115,8 +116,8 @@ export default function TermsPage() {
       <LegalSection heading="11. Contact us">
         <p>
           Questions about these terms? Reach out to us at{" "}
-          <a href="mailto:support@e-commerce.example" className="font-medium text-rose-600 underline underline-offset-4 dark:text-rose-400">
-            support@e-commerce.example
+          <a href={`mailto:${SUPPORT_EMAIL}`} className="font-medium text-rose-600 underline underline-offset-4 dark:text-rose-400">
+            {SUPPORT_EMAIL}
           </a>
           .
         </p>

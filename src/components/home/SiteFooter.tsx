@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BrandMark, CheckIcon, ShieldIcon, TruckIcon } from "@/components/home/icons";
 import { cn } from "@/components/ui/cn";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
+import { SUPPORT_EMAIL } from "@/lib/seo/site";
 
 const assurances = [
   { icon: TruckIcon, label: "Free shipping across India" },
@@ -20,7 +21,6 @@ const legalLinks = [
 // the Terms page's own "Contact us" section) - reused here rather than
 // inventing a phone number, live chat, or social links that don't exist
 // anywhere in the app.
-const SUPPORT_EMAIL = "support@e-commerce.example";
 
 const columnHeadingClass = "text-xs font-semibold tracking-[0.15em] uppercase";
 

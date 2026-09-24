@@ -14,6 +14,7 @@ import { HeartIcon, EyeIcon } from "@/components/home/icons";
 import { formatCurrency } from "@/lib/utils/currency";
 import type { ProductView } from "@/types/product";
 import type { RatingSummary } from "@/types/review";
+import { swatchStyle } from "@/lib/shop/colors";
 
 function PlusIcon() {
   return (
@@ -218,7 +219,7 @@ export function ProductCard({
                 // (or near-white) swatch against this white-themed card -
                 // a stronger, fixed-opacity border keeps it visible always.
                 className="h-3 w-3 rounded-full border-2 border-black/20 shadow-sm dark:border-white/30"
-                style={{ backgroundColor: color.hex ?? "#e5e5e5" }}
+                style={swatchStyle(color.name, color.hex)}
               />
             ))}
             {product.colors.length > 5 ? (

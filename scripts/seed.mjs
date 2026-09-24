@@ -379,7 +379,9 @@ async function main() {
     // --- Reviews ---
     const reviewDocs = [];
     for (const p of demoProducts) {
-      const count = int(0, 5);
+      // Featured products get more reviews (up to all 8 demo customers), so
+      // the product page's review pagination has something to page through.
+      const count = p.isFeatured ? int(5, 8) : int(0, 5);
       const reviewers = [...customers].sort(() => rand() - 0.5).slice(0, count);
       for (const u of reviewers) {
         const r = rand();

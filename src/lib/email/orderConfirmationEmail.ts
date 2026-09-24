@@ -1,32 +1,21 @@
 import { formatCurrency } from "@/lib/utils/currency";
 import { sendMail } from "@/lib/email/mailer";
+import {
+  ACCENT,
+  ACCENT_DARK,
+  BORDER,
+  BRAND_NAME,
+  CARD_BG,
+  MUTED_TEXT,
+  PAGE_BG,
+  TEXT,
+  escapeHtml,
+} from "@/lib/email/theme";
 import type { OrderView } from "@/types/order";
-
-const BRAND_NAME = "E-Commerce";
-// The storefront's own Black + Champagne tokens (src/app/globals.css) -
-// hardcoded here rather than read from CSS, since email HTML can't
-// reference the app's CSS variables and needs literal hex values inlined
-// per element. Keep these in sync by hand whenever the site's own palette
-// changes - there's no automated link between the two.
-const PAGE_BG = "#0b0b0b"; // --background (Black)
-const CARD_BG = "#1c1c1c"; // --surface (Card)
-const ACCENT = "#d6b77c"; // --color-rose-400 (Champagne)
-const ACCENT_DARK = "#171310"; // --burgundy (deep bronze-black panel)
-const BORDER = "#2a2620"; // --surface-border
-const MUTED_TEXT = "#a8a29a"; // --muted-foreground (Muted)
-const TEXT = "#f5f0e6"; // --foreground (Ivory)
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", { dateStyle: "long" });
 
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function itemRowHtml(item: OrderView["items"][number]): string {
+export function itemRowHtml(item: OrderView["items"][number]): string {
   const variant = [item.size, item.color].filter(Boolean).join(" / ");
   return `
     <tr>
@@ -43,7 +32,7 @@ function itemRowHtml(item: OrderView["items"][number]): string {
     </tr>`;
 }
 
-function itemRowText(item: OrderView["items"][number]): string {
+export function itemRowText(item: OrderView["items"][number]): string {
   const variant = [item.size, item.color].filter(Boolean).join(" / ");
   return `  - ${item.name}${variant ? ` (${variant})` : ""} x${item.quantity} - ${formatCurrency(item.price * item.quantity)}`;
 }

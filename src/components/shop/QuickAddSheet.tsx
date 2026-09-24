@@ -12,6 +12,7 @@ import { CloseIcon } from "@/components/home/icons";
 import { formatCurrency } from "@/lib/utils/currency";
 import { hasVariants, isColorAvailable, isSizeAvailable, resolveVariant } from "@/lib/shop/variants";
 import type { ProductView } from "@/types/product";
+import { swatchStyle } from "@/lib/shop/colors";
 
 /**
  * The compact variant selector opened by "Quick add" on a `ProductCard` when
@@ -216,7 +217,7 @@ export function QuickAddSheet({
                       >
                         <span
                           className="h-5 w-5 rounded-full border-2 border-black/20 shadow-sm dark:border-white/30"
-                          style={{ backgroundColor: option.hex ?? "#e5e5e5" }}
+                          style={swatchStyle(option.name, option.hex)}
                         />
                       </button>
                     );

@@ -11,6 +11,12 @@ export const SITE_URL = RAW_SITE_URL.replace(/\/+$/, "");
 
 export const SITE_NAME = "E-Commerce";
 
+/** Customer-facing contact addresses - used by the footer, the Returns,
+ *  Terms and Privacy pages, so there's one place to change them.
+ *  PLACEHOLDERS: replace with real, monitored mailboxes before launch. */
+export const SUPPORT_EMAIL = "support@e-commerce.example";
+export const PRIVACY_EMAIL = "privacy@e-commerce.example";
+
 export const SITE_DESCRIPTION =
   "Curated women's fashion - dresses, tops, ethnic wear and accessories, thoughtfully designed for every occasion. Free shipping across India.";
 

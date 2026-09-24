@@ -58,7 +58,7 @@ export function ForgotPasswordForm() {
         {result.devResetUrl ? (
           <div className="flex flex-col gap-2 rounded-md border border-dashed border-rose-300 bg-rose-50 p-4 text-sm dark:border-rose-800 dark:bg-rose-950/30">
             <p className="font-medium text-rose-700 dark:text-rose-300">
-              Development mode - no email provider is configured yet
+              Development mode - email isn&apos;t configured, so here is your reset link
             </p>
             <a
               href={result.devResetUrl}

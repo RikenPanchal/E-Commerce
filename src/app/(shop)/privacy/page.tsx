@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage, LegalSection } from "@/components/legal/LegalPage";
+import { PRIVACY_EMAIL } from "@/lib/seo/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -101,8 +102,8 @@ export default function PrivacyPage() {
       <LegalSection heading="9. Contact us">
         <p>
           Questions about this policy or your data? Reach out to us at{" "}
-          <a href="mailto:privacy@e-commerce.example" className="font-medium text-rose-600 underline underline-offset-4 dark:text-rose-400">
-            privacy@e-commerce.example
+          <a href={`mailto:${PRIVACY_EMAIL}`} className="font-medium text-rose-600 underline underline-offset-4 dark:text-rose-400">
+            {PRIVACY_EMAIL}
           </a>
           .
         </p>

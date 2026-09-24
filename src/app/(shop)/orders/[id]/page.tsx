@@ -7,6 +7,7 @@ import { OrderStatusTimeline } from "@/components/orders/OrderStatusTimeline";
 import { PaymentStatusBadge } from "@/components/orders/PaymentStatusBadge";
 import { RetryPaymentButton } from "@/components/orders/RetryPaymentButton";
 import { PageHero } from "@/components/shop/PageHero";
+import type { OrderView } from "@/types/order";
 
 export const metadata: Metadata = {
   title: "Order details",
@@ -14,6 +15,17 @@ export const metadata: Metadata = {
 };
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short" });
+
+/** The hero's eyebrow - what state this order is actually in, so a failed or
+ *  unpaid order never announces itself as "confirmed". */
+function orderHeadline(order: OrderView): string {
+  if (order.paymentStatus === "failed") return "Payment failed";
+  if (order.status === "cancelled") return "Order cancelled";
+  if (order.paymentStatus === "pending") return "Awaiting payment";
+  if (order.status === "delivered") return "Delivered";
+  if (order.status === "shipped") return "On its way";
+  return "Order confirmed";
+}
 
 export default async function OrderDetailPage({
   params,
@@ -41,7 +53,7 @@ export default async function OrderDetailPage({
           { label: "My orders", href: "/orders" },
           { label: `#${orderNumber}` },
         ]}
-        eyebrow="Order confirmed"
+        eyebrow={orderHeadline(order)}
         title={`Order #${orderNumber}`}
         description={`Placed ${dateFormatter.format(new Date(order.createdAt))}`}
       />
@@ -69,7 +81,7 @@ export default async function OrderDetailPage({
             <h2 className="text-sm font-semibold text-foreground">Status</h2>
             <PaymentStatusBadge status={order.paymentStatus} />
           </div>
-          <OrderStatusTimeline status={order.status} />
+          <OrderStatusTimeline status={order.status} paymentStatus={order.paymentStatus} total={order.total} />
         </div>
 
         {order.trackingNumber || order.carrier ? (

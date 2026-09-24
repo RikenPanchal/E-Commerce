@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import type { ProductView } from "@/types/product";
 import { CloseIcon } from "@/components/admin/products/icons";
 import { formatCurrency } from "@/lib/utils/currency";
+import { swatchStyle } from "@/lib/shop/colors";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short" });
 
@@ -138,7 +139,7 @@ export function ProductDetailModal({
                       // a stronger, fixed-opacity border keeps every swatch
                       // outlined regardless of how light its color is.
                       className="h-4 w-4 rounded-full border-2 border-black/20 shadow-sm dark:border-white/30"
-                      style={{ backgroundColor: color.hex ?? "#e5e5e5" }}
+                      style={swatchStyle(color.name, color.hex)}
                     />
                     {color.name}
                   </div>

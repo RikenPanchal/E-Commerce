@@ -13,7 +13,7 @@ function CheckIcon(props: SVGProps<SVGSVGElement>) {
 const highlights = [
   "New arrivals added every week",
   "Free shipping across India",
-  "All sales are final - no returns or exchanges",
+  "Final sale - damaged or wrong items replaced",
 ];
 
 // White/near-white panel with a thin border, not a colored gradient fill -

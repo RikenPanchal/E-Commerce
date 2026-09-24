@@ -12,6 +12,8 @@ import type { RatingSummary } from "@/types/review";
 
 export { PRODUCT_SORT_OPTIONS, type ProductSort } from "@/lib/shop/productSort";
 import type { ProductSort } from "@/lib/shop/productSort";
+import { mainColorName, mainColorRegex } from "@/lib/shop/colors";
+import { hexForColorName } from "@/lib/data/colorNames";
 
 export interface PublicProductFilters {
   /** A single category (every existing call site) or several at once (the
@@ -79,7 +81,10 @@ function buildProductFilter(options?: PublicProductFilters): Record<string, unkn
   }
 
   if (options?.colors && options.colors.length > 0) {
-    filter["colors.name"] = { $in: options.colors };
+    // Each picked color matches products whose *main* color it is - "Red"
+    // finds "Red" and "Red & Gold", not "Black & Red" (see ./colors.ts) -
+    // and several picks are OR'd, same as sizes.
+    filter["colors.name"] = { $in: options.colors.map(mainColorRegex) };
   }
 
   if (options?.brands && options.brands.length > 0) {
@@ -154,6 +159,10 @@ export async function getShopFacets(): Promise<ShopFacets> {
   await connectDB();
   const products = await Product.find({ isDeleted: false }, { colors: 1, brand: 1, price: 1 });
 
+  // One entry per *main* color (the first color named - "Black & Red" is
+  // listed under Black), matching how the color filter itself works. The
+  // swatch uses the standard hex for that name when there is one, else the
+  // product's own stored hex, which is always its main color's.
   const colorHexByName = new Map<string, string | undefined>();
   const brands = new Set<string>();
   let priceMin = Infinity;
@@ -161,9 +170,8 @@ export async function getShopFacets(): Promise<ShopFacets> {
 
   for (const product of products) {
     for (const color of product.colors) {
-      if (!colorHexByName.has(color.name)) {
-        colorHexByName.set(color.name, color.hex);
-      }
+      const main = mainColorName(color.name);
+      if (!colorHexByName.get(main)) colorHexByName.set(main, hexForColorName(main) ?? color.hex);
     }
     if (product.brand) brands.add(product.brand);
     priceMin = Math.min(priceMin, product.price);
